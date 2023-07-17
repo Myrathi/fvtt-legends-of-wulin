@@ -3,17 +3,17 @@
  * @extends {ActorSheet}
  */
 
-import { EcrymeUtility } from "../common/ecryme-utility.js";
+import { LoWUtility } from "../common/low-utility.js";
 
 /* -------------------------------------------- */
-export class EcrymeActorSheet extends ActorSheet {
+export class LoWActorSheet extends ActorSheet {
 
   /** @override */
   static get defaultOptions() {
 
     return mergeObject(super.defaultOptions, {
-      classes: ["fvtt-ecryme", "sheet", "actor"],
-      template: "systems/fvtt-ecryme/templates/actors/actor-sheet.hbs",
+      classes: ["fvtt-legends-of-wulin", "sheet", "actor"],
+      template: "systems/fvtt-legends-of-wulin/templates/actors/actor-sheet.hbs",
       width: 860,
       height:680,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }],
@@ -84,7 +84,7 @@ export class EcrymeActorSheet extends ActorSheet {
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item")
-      EcrymeUtility.confirmDelete(this, li).catch("Error : No deletion confirmed")
+      LoWUtility.confirmDelete(this, li).catch("Error : No deletion confirmed")
     })
     html.find('.item-add').click(ev => {
       let dataType = $(ev.currentTarget).data("type")

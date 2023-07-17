@@ -1,22 +1,22 @@
 /* -------------------------------------------- */
-import { EcrymeCommands } from "../app/ecryme-commands.js";
+import { LoWCommands } from "../app/low-commands.js";
 
 /* -------------------------------------------- */
 const __maxImpacts = { superficial: 4, light: 3, serious: 2, major: 1 }
 const __nextImpacts = { superficial: "light", light: "serious", serious: "major", major: "major" }
 const __effect2Impact= [ "none", "superficial", "superficial", "light", "light", "serious", "serious", "major", "major" ]
 /* -------------------------------------------- */
-export class EcrymeUtility {
+export class LoWUtility {
 
   /* -------------------------------------------- */
   static async init() {
-    Hooks.on('renderChatLog', (log, html, data) => EcrymeUtility.chatListeners(html));
-    Hooks.on("getChatLogEntryContext", (html, options) => EcrymeUtility.chatMenuManager(html, options));
+    Hooks.on('renderChatLog', (log, html, data) => LoWUtility.chatListeners(html));
+    Hooks.on("getChatLogEntryContext", (html, options) => LoWUtility.chatMenuManager(html, options));
 
     this.rollDataStore = {}
     this.defenderStore = {}
 
-    EcrymeCommands.init();
+    LoWCommands.init();
   }
 
   /* -------------------------------------------- */
@@ -57,7 +57,7 @@ export class EcrymeUtility {
       return accum;
     })
 
-    game.settings.register("fvtt-ecryme", "ecryme-game-level", {
+    game.settings.register("fvtt-legends-of-wulin", "low-game-level", {
       name: game.i18n.localize("ECRY.settings.gamelevel"),
       label: game.i18n.localize("ECRY.settings.gamelevelhelp"),
       scope: 'world',
@@ -103,7 +103,7 @@ export class EcrymeUtility {
 
   /* -------------------------------------------- */
   static async loadCompendium(compendium, filter = item => true) {
-    let compendiumData = await EcrymeUtility.loadCompendiumData(compendium)
+    let compendiumData = await LoWUtility.loadCompendiumData(compendium)
     return compendiumData.filter(filter)
   }
 
@@ -175,9 +175,9 @@ export class EcrymeUtility {
     }
 
     let msg = await this.createChatWithRollMode(this.confrontData1.alias, {
-      content: await renderTemplate(`systems/fvtt-ecryme/templates/chat/chat-confrontation-result.hbs`, confront)
+      content: await renderTemplate(`systems/fvtt-legends-of-wulin/templates/chat/chat-confrontation-result.hbs`, confront)
     })
-    msg.setFlag("world", "ecryme-rolldata", confront)
+    msg.setFlag("world", "low-rolldata", confront)
     console.log("Confront result", confront)
 
     this.lastConfront = confront
@@ -222,7 +222,7 @@ export class EcrymeUtility {
         callback: li => {
           let message = game.messages.get(li.attr("data-message-id"))
           let rollData = message.getFlag("world", "rolldata")
-          EcrymeUtility.transcendFromSpec(rollData, i).catch("Error on Transcend")
+          LoWUtility.transcendFromSpec(rollData, i).catch("Error on Transcend")
         }
       })
     }
@@ -232,25 +232,25 @@ export class EcrymeUtility {
   static async chatListeners(html) {
 
     html.on("click", '.button-select-confront', event => {
-      let messageId = EcrymeUtility.findChatMessageId(event.currentTarget)
+      let messageId = LoWUtility.findChatMessageId(event.currentTarget)
       let message = game.messages.get(messageId)
-      let rollData = message.getFlag("world", "ecryme-rolldata")
-      EcrymeUtility.manageConfrontation(rollData)
+      let rollData = message.getFlag("world", "low-rolldata")
+      LoWUtility.manageConfrontation(rollData)
     })
     html.on("click", '.button-apply-impact', event => {
-      let messageId = EcrymeUtility.findChatMessageId(event.currentTarget)
+      let messageId = LoWUtility.findChatMessageId(event.currentTarget)
       let message = game.messages.get(messageId)
       let actor = game.actors.get($(event.currentTarget).data("actor-id"))
       actor.modifyImpact($(event.currentTarget).data("impact-type"), $(event.currentTarget).data("impact"), 1)
     })      
     html.on("click", '.button-apply-bonus', event => {
-      let messageId = EcrymeUtility.findChatMessageId(event.currentTarget)
+      let messageId = LoWUtility.findChatMessageId(event.currentTarget)
       let message = game.messages.get(messageId)
       let actor = game.actors.get($(event.currentTarget).data("actor-id"))
       actor.modifyConfrontBonus( $(event.currentTarget).data("bonus") )
     })      
     html.on("click", '.draw-tarot-card', event => {
-      let messageId = EcrymeUtility.findChatMessageId(event.currentTarget)
+      let messageId = LoWUtility.findChatMessageId(event.currentTarget)
       this.drawDeckCard(messageId)
     })
 
@@ -260,14 +260,14 @@ export class EcrymeUtility {
   static async preloadHandlebarsTemplates() {
 
     const templatePaths = [
-      'systems/fvtt-ecryme/templates/actors/editor-notes-gm.hbs',
-      'systems/fvtt-ecryme/templates/items/partial-item-nav.hbs',
-      'systems/fvtt-ecryme/templates/items/partial-item-equipment.hbs',
-      'systems/fvtt-ecryme/templates/items/partial-item-description.hbs',
-      'systems/fvtt-ecryme/templates/dialogs/partial-common-roll-dialog.hbs',
-      'systems/fvtt-ecryme/templates/dialogs/partial-confront-dice-area.hbs',
-      'systems/fvtt-ecryme/templates/dialogs/partial-confront-bonus-area.hbs',
-      'systems/fvtt-ecryme/templates/actors/partial-impacts.hbs',
+      'systems/fvtt-legends-of-wulin/templates/actors/editor-notes-gm.hbs',
+      'systems/fvtt-legends-of-wulin/templates/items/partial-item-nav.hbs',
+      'systems/fvtt-legends-of-wulin/templates/items/partial-item-equipment.hbs',
+      'systems/fvtt-legends-of-wulin/templates/items/partial-item-description.hbs',
+      'systems/fvtt-legends-of-wulin/templates/dialogs/partial-common-roll-dialog.hbs',
+      'systems/fvtt-legends-of-wulin/templates/dialogs/partial-confront-dice-area.hbs',
+      'systems/fvtt-legends-of-wulin/templates/dialogs/partial-confront-bonus-area.hbs',
+      'systems/fvtt-legends-of-wulin/templates/actors/partial-impacts.hbs',
     ]
     return loadTemplates(templatePaths);
   }
@@ -280,7 +280,7 @@ export class EcrymeUtility {
   }
 
   static findChatMessageId(current) {
-    return EcrymeUtility.getChatMessageId(EcrymeUtility.findChatMessage(current));
+    return LoWUtility.getChatMessageId(LoWUtility.findChatMessage(current));
   }
 
   static getChatMessageId(node) {
@@ -288,7 +288,7 @@ export class EcrymeUtility {
   }
 
   static findChatMessage(current) {
-    return EcrymeUtility.findNodeMatching(current, it => it.classList.contains('chat-message') && it.attributes.getNamedItem('data-message-id'));
+    return LoWUtility.findNodeMatching(current, it => it.classList.contains('chat-message') && it.attributes.getNamedItem('data-message-id'));
   }
 
   static findNodeMatching(current, predicate) {
@@ -296,7 +296,7 @@ export class EcrymeUtility {
       if (predicate(current)) {
         return current;
       }
-      return EcrymeUtility.findNodeMatching(current.parentElement, predicate);
+      return LoWUtility.findNodeMatching(current.parentElement, predicate);
     }
     return undefined;
   }
@@ -476,7 +476,7 @@ export class EcrymeUtility {
   }
 
   /* -------------------------------------------- */
-  static async rollEcryme(rollData) {
+  static async rollLoW(rollData) {
 
     let actor = game.actors.get(rollData.actorId)
     // Fix difficulty
@@ -497,9 +497,9 @@ export class EcrymeUtility {
     this.computeResults(rollData)
 
     let msg = await this.createChatWithRollMode(rollData.alias, {
-      content: await renderTemplate(`systems/fvtt-ecryme/templates/chat/chat-generic-result.hbs`, rollData)
+      content: await renderTemplate(`systems/fvtt-legends-of-wulin/templates/chat/chat-generic-result.hbs`, rollData)
     })
-    msg.setFlag("world", "ecryme-rolldata", rollData)
+    msg.setFlag("world", "low-rolldata", rollData)
     console.log("Rolldata result", rollData)
   }
 
@@ -514,9 +514,9 @@ export class EcrymeUtility {
     actor.spentSkillTranscendence(rollData.skill, value)
 
     let msg = await this.createChatWithRollMode(rollData.alias, {
-      content: await renderTemplate(`systems/fvtt-ecryme/templates/chat/chat-generic-result.hbs`, rollData)
+      content: await renderTemplate(`systems/fvtt-legends-of-wulin/templates/chat/chat-generic-result.hbs`, rollData)
     })
-    msg.setFlag("world", "ecryme-rolldata", rollData)
+    msg.setFlag("world", "low-rolldata", rollData)
   }
 
   /* -------------------------------------------- */
@@ -565,7 +565,7 @@ export class EcrymeUtility {
     chatGM.whisper = this.getUsers(user => user.isGM);
     chatGM.content = "Blinde message of " + game.user.name + "<br>" + chatOptions.content;
     console.log("blindMessageToGM", chatGM);
-    game.socket.emit("system.fvtt-ecryme", { msg: "msg_gm_chat_message", data: chatGM });
+    game.socket.emit("system.fvtt-legends-of-wulin", { msg: "msg_gm_chat_message", data: chatGM });
   }
 
 
@@ -625,13 +625,13 @@ export class EcrymeUtility {
       impactMalus: 0,
       config: duplicate(game.system.ecryme.config)
     }
-    EcrymeUtility.updateWithTarget(rollData)
+    LoWUtility.updateWithTarget(rollData)
     return rollData
   }
 
   /* -------------------------------------------- */
   static updateWithTarget(rollData) {
-    let target = EcrymeUtility.getTarget()
+    let target = LoWUtility.getTarget()
     if (target) {
       rollData.defenderTokenId = target.id
     }

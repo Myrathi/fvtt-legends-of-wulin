@@ -1,13 +1,13 @@
-import { EcrymeUtility } from "../common/ecryme-utility.js";
+import { LoWUtility } from "../common/low-utility.js";
 
-export class EcrymeRollDialog extends Dialog {
+export class LoWRollDialog extends Dialog {
 
   /* -------------------------------------------- */
   static async create(actor, rollData) {
 
-    let options = { classes: ["ecryme-roll-dialog"], width: 540, height: 'fit-content', 'z-index': 99999 }
-    let html = await renderTemplate('systems/fvtt-ecryme/templates/dialogs/roll-dialog-generic.hbs', rollData);
-    return new EcrymeRollDialog(actor, rollData, html, options);
+    let options = { classes: ["low-roll-dialog"], width: 540, height: 'fit-content', 'z-index': 99999 }
+    let html = await renderTemplate('systems/fvtt-legends-of-wulin/templates/dialogs/roll-dialog-generic.hbs', rollData);
+    return new LoWRollDialog(actor, rollData, html, options);
   }
 
   /* -------------------------------------------- */
@@ -38,12 +38,12 @@ export class EcrymeRollDialog extends Dialog {
 
   /* -------------------------------------------- */
   roll() {
-    EcrymeUtility.rollEcryme(this.rollData)
+    LoWUtility.rollLoW(this.rollData)
   }
 
   /* -------------------------------------------- */
   async refreshDialog() {
-    const content = await renderTemplate("systems/fvtt-ecryme/templates/dialogs/roll-dialog-generic.hbs", this.rollData)
+    const content = await renderTemplate("systems/fvtt-legends-of-wulin/templates/dialogs/roll-dialog-generic.hbs", this.rollData)
     this.data.content = content
     this.render(true)
   }

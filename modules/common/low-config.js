@@ -1,5 +1,5 @@
 
-export const ECRYME_CONFIG = {
+export const LOW_CONFIG = {
 
   traitTypes: {
     normal: "Normal", 

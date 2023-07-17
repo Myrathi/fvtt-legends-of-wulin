@@ -1,15 +1,15 @@
 /* -------------------------------------------- */
 
-import { EcrymeUtility } from "../common/ecryme-utility.js";
-import { EcrymeCharacterSummary } from "../app/ecryme-summary-app.js"
+import { LoWUtility } from "../common/low-utility.js";
+import { LoWCharacterSummary } from "../app/low-summary-app.js"
 
 /* -------------------------------------------- */
-export class EcrymeCommands {
+export class LoWCommands {
 
   static init() {
     if (!game.system.ecryme.commands) {
-      const commands = new EcrymeCommands();
-      commands.registerCommand({ path: ["/resume"], func: (content, msg, params) => EcrymeCharacterSummary.displayPCSummary(), descr: "Affiche la liste des PJs!" });
+      const commands = new LoWCommands();
+      commands.registerCommand({ path: ["/resume"], func: (content, msg, params) => LoWCharacterSummary.displayPCSummary(), descr: "Affiche la liste des PJs!" });
       game.system.ecryme.commands = commands;
     }
   }

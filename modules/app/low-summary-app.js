@@ -1,8 +1,8 @@
 /* -------------------------------------------- */
-import { EcrymeUtility } from "../common/ecryme-utility.js";
+import { LoWUtility } from "../common/low-utility.js";
 
 /* -------------------------------------------- */
-export class EcrymeCharacterSummary extends Application {
+export class LoWCharacterSummary extends Application {
 
   /* -------------------------------------------- */
   static displayPCSummary() {
@@ -30,7 +30,7 @@ export class EcrymeCharacterSummary extends Application {
     if (!game.user.isGM) { // Uniquement si GM
       return
     }
-    let charSummary = new EcrymeCharacterSummary()
+    let charSummary = new LoWCharacterSummary()
     game.system.ecryme.charSummary = charSummary
   }
 
@@ -44,7 +44,7 @@ export class EcrymeCharacterSummary extends Application {
   /* -------------------------------------------- */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      template: "systems/fvtt-ecryme/templates/dialogs/character-summary.hbs",
+      template: "systems/fvtt-legends-of-wulin/templates/dialogs/character-summary.hbs",
       popOut: true,
       resizable: true,
       dragDrop: [{ dragSelector: ".items-list .item", dropSelector: null }],

@@ -183,99 +183,81 @@
     }
   },
   "Item": {
-    "types": [
-      "equipment",
-      "trait",
-      "weapon",
-      "specialization",
-      "annency",
-      "boheme",
-      "contact",
-      "confrontation"
-    ],
+    "types": [ "skill", "weapon", "advantage", "disadvantage", "technique" , "armor", "art", "equipment", "condition"],
     "templates": {
       "common": {
         "description": ""
-      },
-      "equipement": {
-        "weight": 0,
-        "cost": 0,
-        "costunit": ""
       }
     },
-    "confrontation": {
+    "skill" {
       "templates": [
         "common"
       ],
-      "attackerId": "",
-      "defenserId": "",
-      "rolllist": [],
-      "bonusexecution": 0,
-      "bonuspreservation": 0
+      "specialties": "",
+      "level": 0
+    },
+    "art": {
+      "rank": 0,
+      "effect": "",
+      "destiny": 0
+    },
+    "armor": {
+      "type": "",
+      "equipped": false,
+      "quality": "",
+      "perfect": false,
+      "description":""
     },
     "equipment": {
-      "templates": [
-        "common",
-        "equipement"
-      ],
-      "quantity": 1,
-      "weight": 0
+      "equipped": false,
+      "description":""
     },
-    "trait": {
-      "templates": [
-        "common"
-      ],
-      "traitype": "normal",
-      "level": 1
+    "condition": {
+      "penalty": "",
+      "appliedto": "",
+      "description":""
+    },
+    "advantage": {
+      "multiple":false,
+      "costmin": 0,
+      "costmax": 0,
+      "spent": 0,
+      "description":""
+    },
+    "disadvantage": {
+      "multiple":false,
+      "description":""
+    },
+    "technique": {
+      "skillchi": "",
+      "chicost": 0,
+      "chicolor": "",
+      "duration": 0,
+      "bonus": 0,
+      "style": "",
+      "level": "",
+      "effect": "",
+      "effectdescription": "",
+      "destiny": 0,
+      "canchannel": false,
+      "channelingcost": 0,
+      "description":""
     },
     "weapon": {
-      "templates": [
-        "common",
-        "equipement"
-      ],
-      "weapontype": "melee",
-      "effect": 0
-    },
-    "specialization": {
-      "templates": [
-        "common"
-      ],
-      "skillkey": ""
-    },
-    "scar": {
-      "templates": [
-        "common"
-      ],
-      "skillcategory": [
-        "physical",
-        "mental",
-        "social",
-        "cephalie"
-      ],
-      "scarLevel": 1
-    },
-    "annency": {
-      "templates": [
-        "common"
-      ],
-      "collective": false,
-      "multiple": false,
-      "improvements": ""
-    },
-    "boheme": {
-      "templates": [
-        "common"
-      ],
-      "ideals": "",
-      "political": ""
-    },
-    "contact": {
-      "templates": [
-        "common"
-      ],
-      "attitude": "neutral",
-      "organization": "",
-      "location": ""
+      "family": "",
+      "artful": false,
+      "brutal": false,
+      "ranged": false,
+      "speed":0,
+      "strike":0,
+      "damage": 0,
+      "short": 0,
+      "medium": 0,
+      "long": 0,
+      "equipped": false,
+      "effectdescription": "",
+      "description": ""
     }
   }
+ }
 }

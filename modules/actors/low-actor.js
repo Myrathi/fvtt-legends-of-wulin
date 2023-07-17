@@ -1,7 +1,7 @@
 /* -------------------------------------------- */
-import { EcrymeUtility } from "../common/ecryme-utility.js";
-import { EcrymeRollDialog } from "../dialogs/ecryme-roll-dialog.js";
-import { EcrymeConfrontStartDialog } from "../dialogs/ecryme-confront-start-dialog.js";
+import { LoWUtility } from "../common/low-utility.js";
+import { LoWRollDialog } from "../dialogs/low-roll-dialog.js";
+import { LoWConfrontStartDialog } from "../dialogs/low-confront-start-dialog.js";
 
 /* -------------------------------------------- */
 /* -------------------------------------------- */
@@ -9,7 +9,7 @@ import { EcrymeConfrontStartDialog } from "../dialogs/ecryme-confront-start-dial
  * Extend the base Actor entity by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
-export class EcrymeActor extends Actor {
+export class LoWActor extends Actor {
 
   /* -------------------------------------------- */
   /**
@@ -57,13 +57,13 @@ export class EcrymeActor extends Actor {
   /* -------------------------------------------- */
   getMoneys() {
     let comp = this.items.filter(item => item.type == 'money');
-    EcrymeUtility.sortArrayObjectsByName(comp)
+    LoWUtility.sortArrayObjectsByName(comp)
     return comp;
   }
   getArchetype() {
     let comp = duplicate(this.items.find(item => item.type == 'archetype') || { name: "Pas d'archetype" })
     if (comp?.system) {
-      comp.tarot = EcrymeUtility.getTarot(comp.system.lametutelaire)
+      comp.tarot = LoWUtility.getTarot(comp.system.lametutelaire)
     }
 
     return comp;
@@ -116,7 +116,7 @@ export class EcrymeActor extends Actor {
   /* -------------------------------------------- */
   getWeapons() {
     let comp = duplicate(this.items.filter(item => item.type == 'weapon') || [])
-    EcrymeUtility.sortArrayObjectsByName(comp)
+    LoWUtility.sortArrayObjectsByName(comp)
     return comp;
   }
   /* -------------------------------------------- */
@@ -176,7 +176,7 @@ export class EcrymeActor extends Actor {
     // Compute whole enc
     let enc = 0
     for (let item of equipments) {
-      //item.data.idrDice = EcrymeUtility.getDiceFromLevel(Number(item.data.idr))
+      //item.data.idrDice = LoWUtility.getDiceFromLevel(Number(item.data.idr))
       if (item.system.equipped) {
         if (item.system.iscontainer) {
           enc += item.system.contentsEnc
@@ -213,8 +213,8 @@ export class EcrymeActor extends Actor {
     console.log(impactType, impactLevel, modifier)
     let current = this.system.impacts[impactType][impactLevel]
     if (modifier > 0) {
-      while ( EcrymeUtility.getImpactMax(impactLevel) == current && impactLevel != "major") {
-        impactLevel = EcrymeUtility.getNextImpactLevel(impactLevel)
+      while ( LoWUtility.getImpactMax(impactLevel) == current && impactLevel != "major") {
+        impactLevel = LoWUtility.getNextImpactLevel(impactLevel)
         current = this.system.impacts[impactType][impactLevel]
       }  
     }
@@ -324,7 +324,7 @@ export class EcrymeActor extends Actor {
   /* -------------------------------------------- */
   getCommonRollData() {
     this.system.internals.confrontbonus = 5 // TO BE REMOVED!!!!
-    let rollData = EcrymeUtility.getBasicRollData()
+    let rollData = LoWUtility.getBasicRollData()
     rollData.alias = this.name
     rollData.actorImg = this.img
     rollData.actorId = this.id
@@ -371,7 +371,7 @@ export class EcrymeActor extends Actor {
     rollData.executionTotal    = rollData.skill.value
     rollData.preservationTotal = rollData.skill.value
     rollData.applyTranscendence = "execution"
-    let confrontStartDialog = await EcrymeConfrontStartDialog.create(this, rollData)
+    let confrontStartDialog = await LoWConfrontStartDialog.create(this, rollData)
     confrontStartDialog.render(true)
   }
 
@@ -390,7 +390,7 @@ export class EcrymeActor extends Actor {
     rollData.executionTotal    = rollData.skill.value
     rollData.preservationTotal = rollData.skill.value
     rollData.applyTranscendence = "execution"
-    let confrontStartDialog = await EcrymeConfrontStartDialog.create(this, rollData)
+    let confrontStartDialog = await LoWConfrontStartDialog.create(this, rollData)
     confrontStartDialog.render(true)
   }
 
@@ -417,7 +417,7 @@ export class EcrymeActor extends Actor {
 
   /* -------------------------------------------- */
   async startRoll(rollData) {
-    let rollDialog = await EcrymeRollDialog.create(this, rollData)
+    let rollDialog = await LoWRollDialog.create(this, rollData)
     rollDialog.render(true)
   }
 

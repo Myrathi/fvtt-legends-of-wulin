@@ -1,7 +1,7 @@
-import { EcrymeUtility } from "../common/ecryme-utility.js";
+import { LoWUtility } from "../common/low-utility.js";
 
 /* -------------------------------------------- */
-export class EcrymeCombat extends Combat {
+export class LoWCombat extends Combat {
   
   /* -------------------------------------------- */
   async rollInitiative(ids, formula = undefined, messageOptions = {} ) {

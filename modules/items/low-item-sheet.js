@@ -1,16 +1,16 @@
-import { EcrymeUtility } from "../common/ecryme-utility.js";
+import { LoWUtility } from "../common/low-utility.js";
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
  */
-export class EcrymeItemSheet extends ItemSheet {
+export class LoWItemSheet extends ItemSheet {
 
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["fvtt-ecryme", "sheet", "item"],
-      template: "systems/fvtt-ecryme/templates/item-sheet.hbs",
+      classes: ["fvtt-legends-of-wulin", "sheet", "item"],
+      template: "systems/fvtt-legends-of-wulin/templates/item-sheet.hbs",
       dragDrop: [{ dragSelector: null, dropSelector: null }],
       width: 620,
       height: 580,
@@ -67,7 +67,7 @@ export class EcrymeItemSheet extends ItemSheet {
     }
 
     if ( this.object.type == "archetype")  {
-      formData.tarots = EcrymeUtility.getTarots()
+      formData.tarots = LoWUtility.getTarots()
     }
     
     this.options.editable = !(this.object.origin == "embeddedItem");
@@ -104,8 +104,8 @@ export class EcrymeItemSheet extends ItemSheet {
         payload: chatData,
       });
 
-    renderTemplate('systems/Ecryme/templates/post-item.html', chatData).then(html => {
-      let chatOptions = EcrymeUtility.chatDataSetup(html);
+    renderTemplate('systems/LoW/templates/post-item.html', chatData).then(html => {
+      let chatOptions = LoWUtility.chatDataSetup(html);
       ChatMessage.create(chatOptions)
     });
   }
@@ -121,7 +121,7 @@ export class EcrymeItemSheet extends ItemSheet {
     if (itemData.name != 'None') {
       let item = await Item.create(itemData, { temporary: true });
       item.system.origin = "embeddedItem";
-      new EcrymeItemSheet(item).render(true);
+      new LoWItemSheet(item).render(true);
     }
   }
 
@@ -174,7 +174,7 @@ export class EcrymeItemSheet extends ItemSheet {
   /* -------------------------------------------- */
   get template() {
     let type = this.item.type;
-    return `systems/fvtt-ecryme/templates/items/item-${type}-sheet.hbs`
+    return `systems/fvtt-legends-of-wulin/templates/items/item-${type}-sheet.hbs`
   }
 
   /* -------------------------------------------- */

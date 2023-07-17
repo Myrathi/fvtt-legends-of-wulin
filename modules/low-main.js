@@ -1,5 +1,5 @@
 /**
- * Ecryme system
+ * LoW system
  * Author: Uberwald
  * Software License: Prop
  */
@@ -8,15 +8,15 @@
 
 /* -------------------------------------------- */
 // Import Modules
-import { EcrymeActor } from "./actors/ecryme-actor.js";
-import { EcrymeItemSheet } from "./items/ecryme-item-sheet.js";
-import { EcrymeActorSheet } from "./actors/ecryme-actor-sheet.js";
-import { EcrymeUtility } from "./common/ecryme-utility.js";
-import { EcrymeCombat } from "./app/ecryme-combat.js";
-import { EcrymeItem } from "./items/ecryme-item.js";
-import { EcrymeHotbar } from "./app/ecryme-hotbar.js"
-import { EcrymeCharacterSummary } from "./app/ecryme-summary-app.js"
-import { ECRYME_CONFIG } from "./common/ecryme-config.js"
+import { LoWActor } from "./actors/low-actor.js";
+import { LoWItemSheet } from "./items/low-item-sheet.js";
+import { LoWActorSheet } from "./actors/low-actor-sheet.js";
+import { LoWUtility } from "./common/low-utility.js";
+import { LoWCombat } from "./app/low-combat.js";
+import { LoWItem } from "./items/low-item.js";
+import { LoWHotbar } from "./app/low-hotbar.js"
+import { LoWCharacterSummary } from "./app/low-summary-app.js"
+import { ECRYME_CONFIG } from "./common/low-config.js"
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -25,16 +25,16 @@ import { ECRYME_CONFIG } from "./common/ecryme-config.js"
 /************************************************************************************/
 Hooks.once("init", async function () {
 
-  console.log(`Initializing Ecryme RPG`);
+  console.log(`Initializing LoW RPG`);
 
-  game.system.ecryme = {
-    config: ECRYME_CONFIG,
-    EcrymeHotbar
+  game.system.low = {
+    config: LOW_CONFIG,
+    LoWHotbar
   }
 
   /* -------------------------------------------- */
   // preload handlebars templates
-  EcrymeUtility.preloadHandlebarsTemplates();
+  LoWUtility.preloadHandlebarsTemplates();
 
   /* -------------------------------------------- */
   // Set an initiative formula for the system 
@@ -44,26 +44,26 @@ Hooks.once("init", async function () {
   };
 
   /* -------------------------------------------- */
-  game.socket.on("system.fvtt-ecryme", data => {
-    EcrymeUtility.onSocketMesssage(data)
+  game.socket.on("system.fvtt-legends-of-wulin", data => {
+    LoWUtility.onSocketMesssage(data)
   });
 
   /* -------------------------------------------- */
   // Define custom Entity classes
-  CONFIG.Combat.documentClass = EcrymeCombat
-  CONFIG.Actor.documentClass = EcrymeActor
-  CONFIG.Item.documentClass = EcrymeItem
+  CONFIG.Combat.documentClass = LoWCombat
+  CONFIG.Actor.documentClass = LoWActor
+  CONFIG.Item.documentClass = LoWItem
 
   /* -------------------------------------------- */
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("fvtt-ecryme", EcrymeActorSheet, { types: ["pc"], makeDefault: true });
-  //Actors.registerSheet("fvtt-ecryme", EcrymeNPCSheet, { types: ["pnj"], makeDefault: false });
+  Actors.registerSheet("fvtt-legends-of-wulin", LoWActorSheet, { types: ["pc"], makeDefault: true });
+  //Actors.registerSheet("fvtt-legends-of-wulin", LoWNPCSheet, { types: ["pnj"], makeDefault: false });
 
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("fvtt-ecryme", EcrymeItemSheet, { makeDefault: true });
+  Items.registerSheet("fvtt-legends-of-wulin", LoWItemSheet, { makeDefault: true });
 
-  EcrymeUtility.init()
+  LoWUtility.init()
 
 });
 
@@ -74,7 +74,7 @@ function welcomeMessage() {
       user: game.user.id,
       whisper: [game.user.id],
       content: `<div id="welcome-message-ecryme"><span class="rdd-roll-part">
-      <strong>Bienvenu dans Ecryme !</strong>` });
+      <strong>Welcom in Legends of Wulin RPG !</strong>` });
   }
 }
 
@@ -111,17 +111,17 @@ Hooks.once("ready", function () {
 
   // User warning
   if (!game.user.isGM && game.user.character == undefined) {
-    ui.notifications.info("Attention ! Aucun personnage relié au joueur !");
+    ui.notifications.info("Warning ! No PC connected to the player !");
     ChatMessage.create({
-      content: "<b>WARNING</b> Le joueur  " + game.user.name + " n'est pas relié à un personnage !",
+      content: "<b>WARNING</b> Player  " + game.user.name + " is not connected to any PC !",
       user: game.user._id
     });
   }
 
   registerUsageCount(game.system.id)
   welcomeMessage();
-  EcrymeUtility.ready()
-  EcrymeCharacterSummary.ready()
+  LoWUtility.ready()
+  LoWCharacterSummary.ready()
 
 })
 
