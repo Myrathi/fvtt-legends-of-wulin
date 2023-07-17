@@ -1,0 +1,27 @@
+<form class="skill-roll-dialog">
+  <header class="roll-dialog-header">
+    {{#if img}}
+    <img class="actor-icon" src="{{img}}" data-edit="img" title="{{name}}" />
+    {{/if}}
+    <h1 class="dialog-roll-title roll-dialog-header">{{title}}</h1>
+  </header>
+
+  <div class="flexcol">
+
+    {{> systems/fvtt-ecryme/templates/dialogs/partial-common-roll-dialog.hbs}}
+
+    <div class="flexrow">
+      <span class="roll-dialog-label">Difficulté : </span>
+      <select class="" type="text" id="roll-difficulty" value="{{difficulty}}" data-dtype="Number">
+        {{#select difficulty}}
+        {{#each config.difficulty as |diffData value| }}
+        <option value="{{diffData.value}}">{{localize diffData.difficulty}} / {{localize diffData.frequency}}
+          ({{diffData.value}})</option>
+        {{/each}}
+        {{/select}}
+      </select>
+    </div>
+
+  </div>
+
+</form>

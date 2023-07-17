@@ -1,0 +1,368 @@
+<form class="{{cssClass}}" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <div class="header-fields">
+      <div class="flexrow">
+
+        <div class="profile-img-container">
+          <img class="profile-img" src="{{img}}" data-edit="img" title="{{name}}" />
+        </div>
+
+        <div class="flexcol">
+          <h1 class="charname margin-right"><input name="name" type="text" value="{{name}}" placeholder="Name" /></h1>
+
+          <div class="flexrow">
+            <ul>
+              <li class="flexrow item" data-item-id="{{spleen.id}}">
+                <label class="item-name-label-medium">Spleen :</label>
+                <label class="item-name-label-long">{{spleen.name}}</label>
+                <div class="item-filler">&nbsp;</div>
+                {{#if spleen}}
+                <div class="item-controls item-controls-fixed">
+                  <a class="item-control item-edit" data-type="trait" title="Edit Item"><i class="fas fa-edit"></i></a>
+                  <a class="item-control item-add" data-type="trait" title="Delete Item"><i class="fas fa-plus"></i></a>
+                </div>
+                {{/if}}
+              </li>
+              <li class="item flexrow" data-item-id="{{ideal.id}}">
+                <label class="item-name-label-medium">Ideal :</label>
+                <label class="item-name-label-long">{{ideal.name}}</label>
+                <div class="item-filler">&nbsp;</div>
+                {{#if ideal}}
+                <div class="item-controls item-controls-fixed">
+                  <a class="item-control item-edit" data-type="trait" title="Edit Item"><i class="fas fa-edit"></i></a>
+                  <a class="item-control item-add" data-type="trait" title="Delete Item"><i class="fas fa-plus"></i></a>
+                </div>
+                {{/if}}
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    </div>
+
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="competences">{{localize "ECRY.ui.skills"}}</a>
+    <a class="item" data-tab="traits">{{localize "ECRY.ui.traits"}}</a>
+    <a class="item" data-tab="combat">{{localize "ECRY.ui.healthcombat"}}</a>
+    <a class="item" data-tab="equipements">{{localize "ECRY.ui.equipment"}}</a>
+    <a class="item" data-tab="biodata">{{localize "ECRY.ui.bionotes"}}</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Skills Tab --}}
+    <div class="tab competences" data-group="primary" data-tab="competences">
+
+
+      <div class="grid grid-3col">
+
+        {{#each skills as |category categkey|}}
+        <div>
+          <ul class="stat-list alternate-list item-list">
+            <li class="item flexrow list-item items-title-bg">
+              <span class="item-name-label-header impact-title">
+                <h3><label class="items-title-text">{{localize category.name}} ({{valueAtIndex @root.impactsMalus
+                    categkey}})</label></h3>
+              </span>
+            </li>
+            {{#each category.skilllist as |skill skillkey|}}
+            <li class="item flexrow list-item">
+              <span class="item-name-label-long">
+                <a class="roll-skill-confront" data-category-key="{{categkey}}" data-skill-key="{{skillkey}}">
+                  <i class="fa-regular fa-swords"></i>
+                </a>
+                <a class="roll-skill" data-category-key="{{categkey}}" data-skill-key="{{skillkey}}">
+                  <i class="fa-solid fa-dice-d6"></i>
+                  {{localize skill.name}}
+                </a></span>
+              <select class="item-field-label-short" type="text"
+                name="system.skills.{{categkey}}.skilllist.{{skillkey}}.value" value="{{skill.value}}"
+                data-dtype="Number">
+                {{#select skill.value}}
+                {{#each @root.config.skillLevel as |level key| }}
+                <option value="{{level}}">{{level}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+            </li>
+            <li class="item flexrow list-item">
+              <ul class="ul-level1">
+                {{#each skill.spec as |spec idx|}}
+                <li class="item flexrow list-item" data-item-id="{{spec._id}}" data-item-type="specialization">
+                  <a class="roll-spec" data-spec-id="{{spec._id}}">
+                    <i class="fa-solid fa-dice-d6"></i>
+                    {{spec.name}}
+                  </a>
+                  <div class="item-controls item-controls-fixed">
+                    <a class="item-control item-edit" data-type="specialization" title="Edit Item"><i
+                        class="fas fa-edit"></i></a>
+                    <a class="item-control item-add" data-type="specialization" title="Delete Item"><i
+                        class="fas fa-plus"></i></a>
+                  </div>
+                </li>
+                {{/each}}
+              </ul>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        {{/each}}
+      </div>
+
+    </div>
+
+
+    <div class="tab traits" data-group="primary" data-tab="traits">
+
+      <ul class="item-list alternate-list">
+        <li class="item flexrow list-item items-title-bg">
+          <span class="item-name-label-header-long2">
+            <h3><label class="item-name-label-header-long2">Traits</label></h3>
+          </span>
+          <span class="item-field-label-short">
+            <label class="item-field-label-short">Niveau</label>
+          </span>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-add" data-type="trait" title="Create Trait"><i class="fas fa-plus"></i></a>
+          </div>
+        </li>
+        {{#each traits as |trait key|}}
+        <li class="item flexrow list-item list-item-shadow" data-item-id="{{trait._id}}">
+          <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+              src="{{trait.img}}" /></a>
+          <span class="item-name-label-long2">{{trait.name}}</span>
+          <span class="item-field-label-short"><label>{{trait.system.level}}</label></span>
+
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-delete" title="Delete trait"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+
+    </div>
+
+    <div class="tab combat" data-group="primary" data-tab="combat">
+
+      <div class="flexrow">
+        {{> systems/fvtt-ecryme/templates/actors/partial-impacts.hbs impacts=system.impacts.physical
+        impacttype="physical" impactMalus=impactsMalus.physical}}
+        {{> systems/fvtt-ecryme/templates/actors/partial-impacts.hbs impacts=system.impacts.mental
+        impacttype="mental" impactMalus=impactsMalus.mental}}
+        {{> systems/fvtt-ecryme/templates/actors/partial-impacts.hbs impacts=system.impacts.social
+        impacttype="social" impactMalus=impactsMalus.social}}
+      </div>
+
+      <ul class="item-list alternate-list">
+        <li class="item flexrow list-item items-title-bg">
+          <span class="item-name-label-header-long2">
+            <h3><label class="item-name-label-header-long2">{{localize "ECRY.ui.weapons"}}</label></h3>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">{{localize "ECRY.ui.type"}}</label>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">{{localize "ECRY.ui.effect"}}</label>
+          </span>
+        </li>
+        {{#each weapons as |weapon key|}}
+        <li class="item flexrow list-item list-item-shadow" data-item-id="{{weapon._id}}">
+          <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+              src="{{weapon.img}}" /></a>
+          <span class="item-name-label-long2">
+            <a class="roll-weapon-confront" data-category-key="{{categkey}}" data-skill-key="{{skillkey}}">
+              <i class="fa-regular fa-swords"></i>
+              {{weapon.name}}
+            </a>
+          </span>
+          <span class="item-field-label-medium">{{localize (concat "ECRY.ui." weapon.system.weapontype)}}</span>
+          <span class="item-field-label-medium">{{weapon.system.effect}}</span>
+
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-delete" title="Delete weapon"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+
+    </div>
+
+
+    {{!-- Equipement Tab --}}
+    <div class="tab equipment" data-group="primary" data-tab="equipment">
+
+      <span class="item-name-label-header items-title-bg">
+        <h3><label class="items-title-text">Equipements (saisie libre)</label></h3>
+      </span>
+      <div class="form-group small-editor">
+        {{editor equipementlibre target="system.equipementlibre" button=true owner=owner editable=editable}}
+      </div>
+
+      <ul class="item-list alternate-list">
+        <li class="item flexrow list-item items-title-bg">
+          <span class="item-name-label-header">
+            <h3><label class="items-title-text">Armes</label></h3>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Normaux</label>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Particulier</label>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Critique</label>
+          </span>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-add" data-type="weapon" title="Create Item"><i class="fas fa-plus"></i></a>
+          </div>
+        </li>
+        {{#each armes as |arme key|}}
+        <li class="item flexrow list-item list-item-shadow" data-item-id="{{arme._id}}">
+          <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+              src="{{arme.img}}" /></a>
+          <span class="item-name-label">{{arme.name}}</span>
+          <span class="item-field-label-medium"><label>{{arme.system.dommagenormale}}</label></span>
+          <span class="item-field-label-medium"><label>{{arme.system.dommagepart}}</label></span>
+          <span class="item-field-label-medium"><label>{{arme.system.dommagecritique}}</label></span>
+
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+
+      <ul class="item-list alternate-list">
+        <li class="item flexrow list-item items-title-bg">
+          <span class="item-name-label-header">
+            <h3><label class="items-title-text">Equipements (Items)</label></h3>
+          </span>
+          <span class="item-field-label-long">
+            <label class="short-label">Q.</label>
+          </span>
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-add" data-type="equipment" title="Create Item"><i class="fas fa-plus"></i></a>
+          </div>
+
+        </li>
+        {{#each equipements as |equip key|}}
+        <li class="item list-item flexrow list-item-shadow" data-item-id="{{equip._id}}">
+          <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+              src="{{equip.img}}" /></a>
+          <span class="item-name-label">{{equip.name}}</span>
+
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+
+      <ul class="item-list alternate-list">
+        <li class="item flexrow list-item items-title-bg">
+          <span class="item-name-label-header">
+            <h3><label class="items-title-text">Sortilèges</label></h3>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="short-label">Seuil</label>
+          </span>
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-add" data-type="equipment" title="Create Item"><i class="fas fa-plus"></i></a>
+          </div>
+
+        </li>
+        {{#each sorts as |sort key|}}
+        <li class="item list-item flexrow list-item-shadow" data-item-id="{{sort._id}}">
+          <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+              src="{{sort.img}}" /></a>
+          <span class="item-name-label">{{sort.name}}</span>
+          <span class="item-field-label-medium">
+            <label class="short-label">{{sort.system.seuil}}</label>
+          </span>
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+
+      <hr>
+
+    </div>
+
+    {{!-- Biography Tab --}}
+    <div class="tab biodata" data-group="primary" data-tab="biodata">
+
+      <div class="grid grid-2col">
+        <div>
+          <ul class="item-list alternate-list">
+            <li class="item flexrow">
+              <label class="item-name-label-medium">Lieu de naissance</label>
+              <input type="text" class="" name="system.biodata.lieunaissance" value="{{system.biodata.lieunaissance}}"
+                data-dtype="String" />
+            </li>
+            <li class="item flexrow">
+              <label class="item-name-label-medium">Age</label>
+              <input type="text" class="" name="system.biodata.age" value="{{system.biodata.age}}"
+                data-dtype="String" />
+            </li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li class="item flexrow">
+              <label class="item-name-label-medium">Résidence</label>
+              <input type="text" class="" name="system.biodata.residence" value="{{system.biodata.residence}}"
+                data-dtype="String" />
+            </li>
+            <li class="item flexrow">
+              <label class="item-name-label-medium">Nationalité</label>
+              <input type="text" class="" name="system.biodata.nationalite" value="{{system.biodata.nationalite}}"
+                data-dtype="String" />
+            </li>
+            <li class="item flexrow">
+              <label class="item-name-label-medium">Enfance</label>
+              <input type="text" class="" name="system.biodata.enfance" value="{{system.biodata.enfance}}"
+                data-dtype="String" />
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+      <span class="item-name-label-header items-title-bg">
+        <h3><label class="items-title-text">Background</label></h3>
+      </span>
+      <div class="form-group editor">
+        {{editor description target="system.biodata.description" button=true owner=owner
+        editable=editable}}
+      </div>
+      <hr>
+      <span class="item-name-label-header items-title-bg">
+        <h3><label class="items-title-text">Notes</label></h3>
+      </span>
+      <div class="form-group editor">
+        {{editor notes target="system.biodata.notes" button=true owner=owner editable=editable}}
+      </div>
+      <hr>
+
+    </div>
+
+
+  </section>
+</form>

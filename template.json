@@ -1,0 +1,281 @@
+{
+  "Actor": {
+    "types": [
+      "pc"
+    ],
+    "templates": {
+      "biodata": {
+        "biodata": {
+          "age": "",
+          "size": "",
+          "lieunaissance": "",
+          "nationalite": "",
+          "profession": "",
+          "residence": "",
+          "milieusocial": "",
+          "poids": "",
+          "cheveux": "",
+          "sexe": "",
+          "yeux": "",
+          "enfance": "",
+          "description": "",
+          "gmnotes": ""
+        }
+      },
+      "core": {
+        "subactors": [],
+        "skills": {
+          "physical": {
+            "name": "ECRY.ui.physical",
+            "skilllist": {
+              "athletics": {
+                "name": "ECRY.ui.athletics",
+                "max": 0,
+                "value": 0
+              },
+              "driving": {
+                "name": "ECRY.ui.driving",
+                "max": 0,
+                "value": 0
+              },
+              "fencing": {
+                "name": "ECRY.ui.fencing",
+                "max": 0,
+                "value": 0
+              },
+              "brawling": {
+                "name": "ECRY.ui.brawling",
+                "max": 0,
+                "value": 0
+              },
+              "shooting": {
+                "name": "ECRY.ui.shooting",
+                "max": 0,
+                "value": 0
+              }
+            }
+          },
+          "mental": {
+            "name": "ECRY.ui.mental",
+            "skilllist": {
+              "anthropomecanology": {
+                "name": "ECRY.ui.anthropomecanology",
+                "value": 0,
+                "max": 10
+              },
+              "ecrymology": {
+                "name": "ECRY.ui.ecrymology",
+                "value": 0,
+                "max": 10
+              },
+              "traumatology": {
+                "name": "ECRY.ui.traumatology",
+                "value": 0,
+                "max": 10
+              },
+              "traversology": {
+                "name": "ECRY.ui.traversology",
+                "value": 0,
+                "max": 10
+              },
+              "urbatechnology": {
+                "name": "ECRY.ui.urbatechnology",
+                "value": 0,
+                "max": 10
+              }
+            }
+          },
+          "social": {
+            "name": "ECRY.ui.social",
+            "skilllist": {
+              "quibbling": {
+                "name": "ECRY.ui.quibbling",
+                "value": 0,
+                "max": 10
+              },
+              "creativity": {
+                "name": "ECRY.ui.creativity",
+                "value": 0,
+                "max": 10
+              },
+              "loquacity": {
+                "name": "ECRY.ui.loquacity",
+                "value": 0,
+                "max": 10
+              },
+              "guile": {
+                "name": "ECRY.ui.guile",
+                "value": 0,
+                "max": 10
+              },
+              "performance": {
+                "name": "ECRY.ui.performance",
+                "value": 0,
+                "max": 10
+              }
+            }
+          }
+        },
+        "impacts": {
+          "physical": {
+            "superficial": 0,
+            "light": 0,
+            "serious": 0,
+            "major": 0
+          },
+          "mental": {
+            "superficial": 0,
+            "light": 0,
+            "serious": 0,
+            "major": 0
+          },
+          "social": {
+            "superficial": 0,
+            "light": 0,
+            "serious": 0,
+            "major": 0
+          }
+        },
+        "cephaly": {
+          "name": "ECRY.ui.cephaly",
+          "skilllist": {
+            "elegy": {
+              "name": "ECRY.ui.elegy",
+              "value": 0,
+              "max": 10
+            },
+            "entelechy": {
+              "name": "ECRY.ui.entelechy",
+              "value": 0,
+              "max": 10
+            },
+            "mekany": {
+              "name": "ECRY.ui.mekany",
+              "value": 0,
+              "max": 10
+            },
+            "psyche": {
+              "name": "ECRY.ui.psyche",
+              "value": 0,
+              "max": 10
+            },
+            "scoria": {
+              "name": "ECRY.ui.scoria",
+              "value": 0,
+              "max": 10
+            }
+          }
+        },
+        "internals": {
+          "confrontbonus": 0
+        }
+      },
+      "npccore": {
+        "npctype": "",
+        "description": ""
+      }
+    },
+    "pc": {
+      "templates": [
+        "biodata",
+        "core"
+      ]
+    }
+  },
+  "Item": {
+    "types": [
+      "equipment",
+      "trait",
+      "weapon",
+      "specialization",
+      "annency",
+      "boheme",
+      "contact",
+      "confrontation"
+    ],
+    "templates": {
+      "common": {
+        "description": ""
+      },
+      "equipement": {
+        "weight": 0,
+        "cost": 0,
+        "costunit": ""
+      }
+    },
+    "confrontation": {
+      "templates": [
+        "common"
+      ],
+      "attackerId": "",
+      "defenserId": "",
+      "rolllist": [],
+      "bonusexecution": 0,
+      "bonuspreservation": 0
+    },
+    "equipment": {
+      "templates": [
+        "common",
+        "equipement"
+      ],
+      "quantity": 1,
+      "weight": 0
+    },
+    "trait": {
+      "templates": [
+        "common"
+      ],
+      "traitype": "normal",
+      "level": 1
+    },
+    "weapon": {
+      "templates": [
+        "common",
+        "equipement"
+      ],
+      "weapontype": "melee",
+      "effect": 0
+    },
+    "specialization": {
+      "templates": [
+        "common"
+      ],
+      "skillkey": ""
+    },
+    "scar": {
+      "templates": [
+        "common"
+      ],
+      "skillcategory": [
+        "physical",
+        "mental",
+        "social",
+        "cephalie"
+      ],
+      "scarLevel": 1
+    },
+    "annency": {
+      "templates": [
+        "common"
+      ],
+      "collective": false,
+      "multiple": false,
+      "improvements": ""
+    },
+    "boheme": {
+      "templates": [
+        "common"
+      ],
+      "ideals": "",
+      "political": ""
+    },
+    "contact": {
+      "templates": [
+        "common"
+      ],
+      "attitude": "neutral",
+      "organization": "",
+      "location": ""
+    }
+  }
+}

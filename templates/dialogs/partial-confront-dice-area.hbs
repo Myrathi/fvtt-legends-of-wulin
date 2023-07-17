@@ -1,0 +1,11 @@
+{{#each availableDices as |dice idx|}}
+{{#if (eq dice.location ../filter)}}
+<div class="confront-dice-container dice-spec" data-drag-type="dice" data-dice-idx={{idx}} data-dice-value="{{dice.result}}">
+  <span draggable="true" data-drag-type="dice" data-dice-idx={{idx}} data-dice-value="{{dice.result}}">
+    <img class="confront-dice" src="icons/svg/d6-grey.svg" data-drag-type="dice" data-dice-idx={{idx}} data-dice-value="{{dice.result}}">
+    <label class="confront-dice-centered" data-drag-type="dice" data-dice-idx={{idx}}
+      data-dice-value="{{dice.result}}">{{dice.result}}</label>
+  </span>
+</div>
+{{/if}}
+{{/each}}
