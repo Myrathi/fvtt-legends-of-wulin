@@ -57,7 +57,7 @@ export class LoWItemSheet extends ItemSheet {
       editable: this.isEditable,
       cssClass: this.isEditable ? "editable" : "locked",
       system: duplicate(this.object.system),
-      config: duplicate(game.system.ecryme.config),
+      config: duplicate(game.system.low.config),
       limited: this.object.limited,
       options: this.options,
       owner: this.document.isOwner,
@@ -66,10 +66,6 @@ export class LoWItemSheet extends ItemSheet {
       isGM: game.user.isGM
     }
 
-    if ( this.object.type == "archetype")  {
-      formData.tarots = LoWUtility.getTarots()
-    }
-    
     this.options.editable = !(this.object.origin == "embeddedItem");
     console.log("ITEM DATA", formData, this);
     return formData;

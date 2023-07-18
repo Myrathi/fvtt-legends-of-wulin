@@ -1,7 +1,7 @@
   /* ==================== (A) Fonts ==================== */
   @font-face {
-    font-family: "MailartRubberstamp";
-    src: url('../fonts/MailartRubberstamp-Regular.woff') format("woff");
+    font-family: "BerkeleyStd-Bold";
+    src: url('../fonts/BerkeleyStd-Bold.otf') format("otf");
   }
   
   :root {
@@ -52,7 +52,7 @@
 .sheet nav.sheet-tabs {
   font-size: 0.8rem;
 } /* For nav and title */
-.window-app input, .fvtt-ecryme .item-form, .sheet header.sheet-header .flex-group-center.flex-compteurs, .sheet header.sheet-header .flex-group-center.flex-fatigue, select, button, .item-checkbox, #sidebar, #players, #navigation #nav-toggle {
+.window-app input, .fvtt-legends-of-wulin .item-form, .sheet header.sheet-header .flex-group-center.flex-compteurs, .sheet header.sheet-header .flex-group-center.flex-fatigue, select, button, .item-checkbox, #sidebar, #players, #navigation #nav-toggle {
   font-size: 0.8rem;
 }
 
@@ -189,7 +189,7 @@ table {border: 1px solid #7a7971;}
 }
 
 /* Styles limited to sheets */
-.fvtt-ecryme .sheet-header {
+.fvtt-legends-of-wulin .sheet-header {
   flex: 0 0 210px;
   overflow: hidden;
   display: flex;
@@ -199,7 +199,7 @@ table {border: 1px solid #7a7971;}
   margin-bottom: 10px;
 }
 
-.fvtt-ecryme .sheet-header .profile-img {
+.fvtt-legends-of-wulin .sheet-header .profile-img {
   flex: 0 0 128px;
   width: 128px;
   height: auto;
@@ -248,34 +248,34 @@ table {border: 1px solid #7a7971;}
   vertical-align: bottom;
 }
 
-.fvtt-ecryme .sheet-header .header-fields {
+.fvtt-legends-of-wulin .sheet-header .header-fields {
   flex: 1;
 }
 
-.fvtt-ecryme .sheet-header h1.charname {
+.fvtt-legends-of-wulin .sheet-header h1.charname {
   height: 50px;
   padding: 0px;
   margin: 5px 0;
   border-bottom: 0;
 }
 
-.fvtt-ecryme .sheet-header h1.charname input {
-  font-family: MailartRubberstamp;
+.fvtt-legends-of-wulin .sheet-header h1.charname input {
+  font-family: "BerkeleyStd-Bold";
   font-size: 3rem;
   width: 100%;
   height: 100%;
   margin: 0;
 }
 
-.fvtt-ecryme .sheet-tabs {
+.fvtt-legends-of-wulin .sheet-tabs {
   flex: 0;
-  font-family: MailartRubberstamp;
+  font-family: "BerkeleyStd-Bold";
   font-size: 2.2rem;
 }
 
-.fvtt-ecryme .sheet-body,
-.fvtt-ecryme .sheet-body .tab,
-.fvtt-ecryme .sheet-body .tab .editor {
+.fvtt-legends-of-wulin .sheet-body,
+.fvtt-legends-of-wulin .sheet-body .tab,
+.fvtt-legends-of-wulin .sheet-body .tab .editor {
   height: 100%;
   font-size: 0.8rem;
 }
@@ -298,68 +298,68 @@ table {border: 1px solid #7a7971;}
   padding: 0 3px;
 }
 
-.fvtt-ecryme .tox .tox-editor-container {
+.fvtt-legends-of-wulin .tox .tox-editor-container {
   background: #fff;
 }
 
-.fvtt-ecryme .tox .tox-edit-area {
+.fvtt-legends-of-wulin .tox .tox-edit-area {
   padding: 0 8px;
 }
 
-.fvtt-ecryme .resource-label {
+.fvtt-legends-of-wulin .resource-label {
   font-weight: bold;
   text-transform: uppercase;
 }
 
-.fvtt-ecryme .tabs {
+.fvtt-legends-of-wulin .tabs {
   height: 40px;
   border-top: 1px solid #AAA;
   border-bottom: 1px solid #AAA;
   color: #000000;
 }
 
-.fvtt-ecryme .tabs .item {
+.fvtt-legends-of-wulin .tabs .item {
   line-height: 40px;
   font-weight: bold;
 }
 
-.fvtt-ecryme .tabs .item.active {
+.fvtt-legends-of-wulin .tabs .item.active {
   text-decoration: underline;
   text-shadow: none;
 }
 
-.fvtt-ecryme .items-list {
+.fvtt-legends-of-wulin .items-list {
   list-style: none;
   margin: 1px 0;
   padding: 0;
   overflow-y: auto;
 }
 
-.fvtt-ecryme .items-list .item-header {
+.fvtt-legends-of-wulin .items-list .item-header {
   font-weight: bold;
 }
 
-.fvtt-ecryme .items-list .item {
+.fvtt-legends-of-wulin .items-list .item {
   height: 30px;
   line-height: 24px;
   padding: 1px 0;
   border-bottom: 1px solid #BBB;
 }
 
-.fvtt-ecryme .items-list .item .item-image {
+.fvtt-legends-of-wulin .items-list .item .item-image {
   flex: 0 0 24px;
   margin-right: 5px;
 }
 
-.fvtt-ecryme .items-list .item img {
+.fvtt-legends-of-wulin .items-list .item img {
   display: block;
 }
 
-.fvtt-ecryme .items-list .item-name {
+.fvtt-legends-of-wulin .items-list .item-name {
   margin: 0;
 }
 
-.fvtt-ecryme .items-list .item-controls {
+.fvtt-legends-of-wulin .items-list .item-controls {
   flex: 0 0 86px;
   text-align: right;
 }
@@ -372,7 +372,7 @@ li.folder > .folder-header h3 {
 /* Sheet  */
 .window-app.sheet .window-content .sheet-header{
   color: rgba(19, 18, 18, 0.95);
-  background: url("../images/ui/fond_carnet_01.webp");
+  background: url("../images/ui/sheet_background.jpg");
   /*background: #494e6b;*/
 }
 
@@ -394,7 +394,7 @@ select {
 
 .window-app.sheet .window-content .sheet-header input[type="password"], .window-app.sheet .window-content .sheet-header input[type="date"], .window-app.sheet .window-content .sheet-header input[type="time"] {
   color: rgba(19, 18, 18, 0.95);
-  background: url("../images/ui/fond_carnet_01.webp");
+  background: url("../images/ui/sheet_background.jpg");
   border: 1 none;
   margin-bottom: 0.25rem;
   margin-left: 2px;
@@ -402,7 +402,7 @@ select {
 
 .window-app.sheet .window-content .sheet-body input[type="password"], .window-app.sheet .window-content .sheet-body input[type="date"], .window-app.sheet .window-content .sheet-body input[type="time"] {
   color: rgba(19, 18, 18, 0.95);
-  background: url("../images/ui/fond_carnet_01.webp");
+  background: url("../images/ui/sheet_background.jpg");
   border: 1 none;
   margin-bottom: 0.25rem;
   margin-left: 2px;
@@ -419,7 +419,7 @@ select {
 .window-app .window-content, .window-app.sheet .window-content .sheet-body{
   font-size: 0.8rem;
   /*background: url("../images/ui/pc_sheet_bg.webp") repeat left top;*/
-  background: url("../images/ui/fond_carnet_01.webp");
+  background: url("../images/ui/sheet_background.jpg");
   color: rgba(19, 18, 18, 0.95);
 }
 
@@ -772,7 +772,7 @@ ul, li {
   background-color:#f5f5f5;
   background-position: 0px 35px;
   background-repeat: no-repeat;
-  background-image: url("../images/ui/fond_carnet_01.webp");
+  background-image: url("../images/ui/sheet_background.jpg");
   color: rgba(19, 18, 18, 0.95);
 }
 
@@ -813,7 +813,7 @@ ul, li {
 .chat-result-text,
 .chat-actor-name {
   font-weight: bold;
-  font-family: MailartRubberstamp;
+  font-family: "BerkeleyStd-Bold";
   font-size: 1.2rem;
   padding: 4px;
 }
@@ -1201,7 +1201,7 @@ ul, li {
 
 .items-title-text {
   text-align: center;
-  font-family: MailartRubberstamp;
+  font-family: "BerkeleyStd-Bold";
   margin-left: 4px;
 }
 .lock-icon {
@@ -1350,7 +1350,7 @@ ul, li {
   left: 50%;
   font-size: 1.6rem;
   color: darkgreen;
-  font-family: MailartRubberstamp;
+  font-family: "BerkeleyStd-Bold";
   transform: translate(-50%, -55%);
 }
 
@@ -1369,7 +1369,7 @@ ul, li {
   left: 50%;
   font-size: 2rem;
   color: darkgreen;
-  font-family: MailartRubberstamp;
+  font-family: "BerkeleyStd-Bold";
   transform: translate(-50%, -55%);
 }
 .confront-area {

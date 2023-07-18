@@ -1,7 +1,7 @@
 {
   "description": "Legends of Wulin",
   "esmodules": [
-    "modules/ecryme-main.js"
+    "modules/low-main.js"
   ],
   "gridDistance": 1,
   "gridUnits": "m",
@@ -21,16 +21,16 @@
     "minimum": "11",
     "verified": "11"
   },
-  "id": "legends-of-wulin",
+  "id": "fvtt-legends-of-wulin",
   "primaryTokenAttribute": "secondary.health",
   "secondaryTokenAttribute": "secondary.delirium",
   "socket": true,
   "styles": [
-    "styles/wulin.css"
+    "styles/low.css"
   ],
   "title": "Legends of Wulin RPG",
   "url": "https://www.uberwald.me/gitea/uberwald/legends-of-wulin",
-  "version": "11.0.4",
+  "version": "11.0.0",
   "download": "https://www.uberwald.me/gitea/uberwald/legends-of-wulin/archive/legends-of-wulin-v11.0.0.zip",
   "background": "systems/fvtt-legends-of-wulin/images/ui/LotW- Welcome Background.jpg"
 }

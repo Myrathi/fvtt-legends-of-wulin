@@ -15,8 +15,7 @@ import { LoWUtility } from "./common/low-utility.js";
 import { LoWCombat } from "./app/low-combat.js";
 import { LoWItem } from "./items/low-item.js";
 import { LoWHotbar } from "./app/low-hotbar.js"
-import { LoWCharacterSummary } from "./app/low-summary-app.js"
-import { ECRYME_CONFIG } from "./common/low-config.js"
+import { LOW_CONFIG } from "./common/low-config.js"
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -121,7 +120,6 @@ Hooks.once("ready", function () {
   registerUsageCount(game.system.id)
   welcomeMessage();
   LoWUtility.ready()
-  LoWCharacterSummary.ready()
 
 })
 

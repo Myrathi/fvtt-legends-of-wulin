@@ -41,7 +41,7 @@ export class LoWActorSheet extends ActorSheet {
       ideal: this.actor.getIdeal(),
       spleen: this.actor.getSpleen(),
       impacts: this.object.getImpacts(),
-      config: duplicate(game.system.ecryme.config),
+      config: duplicate(game.system.low.config),
       weapons: this.actor.getWeapons(),
       impactsMalus: this.actor.getImpactsMalus(),
       archetype: duplicate(this.actor.getArchetype()),

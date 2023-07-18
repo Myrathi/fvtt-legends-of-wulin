@@ -1,0 +1,48 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+      <img class="item-sheet-img" src="{{img}}" data-edit="img" title="{{name}}"/>
+      <div class="header-fields">
+          <h1 class="charname"><input name="name" type="text" value="{{name}}" placeholder="Name"/></h1>
+      </div>
+  </header>
+  
+  {{> systems/fvtt-legends-of-wulin/templates/items/partial-item-nav.hbs}}
+
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{> systems/fvtt-legends-of-wulin/templates/items/partial-item-description.hbs}}
+    
+    <div class="tab details" data-group="primary" data-tab="details">
+
+      <div class="tab" data-group="primary">
+        <ul>
+
+          <li class="flexrow">
+            <label class="item-name-label-long">Parent</label>
+            <input type="text" class="item-field-label-long" name="system.parent" value="{{system.parent}}" data-dtype="String"/>          
+          </li>
+
+          <li class="flexrow">
+            <label class="item-name-label-long">Lore type</label>
+            <select class="item-field-label-medium" type="text" name="system.loretype" value="{{system.loretype}}" data-dtype="String">
+              {{#select system.loretype}}
+                {{#each config.loreType as |type key| }}
+                <option value="{{key}}">{{type}}</option>
+                {{/each}}
+              {{/select}}
+            </select> 
+          </li>
+
+          <li class="flexrow">
+            <label class="item-name-label-long">Destiny cost</label>
+            <input type="text" class="item-field-label-long" name="system.destinycost" value="{{system.destinycost}}" data-dtype="Number"/>          
+          </li>
+
+        </ul>
+    </div>
+  </div>
+
+  </section>
+</form>

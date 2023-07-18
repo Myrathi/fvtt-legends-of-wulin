@@ -1,7 +1,6 @@
 /* -------------------------------------------- */
 import { LoWUtility } from "../common/low-utility.js";
 import { LoWRollDialog } from "../dialogs/low-roll-dialog.js";
-import { LoWConfrontStartDialog } from "../dialogs/low-confront-start-dialog.js";
 
 /* -------------------------------------------- */
 /* -------------------------------------------- */
@@ -62,10 +61,6 @@ export class LoWActor extends Actor {
   }
   getArchetype() {
     let comp = duplicate(this.items.find(item => item.type == 'archetype') || { name: "Pas d'archetype" })
-    if (comp?.system) {
-      comp.tarot = LoWUtility.getTarot(comp.system.lametutelaire)
-    }
-
     return comp;
   }
   /* -------------------------------------------- */

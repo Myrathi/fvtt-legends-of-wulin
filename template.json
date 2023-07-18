@@ -183,81 +183,110 @@
     }
   },
   "Item": {
-    "types": [ "skill", "weapon", "advantage", "disadvantage", "technique" , "armor", "art", "equipment", "condition"],
+    "types": [
+      "skill",
+      "archetype",
+      "virtue",
+      "disadvantage",
+      "kungfu",
+      "armor",
+      "technique",
+      "loresheet",
+      "equipment",
+      "condition",
+      "weapon"
+    ],
     "templates": {
       "common": {
         "description": ""
       }
     },
-    "skill" {
+    "technique":  {
+      "parent": "",
+      "loretype": "destiny",
+      "destinycost": 0,
+      "templates": [
+        "common"
+      ]
+    },
+    "loresheet":  {
+      "parent": "",
+      "level": 0,
+      "templates": [
+        "common"
+      ]
+    },
+    "skill": {
       "templates": [
         "common"
       ],
       "specialties": "",
       "level": 0
     },
-    "art": {
-      "rank": 0,
-      "effect": "",
-      "destiny": 0
+    "archetype": {
+      "templates": [
+        "common"
+      ],
+      "focusskill": ""
+    },
+    "virtue": {
+      "templates": [
+        "common"
+      ],
+      "virtuetype": "chivalrous",
+      "level": 1
     },
     "armor": {
+      "templates": [
+        "common"
+      ],
       "type": "",
       "equipped": false,
       "quality": "",
-      "perfect": false,
-      "description":""
+      "perfect": false
     },
     "equipment": {
-      "equipped": false,
-      "description":""
+      "templates": [
+        "common"
+      ],
+      "equipped": false
     },
     "condition": {
       "penalty": "",
       "appliedto": "",
-      "description":""
-    },
-    "advantage": {
-      "multiple":false,
-      "costmin": 0,
-      "costmax": 0,
-      "spent": 0,
-      "description":""
+      "templates": [
+        "common"
+      ]
     },
     "disadvantage": {
-      "multiple":false,
-      "description":""
+      "multiple": false,
+      "templates": [
+        "common"
+      ]
     },
-    "technique": {
-      "skillchi": "",
-      "chicost": 0,
-      "chicolor": "",
-      "duration": 0,
-      "bonus": 0,
-      "style": "",
-      "level": "",
-      "effect": "",
-      "effectdescription": "",
-      "destiny": 0,
-      "canchannel": false,
-      "channelingcost": 0,
-      "description":""
+    "kungfu": {
+      "kungfutype": "internal",
+      "isformless": false,
+      "templates": [
+        "common"
+      ]
     },
     "weapon": {
       "family": "",
       "artful": false,
       "brutal": false,
       "ranged": false,
-      "speed":0,
-      "strike":0,
+      "speed": 0,
+      "strike": 0,
       "damage": 0,
       "short": 0,
       "medium": 0,
       "long": 0,
       "equipped": false,
       "effectdescription": "",
-      "description": ""
+      "templates": [
+        "common"
+      ]
     }
   }
- }
 }

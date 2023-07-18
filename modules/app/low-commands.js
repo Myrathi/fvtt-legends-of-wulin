@@ -1,16 +1,15 @@
 /* -------------------------------------------- */
 
 import { LoWUtility } from "../common/low-utility.js";
-import { LoWCharacterSummary } from "../app/low-summary-app.js"
 
 /* -------------------------------------------- */
 export class LoWCommands {
 
   static init() {
-    if (!game.system.ecryme.commands) {
+    if (!game.system.low.commands) {
       const commands = new LoWCommands();
-      commands.registerCommand({ path: ["/resume"], func: (content, msg, params) => LoWCharacterSummary.displayPCSummary(), descr: "Affiche la liste des PJs!" });
-      game.system.ecryme.commands = commands;
+      //commands.registerCommand({ path: ["/resume"], func: (content, msg, params) => LoWCharacterSummary.displayPCSummary(), descr: "Affiche la liste des PJs!" });
+      game.system.low.commands = commands;
     }
   }
   constructor() {
