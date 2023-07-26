@@ -28,6 +28,9 @@ export class LoWUtility {
     Handlebars.registerHelper('includes', function (array, val) {
       return array.includes(val);
     })
+    Handlebars.registerHelper('exists', function (field) {
+      return field !== undefined && field !== null
+    })
     Handlebars.registerHelper('upper', function (text) {
       return text.toUpperCase();
     })

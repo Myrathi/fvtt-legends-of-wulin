@@ -14,6 +14,18 @@
     }
   ],
   "packs": [
+    {
+      "name": "skills",
+      "label": "Skills",
+      "system": "fvtt-legends-of-wulin",
+      "path": "packs/skills",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    }
   ],
   "license": "LICENSE.txt",
   "manifest": "https://www.uberwald.me/gitea/uberwald/fvtt-legends-of-wulin/raw/branch/master/system.json",
@@ -30,7 +42,7 @@
   ],
   "title": "Legends of Wulin RPG",
   "url": "https://www.uberwald.me/gitea/uberwald/legends-of-wulin",
-  "version": "11.0.0",
+  "version": "11.0.3",
   "download": "https://www.uberwald.me/gitea/uberwald/legends-of-wulin/archive/legends-of-wulin-v11.0.0.zip",
   "background": "systems/fvtt-legends-of-wulin/images/ui/LotW- Welcome Background.jpg"
 }

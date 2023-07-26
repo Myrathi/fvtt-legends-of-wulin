@@ -10,5 +10,9 @@ export const LOW_CONFIG = {
     treasure: "Treasure",
     technique: "Technique",
     status: "Status"
+  },
+  styleType: {
+    internal: "Internal",
+    external: "External"
   }
 }

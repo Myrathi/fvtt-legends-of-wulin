@@ -1,0 +1,51 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+      <img class="item-sheet-img" src="{{img}}" data-edit="img" title="{{name}}"/>
+      <div class="header-fields">
+          <h1 class="charname"><input name="name" type="text" value="{{name}}" placeholder="Name"/></h1>
+      </div>
+  </header>
+  
+  {{> systems/fvtt-legends-of-wulin/templates/items/partial-item-nav.hbs}}
+
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{> systems/fvtt-legends-of-wulin/templates/items/partial-item-description.hbs}}
+    
+    <div class="tab details" data-group="primary" data-tab="details">
+
+      <div class="tab" data-group="primary">
+        <ul>
+
+          <li class="flexrow">
+            <label class="item-name-label-long">Type</label>
+            <select class="item-field-label-medium" type="text" name="system.styletype" value="{{system.styletype}}" data-dtype="String">
+              {{#select system.styletype}}
+                {{#each config.styleType as |type key| }}
+                <option value="{{key}}">{{type}}</option>
+                {{/each}}
+              {{/select}}
+            </select> 
+          </li>
+
+
+          {{#if (eq system.styletype "external")}}
+          {{#each system.stats as |stat key|}}
+
+          <li class="flexrow">
+            <label class="item-name-label-long">{{upperFirst key}}</label>
+            Basic: <input type="text" class="item-field-label-short" name="system.stats.{{@key}}.basic" value="{{stat.basic}}" data-dtype="Number"/>
+            Modified: <input type="text" class="item-field-label-short" name="system.stats.{{@key}}.modified" value="{{stat.modified}}" data-dtype="Number"/>
+          </li>
+
+          {{/each}}
+          {{/if}}
+
+        </ul>
+    </div>
+  </div>
+
+  </section>
+</form>

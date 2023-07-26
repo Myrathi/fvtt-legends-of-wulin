@@ -25,9 +25,21 @@
           </li>
 
           <li class="flexrow">
+            <label class="item-name-label-long">Lore type</label>
+            <select class="item-field-label-medium" type="text" name="system.loretype" value="{{system.loretype}}" data-dtype="String">
+              {{#select system.loretype}}
+                {{#each config.loreType as |type key| }}
+                <option value="{{key}}">{{type}}</option>
+                {{/each}}
+              {{/select}}
+            </select> 
+          </li>
+
+          <li class="flexrow">
             <label class="item-name-label-long">Destiny cost</label>
             <input type="text" class="item-field-label-short" name="system.destinycost" value="{{system.destinycost}}" data-dtype="Number"/>          
           </li>
+
         </ul>
     </div>
   </div>

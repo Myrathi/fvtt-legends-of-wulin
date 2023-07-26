@@ -8,10 +8,10 @@
         "biodata": {
           "age": "",
           "size": "",
-          "lieunaissance": "",
-          "nationalite": "",
-          "profession": "",
-          "residence": "",
+          "concept": "",
+          "rang": "",
+          "archetype": "",
+          "player": "",
           "milieusocial": "",
           "poids": "",
           "cheveux": "",
@@ -23,151 +23,69 @@
         }
       },
       "core": {
+        "destiny": {
+          "spent": 0,
+          "unspent": 0
+        },
+        "entanglement": {
+          "value": 0
+        },
         "subactors": [],
-        "skills": {
-          "physical": {
-            "name": "ECRY.ui.physical",
-            "skilllist": {
-              "athletics": {
-                "name": "ECRY.ui.athletics",
-                "max": 0,
-                "value": 0
-              },
-              "driving": {
-                "name": "ECRY.ui.driving",
-                "max": 0,
-                "value": 0
-              },
-              "fencing": {
-                "name": "ECRY.ui.fencing",
-                "max": 0,
-                "value": 0
-              },
-              "brawling": {
-                "name": "ECRY.ui.brawling",
-                "max": 0,
-                "value": 0
-              },
-              "shooting": {
-                "name": "ECRY.ui.shooting",
-                "max": 0,
-                "value": 0
-              }
-            }
-          },
-          "mental": {
-            "name": "ECRY.ui.mental",
-            "skilllist": {
-              "anthropomecanology": {
-                "name": "ECRY.ui.anthropomecanology",
-                "value": 0,
-                "max": 10
-              },
-              "ecrymology": {
-                "name": "ECRY.ui.ecrymology",
-                "value": 0,
-                "max": 10
-              },
-              "traumatology": {
-                "name": "ECRY.ui.traumatology",
-                "value": 0,
-                "max": 10
-              },
-              "traversology": {
-                "name": "ECRY.ui.traversology",
-                "value": 0,
-                "max": 10
-              },
-              "urbatechnology": {
-                "name": "ECRY.ui.urbatechnology",
-                "value": 0,
-                "max": 10
-              }
-            }
-          },
-          "social": {
-            "name": "ECRY.ui.social",
-            "skilllist": {
-              "quibbling": {
-                "name": "ECRY.ui.quibbling",
-                "value": 0,
-                "max": 10
-              },
-              "creativity": {
-                "name": "ECRY.ui.creativity",
-                "value": 0,
-                "max": 10
-              },
-              "loquacity": {
-                "name": "ECRY.ui.loquacity",
-                "value": 0,
-                "max": 10
-              },
-              "guile": {
-                "name": "ECRY.ui.guile",
-                "value": 0,
-                "max": 10
-              },
-              "performance": {
-                "name": "ECRY.ui.performance",
-                "value": 0,
-                "max": 10
-              }
-            }
-          }
-        },
-        "impacts": {
-          "physical": {
-            "superficial": 0,
-            "light": 0,
-            "serious": 0,
+        "chi_threshold": {
+          "armored": {
+            "trivial": 0,
+            "minor": 0,
             "major": 0
           },
-          "mental": {
-            "superficial": 0,
-            "light": 0,
-            "serious": 0,
-            "major": 0
-          },
-          "social": {
-            "superficial": 0,
-            "light": 0,
-            "serious": 0,
+          "unarmored": {
+            "trivial": 0,
+            "minor": 0,
             "major": 0
           }
         },
-        "cephaly": {
-          "name": "ECRY.ui.cephaly",
-          "skilllist": {
-            "elegy": {
-              "name": "ECRY.ui.elegy",
-              "value": 0,
-              "max": 10
-            },
-            "entelechy": {
-              "name": "ECRY.ui.entelechy",
-              "value": 0,
-              "max": 10
-            },
-            "mekany": {
-              "name": "ECRY.ui.mekany",
-              "value": 0,
-              "max": 10
-            },
-            "psyche": {
-              "name": "ECRY.ui.psyche",
-              "value": 0,
-              "max": 10
-            },
-            "scoria": {
-              "name": "ECRY.ui.scoria",
-              "value": 0,
-              "max": 10
-            }
+        "chi": {
+          "general": {
+            "value": 0,
+            "max": 0,
+            "cultivation": 0
+          },
+          "wood": {
+            "value": 0,
+            "cultivation": 0
+          },
+          "fire": {
+            "value": 0,
+            "cultivation": 0
+          },
+          "earth": {
+            "value": 0,
+            "cultivation": 0
+          },
+          "water": {
+            "value": 0,
+            "cultivation": 0
+          },
+          "metal": {
+            "value": 0,
+            "cultivation": 0
+          },
+          "enlightened": {
+            "value": 0,
+            "cultivation": 0
+          },
+          "corrupt": {
+            "value": 0,
+            "cultivation": 0
           }
         },
-        "internals": {
-          "confrontbonus": 0
+        "aura": {
+          "max": 0
+        },
+        "cultivation": {
+          "total": 0
+        },
+        "replenishment": {
+          "total": 0
         }
       },
       "npccore": {
@@ -188,10 +106,10 @@
       "archetype",
       "virtue",
       "disadvantage",
-      "kungfu",
+      "style",
       "armor",
-      "technique",
       "loresheet",
+      "technique",
       "equipment",
       "condition",
       "weapon"
@@ -203,14 +121,15 @@
     },
     "technique":  {
       "parent": "",
-      "loretype": "destiny",
       "destinycost": 0,
       "templates": [
         "common"
       ]
     },
-    "loresheet":  {
+    "loresheet": {
       "parent": "",
+      "loretype": "",
+      "destinycost": 0,
       "level": 0,
       "templates": [
         "common"
@@ -264,9 +183,35 @@
         "common"
       ]
     },
-    "kungfu": {
-      "kungfutype": "internal",
+    "style": {
+      "styletype": "internal",
       "isformless": false,
+      "stats":  {
+        "speed": {
+          "basic": 0,
+          "modified": 0
+        },
+        "footwork": {
+          "basic": 0,
+          "modified": 0
+        },
+        "strike": {
+          "basic": 0,
+          "modified": 0
+        },
+        "block": {
+          "basic": 0,
+          "modified": 0
+        },
+        "damage": {
+          "basic": 0,
+          "modified": 0
+        },
+        "toughness": {
+          "basic": 0,
+          "modified": 0
+        }  
+      },
       "templates": [
         "common"
       ]

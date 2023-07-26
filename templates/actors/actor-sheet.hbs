@@ -14,27 +14,28 @@
 
           <div class="flexrow">
             <ul>
-              <li class="flexrow item" data-item-id="{{spleen.id}}">
-                <label class="item-name-label-medium">Spleen :</label>
-                <label class="item-name-label-long">{{spleen.name}}</label>
-                <div class="item-filler">&nbsp;</div>
-                {{#if spleen}}
-                <div class="item-controls item-controls-fixed">
-                  <a class="item-control item-edit" data-type="trait" title="Edit Item"><i class="fas fa-edit"></i></a>
-                  <a class="item-control item-add" data-type="trait" title="Delete Item"><i class="fas fa-plus"></i></a>
-                </div>
-                {{/if}}
+              <li class="flexrow item">
+                <label class="item-name-label-medium">Concept</label>
+                <input type="text" class="item-name-label-header-long2" name="system.biodata.concept"
+                  value="{{system.biodata.concept}}" data-dtype="String" />
               </li>
-              <li class="item flexrow" data-item-id="{{ideal.id}}">
-                <label class="item-name-label-medium">Ideal :</label>
-                <label class="item-name-label-long">{{ideal.name}}</label>
-                <div class="item-filler">&nbsp;</div>
-                {{#if ideal}}
-                <div class="item-controls item-controls-fixed">
-                  <a class="item-control item-edit" data-type="trait" title="Edit Item"><i class="fas fa-edit"></i></a>
-                  <a class="item-control item-add" data-type="trait" title="Delete Item"><i class="fas fa-plus"></i></a>
-                </div>
-                {{/if}}
+              <li class="item flexrow">
+                <label class="item-name-label-medium">Rank</label>
+                <input type="text" class="item-field-label-short" name="system.biodata.rank"
+                  value="{{system.biodata.rank}}" data-dtype="Number" />
+                <label class="list-item-margin1 item-name-label-medium">Archetype</label>
+                <input type="text" class="item-field-label-long" name="system.biodata.archetype"
+                  value="{{system.biodata.archetype}}" data-dtype="String" />
+              </li>
+              <li class="flexrow item">
+                <label class="item-name-label-medium">Destiny</label>
+                <input type="text" class="item-field-label-short" name="system.destiny.spent"
+                  value="{{system.destiny.spent}}" data-dtype="Number" />
+                <input type="text" class="item-field-label-short" name="system.destiny.unspent"
+                  value="{{system.destiny.unspent}}" data-dtype="Number" />
+                <label class="list-item-margin1 item-name-label-medium">Entanglement</label>
+                <input type="text" class="item-field-label-short" name="system.entanglement.value"
+                  value="{{system.entanglement.value}}" data-dtype="String" />
               </li>
             </ul>
           </div>
@@ -48,84 +49,109 @@
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="competences">{{localize "ECRY.ui.skills"}}</a>
-    <a class="item" data-tab="traits">{{localize "ECRY.ui.traits"}}</a>
-    <a class="item" data-tab="combat">{{localize "ECRY.ui.healthcombat"}}</a>
-    <a class="item" data-tab="equipements">{{localize "ECRY.ui.equipment"}}</a>
-    <a class="item" data-tab="biodata">{{localize "ECRY.ui.bionotes"}}</a>
+    <a class="item" data-tab="skills">Skills</a>
+    <a class="item" data-tab="combat">Combat</a>
+    <a class="item" data-tab="conditions">Conditions</a>
+    <a class="item" data-tab="equipements">Equipment</a>
+    <a class="item" data-tab="biodata">Notes&Bio</a>
   </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
 
     {{!-- Skills Tab --}}
-    <div class="tab competences" data-group="primary" data-tab="competences">
+    <div class="tab skills" data-group="primary" data-tab="skills">
 
 
-      <div class="grid grid-3col">
+      <div class="grid grid-2col">
 
-        {{#each skills as |category categkey|}}
         <div>
           <ul class="stat-list alternate-list item-list">
-            <li class="item flexrow list-item items-title-bg">
-              <span class="item-name-label-header impact-title">
-                <h3><label class="items-title-text">{{localize category.name}} ({{valueAtIndex @root.impactsMalus
-                    categkey}})</label></h3>
-              </span>
-            </li>
-            {{#each category.skilllist as |skill skillkey|}}
-            <li class="item flexrow list-item">
-              <span class="item-name-label-long">
-                <a class="roll-skill-confront" data-category-key="{{categkey}}" data-skill-key="{{skillkey}}">
-                  <i class="fa-regular fa-swords"></i>
-                </a>
-                <a class="roll-skill" data-category-key="{{categkey}}" data-skill-key="{{skillkey}}">
+            {{#each skills as |skill key|}}
+            <li class="item flexrow list-item" data-item-id="{{skill._id}}">
+              <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+                  src="{{skill.img}}" /></a>
+              <span class="item-field-label-long">
+                <a class="roll-skill" data-skill-key="{{key}}" data-skill-id="{{skill._id}}">
                   <i class="fa-solid fa-dice-d6"></i>
-                  {{localize skill.name}}
-                </a></span>
-              <select class="item-field-label-short" type="text"
-                name="system.skills.{{categkey}}.skilllist.{{skillkey}}.value" value="{{skill.value}}"
-                data-dtype="Number">
-                {{#select skill.value}}
-                {{#each @root.config.skillLevel as |level key| }}
-                <option value="{{level}}">{{level}}</option>
-                {{/each}}
-                {{/select}}
-              </select>
-            </li>
-            <li class="item flexrow list-item">
-              <ul class="ul-level1">
-                {{#each skill.spec as |spec idx|}}
-                <li class="item flexrow list-item" data-item-id="{{spec._id}}" data-item-type="specialization">
-                  <a class="roll-spec" data-spec-id="{{spec._id}}">
-                    <i class="fa-solid fa-dice-d6"></i>
-                    {{spec.name}}
-                  </a>
-                  <div class="item-controls item-controls-fixed">
-                    <a class="item-control item-edit" data-type="specialization" title="Edit Item"><i
-                        class="fas fa-edit"></i></a>
-                    <a class="item-control item-add" data-type="specialization" title="Delete Item"><i
-                        class="fas fa-plus"></i></a>
-                  </div>
-                </li>
-                {{/each}}
-              </ul>
+                  {{skill.name}}
+                </a>
+              </span>
+              <span class="item-field-label-short">{{skill.system.level}}</span>
+              <span class="item-field-label-long2">{{skill.system.specialties}}</span>
             </li>
             {{/each}}
           </ul>
         </div>
-        {{/each}}
+
+        <div>
+          <h3>Chi Threshold</h3>
+          {{#each system.chi_threshold as |chi key|}}
+          <ul class="item-list alternate-list">
+            <li class="item flexrow list-item items-title-bg">
+              <span class="item-field-label-medium">{{upperFirst key}}</span>
+              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.trivial"
+                value="{{chi.trivial}}" data-dtype="Number" />
+              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.minor"
+                value="{{chi.minor}}" data-dtype="Number" />
+              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.major"
+                value="{{chi.major}}" data-dtype="Number" />
+            </li>
+          </ul>
+          {{/each}}
+
+          <h3>Chi</h3>
+          <ul class="item-list alternate-list">
+            <li class="item flexrow list-item items-title-bg">
+              <span class="item-field-label-medium">Name</span>
+              <span class="item-field-label-short">Value</span>
+              <span class="item-field-label-short">Cult.</span>
+              {{#if (exists chi.max)}}
+              <span class="item-field-label-short">Max</span>
+              {{/if}}
+            </li>
+            {{#each system.chi as |chi key|}}
+            <li class="item flexrow list-item items-title-bg">
+              <span class="item-field-label-medium">{{upperFirst key}}</span>
+              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.value"
+                value="{{chi.trivial}}" data-dtype="Number" />
+              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.cultivation"
+                value="{{chi.minor}}" data-dtype="Number" />
+              {{#if (exists chi.max)}}
+              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.max"
+                value="{{chi.max}}" data-dtype="Number" />
+              {{/if}}
+            </li>
+            {{/each}}
+          </ul>
+          <li class="item flexrow list-item items-title-bg">
+            <span class="item-field-label-long">Total Chi Cultivation</span>
+            <input type="text" class="item-field-label-short" name="system.cultivation.total"
+              value="{{system.cultivation.total}}" data-dtype="Number" />
+          </li>
+          <li class="item flexrow list-item items-title-bg">
+            <span class="item-field-label-long">Maximum Chi Aura</span>
+            <input type="text" class="item-field-label-short" name="system.aura.max" value="{{system.aura.max}}"
+              data-dtype="Number" />
+          </li>
+          <li class="item flexrow list-item items-title-bg">
+            <span class="item-field-label-long">Chi Replenishment</span>
+            <input type="text" class="item-field-label-short" name="system.replenishment.total"
+              value="{{system.replenishment.total}}" data-dtype="Number" />
+          </li>
+
+        </div>
       </div>
 
     </div>
 
 
-    <div class="tab traits" data-group="primary" data-tab="traits">
+    <div class="tab combat" data-group="primary" data-tab="combat">
 
       <ul class="item-list alternate-list">
         <li class="item flexrow list-item items-title-bg">
           <span class="item-name-label-header-long2">
-            <h3><label class="item-name-label-header-long2">Traits</label></h3>
+            <h3><label class="item-name-label-header-long2">External Styles</label></h3>
           </span>
           <span class="item-field-label-short">
             <label class="item-field-label-short">Niveau</label>
@@ -134,12 +160,12 @@
             <a class="item-control item-add" data-type="trait" title="Create Trait"><i class="fas fa-plus"></i></a>
           </div>
         </li>
-        {{#each traits as |trait key|}}
-        <li class="item flexrow list-item list-item-shadow" data-item-id="{{trait._id}}">
+        {{#each externalStyles as |style key|}}
+        <li class="item flexrow list-item list-item-shadow" data-item-id="{{style._id}}">
           <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
-              src="{{trait.img}}" /></a>
-          <span class="item-name-label-long2">{{trait.name}}</span>
-          <span class="item-field-label-short"><label>{{trait.system.level}}</label></span>
+              src="{{style.img}}" /></a>
+          <span class="item-name-label-long2">{{style.name}}</span>
+          <span class="item-field-label-short"><label>{{style.system.level}}</label></span>
 
           <div class="item-filler">&nbsp;</div>
           <div class="item-controls item-controls-fixed">
@@ -151,16 +177,7 @@
 
     </div>
 
-    <div class="tab combat" data-group="primary" data-tab="combat">
-
-      <div class="flexrow">
-        {{> systems/fvtt-ecryme/templates/actors/partial-impacts.hbs impacts=system.impacts.physical
-        impacttype="physical" impactMalus=impactsMalus.physical}}
-        {{> systems/fvtt-ecryme/templates/actors/partial-impacts.hbs impacts=system.impacts.mental
-        impacttype="mental" impactMalus=impactsMalus.mental}}
-        {{> systems/fvtt-ecryme/templates/actors/partial-impacts.hbs impacts=system.impacts.social
-        impacttype="social" impactMalus=impactsMalus.social}}
-      </div>
+    <div class="tab conditions" data-group="primary" data-tab="conditions">
 
       <ul class="item-list alternate-list">
         <li class="item flexrow list-item items-title-bg">

@@ -35,21 +35,14 @@ export class LoWActorSheet extends ActorSheet {
       cssClass: this.isEditable ? "editable" : "locked",
       system: duplicate(this.object.system),
       limited: this.object.limited,
-      skills: this.actor.prepareSkills(),
-      traits: this.actor.getRollTraits(),
-      confrontations: this.actor.getConfrontations(),
-      ideal: this.actor.getIdeal(),
-      spleen: this.actor.getSpleen(),
-      impacts: this.object.getImpacts(),
+      skills: this.actor.getSkills(),
+      conditions: this.object.getConditions(),
       config: duplicate(game.system.low.config),
       weapons: this.actor.getWeapons(),
-      impactsMalus: this.actor.getImpactsMalus(),
-      archetype: duplicate(this.actor.getArchetype()),
       equipements: this.actor.getEquipments(),
       subActors: duplicate(this.actor.getSubActors()),
       description: await TextEditor.enrichHTML(this.object.system.description, { async: true }),
       notes: await TextEditor.enrichHTML(this.object.system.notes, { async: true }),
-      equipementlibre: await TextEditor.enrichHTML(this.object.system.equipementlibre, { async: true }),
       options: this.options,
       owner: this.document.isOwner,
       editScore: this.options.editScore,
@@ -117,23 +110,6 @@ export class LoWActorSheet extends ActorSheet {
       let skillKey = $(event.currentTarget).data("skill-key")
       this.actor.rollSkill(categKey, skillKey)
     });    
-    html.find('.roll-skill-confront').click((event) => {
-      let categKey = $(event.currentTarget).data("category-key")
-      let skillKey = $(event.currentTarget).data("skill-key")
-      this.actor.rollSkillConfront(categKey, skillKey)
-    });    
-    html.find('.roll-weapon-confront').click((event) => {
-      const li = $(event.currentTarget).parents(".item")
-      let weaponId = li.data("item-id");
-      this.actor.rollWeaponConfront(weaponId)
-    });    
-    
-    html.find('.impact-modify').click((event) => {
-      let impactType = $(event.currentTarget).data("impact-type")
-      let impactLevel = $(event.currentTarget).data("impact-level")
-      let modifier = Number($(event.currentTarget).data("impact-modifier"))
-      this.actor.modifyImpact(impactType, impactLevel, modifier)
-    });
     
     html.find('.roll-weapon').click((event) => {
       const armeId = $(event.currentTarget).data("arme-id")

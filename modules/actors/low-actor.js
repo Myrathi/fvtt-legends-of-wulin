@@ -33,6 +33,13 @@ export class LoWActor extends Actor {
       let actor = super.create(data, options);
       return actor;
     }
+    if (data.type == 'pc') {
+      const skills = await LoWUtility.loadCompendium("fvtt-legends-of-wulin.skills");
+      data.items = skills.map(i => i.toObject())
+    }
+    if (data.type == 'npc') {
+      // TODO ?
+    }
 
     return super.create(data, options);
   }
@@ -59,56 +66,17 @@ export class LoWActor extends Actor {
     LoWUtility.sortArrayObjectsByName(comp)
     return comp;
   }
-  getArchetype() {
-    let comp = duplicate(this.items.find(item => item.type == 'archetype') || { name: "Pas d'archetype" })
-    return comp;
-  }
   /* -------------------------------------------- */
-  getConfrontations() {
-    return this.items.filter(it => it.type == "confrontation")
+  getSkills() {
+    let comp = duplicate(this.items.filter(it => it.type == "skill"))
+    LoWUtility.sortArrayObjectsByName(comp)
+    return comp
   }
-  getRollTraits() {
-    return this.items.filter(it => it.type == "trait" && it.system.traitype == "normal")
+  getConditions() {
+    let comp = duplicate(this.items.filter(it => it.type == "condition"))
+    LoWUtility.sortArrayObjectsByName(comp)
+    return comp
   }
-  getIdeal() {
-    return this.items.find(it => it.type == "trait" && it.system.traitype == "ideal")
-  }
-  getSpleen() {
-    return this.items.find(it => it.type == "trait" && it.system.traitype == "spleen")
-  }
-
-  /* -------------------------------------------- */
-  getTrait(id) {
-    //console.log("TRAITS", this.items, this.items.filter(it => it.type == "trait") )
-    return this.items.find(it => it.type == "trait" && it._id == id)
-  }
-  /* -------------------------------------------- */
-  getSpecialization(id) {
-    let spec = this.items.find(it => it.type == "specialization" && it.id == id)
-    return spec
-  }
-  /* -------------------------------------------- */
-  getSpecializations(skillKey) {
-    return this.items.filter(it => it.type == "specialization" && it.system.skillkey == skillKey)
-  }
-  /* -------------------------------------------- */
-  prepareSkills() {
-    let skills = duplicate(this.system.skills)
-    for (let categKey in skills) {
-      let category = skills[categKey]
-      for (let skillKey in category.skilllist) {
-        let skill = category.skilllist[skillKey]
-        skill.spec = this.getSpecializations(skillKey)
-      }
-    }
-    return skills
-  }
-  /* -------------------------------------------- */
-  getImpacts() {
-    let comp = duplicate(this.items.filter(item => item.type == 'impact') || [])
-    return comp;
-  }
-  /* -------------------------------------------- */
   getWeapons() {
     let comp = duplicate(this.items.filter(item => item.type == 'weapon') || [])
     LoWUtility.sortArrayObjectsByName(comp)
@@ -204,36 +172,6 @@ export class LoWActor extends Actor {
   }
 
   /* -------------------------------------------- */
-  modifyImpact(impactType, impactLevel, modifier) {
-    console.log(impactType, impactLevel, modifier)
-    let current = this.system.impacts[impactType][impactLevel]
-    if (modifier > 0) {
-      while ( LoWUtility.getImpactMax(impactLevel) == current && impactLevel != "major") {
-        impactLevel = LoWUtility.getNextImpactLevel(impactLevel)
-        current = this.system.impacts[impactType][impactLevel]
-      }  
-    }
-    let newImpact  = Math.max(this.system.impacts[impactType][impactLevel] + modifier, 0)
-    this.update({ [`system.impacts.${impactType}.${impactLevel}`]: newImpact})
-  }
-
-  /* -------------------------------------------- */
-  getImpactMalus(impactKey) {
-    let impacts = this.system.impacts[impactKey]
-    return - ((impacts.serious*2) + (impacts.major*4))
-  }
-
-  /* -------------------------------------------- */
-  getImpactsMalus() {
-    let impactsMalus = {
-      physical: this.getImpactMalus("physical"),
-      mental: this.getImpactMalus("mental"),
-      social: this.getImpactMalus("social")
-    }
-    return impactsMalus
-  }
-
-  /* -------------------------------------------- */
   clearInitiative() {
     this.getFlag("world", "initiative", -1)
   }
@@ -294,28 +232,6 @@ export class LoWActor extends Actor {
     }
   }
   
-  /* -------------------------------------------- */
-  modifyConfrontBonus( modifier ) {
-    let newBonus = this.system.internals.confrontbonus + bonus
-    this.update({'system.internals.confrontbonus': newBonus})
-  }
-
-  /* -------------------------------------------- */
-  spentSkillTranscendence(skill, value) {
-    let newValue = this.system.skills[skill.categKey].skilllist[skill.skillKey].value - value
-    newValue = Math.max(0, newValue)
-    this.update({ [`system.skills.${skill.categKey}.skilllist.${skill.skillKey}.value`]: newValue })
-  }
-
-  /* -------------------------------------------- */
-  getBonusList() {
-    let bonusList = []
-    for(let i=0; i<this.system.internals.confrontbonus; i++) {
-      bonusList.push( { value: 1, type: "bonus", location: "mainpool"})
-    }
-    return bonusList
-  }
-
   /* -------------------------------------------- */
   getCommonRollData() {
     this.system.internals.confrontbonus = 5 // TO BE REMOVED!!!!
