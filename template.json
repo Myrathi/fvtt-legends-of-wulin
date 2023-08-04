@@ -9,7 +9,7 @@
           "age": "",
           "size": "",
           "concept": "",
-          "rank": "",
+          "rank": 4,
           "archetype": "",
           "player": "",
           "description": "",
@@ -17,6 +17,16 @@
         }
       },
       "core": {
+        "joss": {
+          "chivalrous": {
+            "label": "Chivalrous",
+            "value": 0
+          },
+          "malicious": {
+            "label": "Malicious",
+            "value": 0
+          }
+        },
         "destiny": {
           "spent": 0,
           "unspent": 0
@@ -90,6 +100,62 @@
         },
         "replenishment": {
           "total": 0
+        },
+        "virtues": {
+          "chivalry": {
+            "benevolence": {
+              "name": "Benevolence",
+              "code": "Kuan",
+              "value": 0
+            },
+            "force": {
+              "code": "Ba",
+              "name": "Force",
+              "value": 0
+            },
+            "honor": {
+              "code": "Xin",
+              "name": "Honor",
+              "value": 0
+            },
+            "loyalty": {
+              "code": "Zhong",
+              "name": "Loyalty",
+              "value": 0
+            },
+            "righteousness": {
+              "code": "Yi",
+              "name": "Righteousness",
+              "value": 0
+            }
+          },
+          "selfish": {
+            "ferocity": {
+              "code": "Bao",
+              "name": "Ferocity",
+              "value": 0
+            },
+            "individualism": {
+              "code": "Si",
+              "name": "Individualism",
+              "value": 0
+            },
+            "obsession": {
+              "code": "Chan",
+              "name": "Obsession",
+              "value": 0
+            },
+            "revenge": {
+              "code": "Chou",
+              "name": "Revenge",
+              "value": 0
+            },
+            "ruthlessness": {
+              "code": "Hen",
+              "name": "Ruthlessness",
+              "value": 0
+            }          
+          }
         }
       },
       "npccore": {

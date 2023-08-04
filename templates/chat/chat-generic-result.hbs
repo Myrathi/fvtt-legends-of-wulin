@@ -34,6 +34,15 @@
   <ul>
     {{#if skill}}
     <li>{{skill.name}}: {{skill.system.level}} </li>
+      {{#if useSpecialty}}
+      <li>Specialty used (+5) ! ({{skill.system.specialties}})  </li>
+      {{/if}}
+    {{/if}}
+
+    {{#if spentChivalrous}}
+    {{#if (gt lakeModifier 0)}}
+      <li>Chivalrous Joss has been spent: {{lakeModifier}} </li>
+    {{/if}}
     {{/if}}
 
     {{#if bonusMalus}}

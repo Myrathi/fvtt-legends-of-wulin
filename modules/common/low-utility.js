@@ -375,6 +375,9 @@ export class LoWUtility {
     rollData.total = rollData.bestGroup.value
     if (rollData.skill) {
       rollData.total += rollData.skill.system.level // If skill mode, add the level
+      if ( rollData.useSpecialty) {
+        rollData.total += 5
+      }
     }
     rollData.total += rollData.bonusMalus // Add bonus/malus if present
     // Compute success/critical
@@ -401,9 +404,12 @@ export class LoWUtility {
       rollData.difficulty = 0
     }
     rollData.difficulty = Number(rollData.difficulty)
-
-    let diceFormula = actor.system.lake.value + "d10" // Compute Lake roll number of d10
-
+    
+    let nbDice = actor.system.lake.value + rollData.lakeModifier 
+    let diceFormula = nbDice + "d10" // Compute Lake roll number of d10
+    if ( rollData.spentChivalrous && rollData.lakeModifier > 0) {
+      actor.spendChivalrous(rollData.lakeModifier)
+    }
     // Performs roll
     let myRoll = new Roll(diceFormula).roll({ async: false })
     await this.showDiceSoNice(myRoll, game.settings.get("core", "rollMode"))
@@ -509,7 +515,10 @@ export class LoWUtility {
       type: "roll-data",
       bonusMalus: 0,
       rollMode: game.settings.get("core", "rollMode"),
-      difficulty: "0",
+      difficulty: 0,
+      useSpecialty: false,
+      lakeModifier: 0,
+      spentChivalrous: false,
       config: duplicate(game.system.low.config)
     }
     LoWUtility.updateWithTarget(rollData)

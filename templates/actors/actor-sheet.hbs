@@ -50,6 +50,7 @@
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="skills">Skills</a>
+    <a class="item" data-tab="virtues">Virtues</a>
     <a class="item" data-tab="combat">Combat</a>
     <a class="item" data-tab="conditions">Conditions</a>
     <a class="item" data-tab="equipements">Equipment</a>
@@ -61,7 +62,6 @@
 
     {{!-- Skills Tab --}}
     <div class="tab skills" data-group="primary" data-tab="skills">
-
 
       <div class="grid grid-2col">
 
@@ -88,7 +88,7 @@
 
           <span class="flexrow pack-left">
             <h3>River {{system.river.value}} - Lake : {{system.lake.value}}</h3>            
-            <span> <button class="river-button river-wash">Flush</button></span>
+            <span> <button class="river-button river-wash">Wash</button></span>
           </span>
           <div class="dice-river-list div-center flexrow div-river ">
             <table class="div-river-full">
@@ -179,6 +179,66 @@
 
     </div>
 
+    <div class="tab virtues" data-group="primary" data-tab="virtues">
+
+      <div class="grid grid-2col">
+        <div class="flexrow">
+          <label class="item-name-label-long">{{system.joss.chivalrous.label}} : </label>
+          <input type="text" class="item-field-label-short" name="system.joss.chivalrous.value"
+                  value="{{system.joss.chivalrous.value}}" data-dtype="Number" />
+        </div>
+
+        <div class="flexrow">
+          <label class="item-name-label-long">{{system.joss.malicious.label}} : </label>
+        <input type="text" class="item-field-label-short" name="system.joss.malicious.value"
+                value="{{system.joss.malicious.value}}" data-dtype="Number" />
+        </div>
+      </div>
+      
+      <div class="grid grid-2col">
+
+        <div>
+          <ul class="stat-list alternate-list item-list">
+            {{#each system.virtues.chivalry as |virtue key|}}
+            <li class="item flexrow list-item" data-virtue-key="{{key}}" data-virtue-type="chivalry">
+              <label class="item-name-label-long">{{virtue.name}} ({{virtue.code}})</label>
+              <select class="item-name-label-short" type="text" name="system.virtues.chivalry.{{key}}.value" value="{{virtue.value}}" data-dtype="Number">
+                {{#select virtue.value}}
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                {{/select}}
+              </select>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+
+        <div>
+          <ul class="stat-list alternate-list item-list">
+            {{#each system.virtues.selfish as |virtue key|}}
+            <li class="item flexrow list-item" data-virtue-key="{{key}}" data-virtue-type="selfish">
+              <label class="item-name-label-long">{{virtue.name}} ({{virtue.code}})</label>
+              <select class="item-name-label-short" type="text" name="system.virtues.selfish.{{key}}.value" value="{{virtue.value}}" data-dtype="Number">
+                {{#select virtue.value}}
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                {{/select}}
+              </select>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+
+      </div>
+    </div>
 
     <div class="tab combat" data-group="primary" data-tab="combat">
 
@@ -297,7 +357,7 @@
       <ul class="item-list alternate-list">
         <li class="item flexrow list-item items-title-bg">
           <span class="item-name-label-header">
-            <h3><label class="items-title-text">Equipements (Items)</label></h3>
+            <h3><label class="items-title-text">Equipments (Items)</label></h3>
           </span>
           <span class="item-field-label-long">
             <label class="short-label">Q.</label>
@@ -358,42 +418,6 @@
 
     {{!-- Biography Tab --}}
     <div class="tab biodata" data-group="primary" data-tab="biodata">
-
-      <div class="grid grid-2col">
-        <div>
-          <ul class="item-list alternate-list">
-            <li class="item flexrow">
-              <label class="item-name-label-medium">Lieu de naissance</label>
-              <input type="text" class="" name="system.biodata.lieunaissance" value="{{system.biodata.lieunaissance}}"
-                data-dtype="String" />
-            </li>
-            <li class="item flexrow">
-              <label class="item-name-label-medium">Age</label>
-              <input type="text" class="" name="system.biodata.age" value="{{system.biodata.age}}"
-                data-dtype="String" />
-            </li>
-          </ul>
-        </div>
-        <div>
-          <ul>
-            <li class="item flexrow">
-              <label class="item-name-label-medium">Résidence</label>
-              <input type="text" class="" name="system.biodata.residence" value="{{system.biodata.residence}}"
-                data-dtype="String" />
-            </li>
-            <li class="item flexrow">
-              <label class="item-name-label-medium">Nationalité</label>
-              <input type="text" class="" name="system.biodata.nationalite" value="{{system.biodata.nationalite}}"
-                data-dtype="String" />
-            </li>
-            <li class="item flexrow">
-              <label class="item-name-label-medium">Enfance</label>
-              <input type="text" class="" name="system.biodata.enfance" value="{{system.biodata.enfance}}"
-                data-dtype="String" />
-            </li>
-          </ul>
-        </div>
-      </div>
 
       <hr>
       <span class="item-name-label-header items-title-bg">

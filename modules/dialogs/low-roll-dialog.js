@@ -63,6 +63,16 @@ export class LoWRollDialog extends Dialog {
     html.find('#roll-difficulty').change((event) => {
       this.rollData.difficulty = Number(event.currentTarget.value) || 0
     })
-
+    html.find('#use-specialty').change((event) => {
+      this.rollData.useSpecialty = event.currentTarget.checked
+    })
+    html.find('#roll-lake-modifier').change((event) => {
+      this.rollData.lakeModifier = Number(event.currentTarget.value)
+    })
+    html.find('#spent-chivalrous').change((event) => {
+      this.rollData.spentChivalrous = event.currentTarget.checked
+    })
+    
+    
   }
 }

@@ -283,6 +283,14 @@ export class LoWActor extends Actor {
   }
 
   /* -------------------------------------------- */
+  spendChivalrous(jossValue) {
+    let joss = duplicate(this.system.joss.chivalrous)
+    joss.value -= jossValue
+    joss.value = (joss.value < 0) ? 0 : joss.value
+    this.update({ 'system.joss.chivalrous': joss })
+  }
+
+  /* -------------------------------------------- */
   getCommonRollData() {
     let rollData = LoWUtility.getBasicRollData()
     rollData.alias = this.name

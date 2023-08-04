@@ -3,6 +3,10 @@
     font-family: "BerkeleyStd-Bold";
     src: url('../fonts/BerkeleyStd-Bold.otf') format("otf");
   }
+  @font-face {
+    font-family: "Mephisto";
+    src: url('../fonts/Mephisto.woff') format("woff");
+  }
   
   :root {
   /* =================== 1. ACTOR SHEET FONT STYLES =========== */
@@ -51,6 +55,7 @@
 } /* For title, sidebar character and scene */
 .sheet nav.sheet-tabs {
   font-size: 0.8rem;
+  font-family: Mephisto;
 } /* For nav and title */
 .window-app input, .fvtt-legends-of-wulin .item-form, .sheet header.sheet-header .flex-group-center.flex-compteurs, .sheet header.sheet-header .flex-group-center.flex-fatigue, select, button, .item-checkbox, #sidebar, #players, #navigation #nav-toggle {
   font-size: 0.8rem;
@@ -1321,9 +1326,10 @@ ul, li {
   margin-bottom: 4px;
 }
 
-.river-flush {
-  max-width: 5rem;
-  min-width: 5rem;
+.river-wash {
+  max-width: 4rem;
+  min-width: 4rem;
+  max-height: 2rem;
 }
 .dice-cell {  
   padding-left: 12px;
