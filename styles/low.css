@@ -1155,12 +1155,6 @@ ul, li {
   text-align: center;
 }
 
-.dice-formula,
-.dice-total {
-  height: 54px;
-  position:relative;
-}
-
 .status-small-label {
   font-size: 0.65rem;
 }
@@ -1315,10 +1309,10 @@ ul, li {
   text-decoration: underline;
 }
 
-.ecryme-roll-dialog .window-header {
+.wulin-roll-dialog .window-header {
   border-radius: 10px 10px 0% 0%;
 }
-.ecryme-roll-dialog .window-content {
+.wulin-roll-dialog .window-content {
   border-radius: 0% 0% 10px 10px;
 }
 
@@ -1327,59 +1321,60 @@ ul, li {
   margin-bottom: 4px;
 }
 
-.confront-dice {
-  border-width: 0px;
+.river-flush {
+  max-width: 5rem;
+  min-width: 5rem;
+}
+.dice-cell {  
+  padding-left: 12px;
+  padding-right: 12px;
+  width: 60px;
+  text-align: center;
 }
 
-.bonus-spec {
-  max-width: 48px;
-}
-.confront-bonus-container {
-  position: relative;
-  flex-grow: 1;
-  text-align: center;
-  color: black;
-}
-.pool-list {
-  align-items: center;
-  justify-content: center;
-}
-.confront-bonus-centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 1.6rem;
-  color: darkgreen;
-  font-family: "BerkeleyStd-Bold";
-  transform: translate(-50%, -55%);
+.dice-formula,
+.dice-total {
+  position:relative;
 }
 
-.dice-spec {
-  max-width: 64px;
+.dice-river-list-river {
+  position:relative;
 }
-.confront-dice-container {
-  position: relative;
-  flex-grow: 1;
-  text-align: center;
-  color: black;
-}
-.confront-dice-centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 2rem;
-  color: darkgreen;
-  font-family: "BerkeleyStd-Bold";
-  transform: translate(-50%, -55%);
-}
-.confront-area {
+
+.dice-river-list .dice,
+.dice-formula .dice,
+.dice-total .dice {
   margin: 2px;
-  padding: 4px;
-  min-height: 64px;
-  border-width: 2px;
-  border-color: #000000;
-  border-radius: 6px;
-  border: 2px ridge #443307;
-  align-items: center;
-  justify-content: center;
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+}
+
+.dice-river-list .dice label,
+.dice-formula .dice label,
+.dice-total .dice label {
+  font-weight: bold;
+  color: white;
+  position:absolute;
+  text-align: center;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  margin-left: 12px;
+  z-index: 1;
+}
+
+.dice-river-list .dice img,
+.dice-formula .dice img,
+.dice-total .dice img {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border: none;
+}
+
+.dice-river-list .modifier,
+.dice-formula .modifier,
+.dice-total .modifier {
+  margin: 2px;
+  display: inline-flex;
 }

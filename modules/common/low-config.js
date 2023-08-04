@@ -14,5 +14,14 @@ export const LOW_CONFIG = {
   styleType: {
     internal: "Internal",
     external: "External"
+  },
+  difficulty: {
+    10: "Trivial",
+    20 : "Moderate",
+    30 : "Hard",
+    40 : "Memorable",
+    60 : "Fantastic",
+    80 : "Legendary",
+    100: "Impossible"
   }
 }

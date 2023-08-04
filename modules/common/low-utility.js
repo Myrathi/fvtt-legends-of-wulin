@@ -107,90 +107,6 @@ export class LoWUtility {
     return actor
   }
   /* -------------------------------------------- */
-  static getImpactFromEffect(effectValue) {
-    if (effectValue >= __effect2Impact.length) {
-      return "major"
-    }
-    return __effect2Impact[effectValue]
-  }
-  /* -------------------------------------------- */
-  static async processConfrontation() {
-    let confront = {
-      type: "confront-data",
-      rollData1: this.confrontData1,
-      rollData2: this.confrontData2,
-    }
-    // Compute margin
-    confront.marginExecution = this.confrontData1.executionTotal - this.confrontData2.preservationTotal
-    confront.marginPreservation = this.confrontData1.preservationTotal - this.confrontData2.executionTotal
-    console.log(confront.marginExecution, confront.marginPreservation)    
-    // Filter margin
-    let maxMargin // Dummy max
-    if ( confront.marginExecution > 0) { // Successful hit
-      // Limit with skill+spec
-      maxMargin = confront.rollData1.skill.value + ((confront.rollData1.spec) ? 2 : 0)
-      confront.marginExecution = Math.min(confront.marginExecution, maxMargin)
-    } else { // Failed hit
-      maxMargin = confront.rollData2.skill.value + ((confront.rollData2.spec) ? 2 : 0)
-      confront.marginExecution = -Math.min(Math.abs(confront.marginExecution), maxMargin)
-    }
-
-    if ( confront.marginPreservation > 0) { // Successful defense
-      // Limit with skill+spec
-      maxMargin = confront.rollData1.skill.value + ((confront.rollData1.spec) ? 2 : 0)
-      confront.marginPreservation = Math.min(confront.marginPreservation, maxMargin)
-    } else { // Failed defense
-      maxMargin = confront.rollData2.skill.value + ((confront.rollData2.spec) ? 2 : 0)
-      confront.marginPreservation = - Math.min(Math.abs(confront.marginPreservation), maxMargin)
-    }
-
-    // Compute effects
-    confront.effectExecution = confront.marginExecution
-    if (confront.rollData1.weapon && confront.marginExecution > 0) {
-      confront.effectExecution += confront.rollData1.weapon.system.effect
-      confront.impactExecution = this.getImpactFromEffect(confront.effectExecution)
-    } 
-    if ( confront.marginExecution < 0) {
-      confront.bonus2 = -confront.marginExecution
-    }
-    confront.effectPreservation = confront.marginPreservation
-    if (confront.rollData2.weapon && confront.marginPreservation < 0) {
-      confront.effectPreservation = - (Math.abs(confront.marginPreservation) + confront.rollData2.weapon.system.effect)
-      confront.impactPreservation = this.getImpactFromEffect(Math.abs(confront.effectPreservation))
-    }
-    if ( confront.marginPreservation > 0) {
-      confront.bonus1 = -confront.marginPreservation
-    }
-
-    let msg = await this.createChatWithRollMode(this.confrontData1.alias, {
-      content: await renderTemplate(`systems/fvtt-legends-of-wulin/templates/chat/chat-confrontation-result.hbs`, confront)
-    })
-    msg.setFlag("world", "low-rolldata", confront)
-    console.log("Confront result", confront)
-
-    this.lastConfront = confront
-  }
-
-  /* -------------------------------------------- */
-  static manageConfrontation(rollData) {
-    console.log("Confront", rollData)
-    // Auto - Reset
-    if (this.confrontData1 && this.confrontData2) {
-      this.confrontData1 = undefined
-      this.confrontData2 = undefined
-    }
-    // Then attribute
-    if (!this.confrontData1) {
-      this.confrontData1 = rollData
-    } else if (this.confrontData1 && this.confrontData1.rollId != rollData.rollId) {
-      this.confrontData2 = rollData
-      this.processConfrontation().catch("Error during confrontation processing")
-    } else {
-      ui.notifications.warn(game.i18n.localize("ECRY.warn.confrontalready"))
-    }
-  }
-
-  /* -------------------------------------------- */
   static chatMenuManager(html, options) {
     let canTranscendRoll = []
     for (let i = 1; i <= 10; i++) {
@@ -215,33 +131,50 @@ export class LoWUtility {
       })
     }
   }
+  /* -------------------------------------------- */
+  static removeDiceAndUpdate(rollData, diceValue, messageId) {
+    
+    this.removeChatMessageId(messageId) // Delete the previous chat message
+    for (let i = 0; i < rollData.diceResults.length; i++) {
+      if (rollData.diceResults[i].result == diceValue) {
+        rollData.diceResults.splice(i, 1)
+        break
+      }
+    }
+    this.processRollResults(rollData) // Update and display again the new roll results
+  }
+
+  /* -------------------------------------------- */
+  static flowDiceToLake(messageId, diceValue) {
+    let message = game.messages.get(messageId)
+    if (!message) {
+      ui.notifications.error("No message found")
+    } else {
+      this.removeChatMessageId(messageId) // Delete the previous chat message
+      let rollData = message.getFlag("world", "low-rolldata")
+      rollData.diceResults.push( {result: diceValue, active: true }) // Add a new dice to the dice results
+      this.processRollResults(rollData) // Update and display again the new roll results  
+    }
+  }
 
   /* -------------------------------------------- */
   static async chatListeners(html) {
 
-    html.on("click", '.button-select-confront', event => {
+    html.on("click", '.dice-to-river', event => {
       let messageId = LoWUtility.findChatMessageId(event.currentTarget)
       let message = game.messages.get(messageId)
-      let rollData = message.getFlag("world", "low-rolldata")
-      LoWUtility.manageConfrontation(rollData)
+      if (message) {
+        let rollData = message.getFlag("world", "low-rolldata")
+        const actorId = $(event.currentTarget).data("actor-id")
+        const diceValue = Number($(event.currentTarget).data("dice-value"))
+        let actor = game.actors.get( actorId)
+        if ( actor.addDiceToRiver(diceValue) ) {        
+          this.removeDiceAndUpdate( rollData, diceValue, messageId)
+        }
+      } else {
+        ui.notifications.error("Unable to find the message")
+      }
     })
-    html.on("click", '.button-apply-impact', event => {
-      let messageId = LoWUtility.findChatMessageId(event.currentTarget)
-      let message = game.messages.get(messageId)
-      let actor = game.actors.get($(event.currentTarget).data("actor-id"))
-      actor.modifyImpact($(event.currentTarget).data("impact-type"), $(event.currentTarget).data("impact"), 1)
-    })      
-    html.on("click", '.button-apply-bonus', event => {
-      let messageId = LoWUtility.findChatMessageId(event.currentTarget)
-      let message = game.messages.get(messageId)
-      let actor = game.actors.get($(event.currentTarget).data("actor-id"))
-      actor.modifyConfrontBonus( $(event.currentTarget).data("bonus") )
-    })      
-    html.on("click", '.draw-tarot-card', event => {
-      let messageId = LoWUtility.findChatMessageId(event.currentTarget)
-      this.drawDeckCard(messageId)
-    })
-
   }
 
   /* -------------------------------------------- */
@@ -252,10 +185,7 @@ export class LoWUtility {
       'systems/fvtt-legends-of-wulin/templates/items/partial-item-nav.hbs',
       'systems/fvtt-legends-of-wulin/templates/items/partial-item-equipment.hbs',
       'systems/fvtt-legends-of-wulin/templates/items/partial-item-description.hbs',
-      'systems/fvtt-legends-of-wulin/templates/dialogs/partial-common-roll-dialog.hbs',
-      'systems/fvtt-legends-of-wulin/templates/dialogs/partial-confront-dice-area.hbs',
-      'systems/fvtt-legends-of-wulin/templates/dialogs/partial-confront-bonus-area.hbs',
-      'systems/fvtt-legends-of-wulin/templates/actors/partial-impacts.hbs',
+      'systems/fvtt-legends-of-wulin/templates/dialogs/partial-common-roll-dialog.hbs'
     ]
     return loadTemplates(templatePaths);
   }
@@ -406,105 +336,81 @@ export class LoWUtility {
   /* -------------------------------------------- */
   static computeResults(rollData) {
     rollData.isSuccess = false
-    if (!rollData.difficulty || rollData.difficulty == "-") {
+    if (rollData.difficulty > 0) {
       return
     }
-    rollData.margin = rollData.total - rollData.difficulty
-    if (rollData.total > rollData.difficulty) {
+    if (rollData.total >= rollData.difficulty) {
       rollData.isSuccess = true
-      let maxMargin = rollData.skill.value + (rollData.spec) ? 2 : 0
-      rollData.margin = Math.min(rollData.margin, maxMargin)
+      rollData.isCritical = (rollData.total - rollData.difficulty) > 10
     }
   }
 
   /* -------------------------------------------- */
-  static computeRollFormula(rollData, actor, isConfrontation = false) {
-    // Build the dice formula
-    let diceFormula = (isConfrontation) ? "4d6" : "2d6"
-    if (rollData.useIdeal) {
-      diceFormula = (isConfrontation) ? "5d6kh2" : "3d6kh2"
+  static performGrouping(rollData) {
+    let results = rollData.diceResults
+    let groupedResults = []
+    for (let i=0; i<=10; i++) {
+      groupedResults[i] = {dice: i, count: 0, value: 0}
     }
-    if (rollData.useSpleen) {
-      diceFormula = (isConfrontation) ? "5d6kl2" : "3d6kl2"
+    // Build the dice groups
+    for (let result of results) { // Build the number of similar results
+      groupedResults[result.result].count += 1 // Inc number of dice
+      groupedResults[result.result].value = (groupedResults[result.result].count*10) + result.result // Compute total dice value
     }
+    rollData.groupedResults = groupedResults // keep the groups
+    // Then get the best group
+    let bestGroup = groupedResults[0] // Dice index 0 is always 0 (ie never a result)
+    for (let group of groupedResults) { 
+      if (group.value > bestGroup.value) {
+        bestGroup = group
+      }
+    }
+    return bestGroup
+  }
+
+  /* -------------------------------------------- */
+  static async processRollResults(rollData) {
+    rollData.bestGroup = this.performGrouping(rollData)
+    // Compute the total
+    rollData.total = rollData.bestGroup.value
     if (rollData.skill) {
-      diceFormula += "+" + rollData.skill.value
+      rollData.total += rollData.skill.system.level // If skill mode, add the level
     }
-    if (rollData.skillTranscendence) {
-      diceFormula += "+" + rollData.skillTranscendence
-      actor.spentSkillTranscendence(rollData.skill, rollData.skillTranscendence)
-    }
-    if (rollData.selectedSpecs && rollData.selectedSpecs.length > 0) {
-      rollData.spec = actor.getSpecialization(rollData.selectedSpecs[0])
-      diceFormula += "+2"
-    }
-    rollData.bonusMalusTraits = 0
-    if (rollData.traitsBonus && rollData.traitsBonus.length > 0) {
-      rollData.traitsBonusList = []
-      for (let id of rollData.traitsBonus) {
-        let trait = actor.getTrait(id)
-        console.log(trait, id)
-        rollData.traitsBonusList.push(trait)
-        rollData.bonusMalusTraits += trait.system.level
-      }
-    }
-    if (rollData.traitsMalus && rollData.traitsMalus.length > 0) {
-      rollData.traitsMalusList = []
-      for (let id of rollData.traitsMalus) {
-        let trait = actor.getTrait(id)
-        rollData.traitsMalusList.push(trait)
-        rollData.bonusMalusTraits -= trait.system.level
-      }
-    }
-    diceFormula += "+" + rollData.bonusMalusTraits
-    diceFormula += "+" + rollData.bonusMalusPerso
-    diceFormula += "+" + rollData.impactMalus
-    rollData.diceFormula = diceFormula
-    return diceFormula
+    rollData.total += rollData.bonusMalus // Add bonus/malus if present
+    // Compute success/critical
+    this.computeResults(rollData)
+    // Display on the chat
+    let msg = await this.createChatWithRollMode(rollData.alias, {
+      content: await renderTemplate(`systems/fvtt-legends-of-wulin/templates/chat/chat-generic-result.hbs`, rollData)
+    })
+    await msg.setFlag("world", "low-rolldata", rollData)
+
+    // Store the lates lake roll
+    let actor = game.actors.get(rollData.actorId)
+    await actor.setFlag("world", "last-roll-message-id", msg.id)
+    console.log("Rolldata result", rollData)
   }
 
   /* -------------------------------------------- */
   static async rollLoW(rollData) {
 
     let actor = game.actors.get(rollData.actorId)
+    
     // Fix difficulty
     if (!rollData.difficulty || rollData.difficulty == "-") {
       rollData.difficulty = 0
     }
     rollData.difficulty = Number(rollData.difficulty)
 
-    let diceFormula = this.computeRollFormula(rollData, actor)
+    let diceFormula = actor.system.lake.value + "d10" // Compute Lake roll number of d10
 
     // Performs roll
     let myRoll = new Roll(diceFormula).roll({ async: false })
     await this.showDiceSoNice(myRoll, game.settings.get("core", "rollMode"))
-    rollData.roll = duplicate(myRoll)
-    rollData.total = myRoll.total
-    rollData.diceSum = myRoll.terms[0].total
+    rollData.roll = duplicate(myRoll)  
+    rollData.diceResults = duplicate(rollData.roll.terms[0].results) // get results array
 
-    this.computeResults(rollData)
-
-    let msg = await this.createChatWithRollMode(rollData.alias, {
-      content: await renderTemplate(`systems/fvtt-legends-of-wulin/templates/chat/chat-generic-result.hbs`, rollData)
-    })
-    msg.setFlag("world", "low-rolldata", rollData)
-    console.log("Rolldata result", rollData)
-  }
-
-  /* -------------------------------------------- */
-  static async transcendFromSpec(rollData, value) {
-    rollData.total += value
-    rollData.transcendUsed = true
-    this.computeResults(rollData)
-    //console.log("Adding spec", value, rollData.total)
-
-    let actor = game.actors.get(rollData.actorId)
-    actor.spentSkillTranscendence(rollData.skill, value)
-
-    let msg = await this.createChatWithRollMode(rollData.alias, {
-      content: await renderTemplate(`systems/fvtt-legends-of-wulin/templates/chat/chat-generic-result.hbs`, rollData)
-    })
-    msg.setFlag("world", "low-rolldata", rollData)
+    await this.processRollResults(rollData)
   }
 
   /* -------------------------------------------- */
@@ -601,17 +507,10 @@ export class LoWUtility {
     let rollData = {
       rollId: randomID(16),
       type: "roll-data",
-      bonusMalusPerso: 0,
-      bonusMalusSituation: 0,
-      bonusMalusDef: 0,
-      bonusMalusPortee: 0,
-      skillTranscendence: 0,
+      bonusMalus: 0,
       rollMode: game.settings.get("core", "rollMode"),
-      difficulty: "-",
-      useSpleen: false,
-      useIdeal: false,
-      impactMalus: 0,
-      config: duplicate(game.system.ecryme.config)
+      difficulty: "0",
+      config: duplicate(game.system.low.config)
     }
     LoWUtility.updateWithTarget(rollData)
     return rollData

@@ -5,61 +5,46 @@
   <h4 class="chat-actor-name">{{alias}}</h4>
 </div>
 
-  <hr>
-  
+<hr>
+
+<div>
   {{#if img}}
-  <div >
-    <img class="chat-icon" src="{{img}}" alt="{{name}}" />
-  </div>
+  <img class="chat-icon" src="{{img}}" alt="{{name}}" />
   {{/if}}
 
+
   <div class="flexcol">
+    {{#each groupedResults as |group key1|}}
+    {{#if (gt group.value 0)}}
+    <div class="dice-total">
+      {{#for 1 group.count 1}}
+      <div class="flexrow dice">
+        <a class="dice-to-river" data-actor-id="{{@root.actorId}}" data-roll-id="{{@root.rollId}}"
+          data-dice-value="{{group.dice}}">
+          <label>{{group.dice}}</label>
+          <img src="systems/fvtt-legends-of-wulin/images/dice/d10black.svg" />
+        </a>
+      </div>
+      {{/for}}
+      {{/if}}
+      {{/each}}
     </div>
-
-    <div>
-      <ul>
-        {{#if skill}}
-          <li>{{localize skill.name}}: {{skill.value}} </li>
-          {{#if spec}}
-            <li>{{localize "ECRY.chat.specialization"}} {{spec.name}} (+2) </li>
-          {{/if}}
-        {{/if}}
-
-        {{#if impactMalus}}
-          <li>{{localize "ECRY.ui.impactmalus"}}: {{impactMalus}} </li>
-        {{/if}}
-
-        {{#if skillTranscendence}}
-          <li>{{localize "ECRY.ui.skilltranscendence"}}: {{skillTranscendence}} </li>
-        {{/if}}
-
-        {{#if traitsBonusList}}
-          {{#each traitsBonusList as |trait idx|}}
-          <li>{{localize "ECRY.chat.traitbonus"}}: {{trait.name}} ({{trait.system.level}}) </li>
-          {{/each}}
-        {{/if}}
-        {{#if traitsMalusList}}
-          {{#each traitsMalusList as |trait idx|}}
-            <li>{{localize "ECRY.chat.traitmalus"}}: {{trait.name}} ({{trait.system.level}}) </li>
-          {{/each}}
-        {{/if}}
-        {{#if bonusMalusTraits}}
-          <li>{{localize "ECRY.chat.bonusmalustraits"}}: {{bonusMalusTraits}} </li>
-        {{/if}}
-
-        <li>{{localize "ECRY.chat.formula"}}: {{diceFormula}} </li>
-        <li>{{localize "ECRY.chat.dicesum"}}: {{diceSum}} </li>
-        <li>{{localize "ECRY.chat.result"}}: {{total}} </li>
-        {{#if difficulty}}
-          <li>{{localize "ECRY.chat.difficulty"}}: {{difficulty}} - {{localize "ECRY.chat.margin"}}: {{margin}} </li>
-          {{#if isSuccess}}
-            <li><label class="chat-result-text chat-result-success ">{{localize "ECRY.chat.success"}}</label></li>
-          {{else}}
-            <li><label class="chat-result-text chat-result-failure">{{localize "ECRY.chat.failure"}}</label></li>
-          {{/if}}
-        {{/if}}
-
-      </ul>  
-    </div>
-
   </div>
+
+  <ul>
+    {{#if skill}}
+    <li>{{skill.name}}: {{skill.system.level}} </li>
+    {{/if}}
+
+    {{#if bonusMalus}}
+    <li>Modifier: {{bonusMalus}} </li>
+    {{/if}}
+    {{#if difficulty}}
+    <li>Difficulty: {{difficulty}} </li>
+    {{/if}}
+
+    <li><strong>Total: {{total}} </strong></li>
+
+  </ul>
+
+</div>  

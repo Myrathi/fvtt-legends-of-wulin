@@ -48,16 +48,31 @@ export class LoWActor extends Actor {
   async prepareData() {
     super.prepareData()
   }
-
   /* -------------------------------------------- */
-  prepareDerivedData() {
-    super.prepareDerivedData();
+  computeDerivedData() {
   }
 
   /* -------------------------------------------- */
   _preUpdate(changed, options, user) {
 
+    if (changed.system?.biodata?.rank) {
+      let newRiver = (5 - Number(changed.system.biodata.rank)) + 1;
+      if (newRiver != this.system.river.value) {
+        let dices = [];
+        for (let i = 0; i < 5; i++) {
+          dices.push({ index: i, active: i < newRiver, value: -1 });
+        }
+        changed.system.river = { value: newRiver, dices: dices };
+        changed.system.lake = { value: newRiver + 5 } // Update Lake also
+      }
+    }
     super._preUpdate(changed, options, user);
+  }
+
+  /* -------------------------------------------- */
+  prepareDerivedData() {
+    super.prepareDerivedData();
+    this.computeDerivedData();
   }
 
   /* -------------------------------------------- */
@@ -231,78 +246,71 @@ export class LoWActor extends Actor {
       }
     }
   }
-  
+  /* -------------------------------------------- */
+  washRiver() {
+    let riverDices = duplicate(this.system.river.dices)
+    for (let dice of riverDices) {
+      dice.value = -1
+      this.update({ 'system.river.dices': riverDices })
+    }
+  }
+  /* -------------------------------------------- */
+  addDiceToRiver(diceValue) {
+    let riverDices = duplicate(this.system.river.dices)
+    for (let dice of riverDices) {
+      if (dice.active && dice.value == -1) {
+        dice.value = Number(diceValue);
+        this.update({ 'system.river.dices': riverDices });
+        return true;
+      }
+    }
+    console.log(riverDices)
+    ui.notifications.warn("No more room available in your River !");
+    return false
+  }
+  /* -------------------------------------------- */
+  flowDice(diceIndex) {
+    let msgId = this.getFlag("world", "last-roll-message-id")
+    if (msgId) {
+      let riverDices = duplicate(this.system.river.dices)
+      let diceValue = riverDices[diceIndex].value
+      riverDices[diceIndex].value = -1
+      this.update({ 'system.river.dices': riverDices })
+      LoWUtility.flowDiceToLake(msgId, diceValue)
+    } else {
+      ui.notifications.warn("No lake roll available !")
+    }
+  }
+
   /* -------------------------------------------- */
   getCommonRollData() {
-    this.system.internals.confrontbonus = 5 // TO BE REMOVED!!!!
     let rollData = LoWUtility.getBasicRollData()
     rollData.alias = this.name
     rollData.actorImg = this.img
     rollData.actorId = this.id
     rollData.img = this.img
-    rollData.isReroll = false
-    rollData.traits = duplicate(this.getRollTraits())
-    rollData.spleen = duplicate(this.getSpleen() || {})
-    rollData.ideal = duplicate(this.getIdeal() || {})
-    rollData.confrontBonus = this.getBonusList()
 
     return rollData
   }
 
   /* -------------------------------------------- */
-  getCommonSkill(categKey, skillKey) {
-    let skill = this.system.skills[categKey].skilllist[skillKey]
+  getCommonSkill(skillId) {
+    let skill = this.items.find(i => i.id == skillId)
     let rollData = this.getCommonRollData()
-    
-    skill = duplicate(skill)
-    skill.categKey = categKey
-    skill.skillKey = skillKey
-    skill.spec = this.getSpecializations(skillKey)
 
+    skill = duplicate(skill)
     rollData.skill = skill
     rollData.img = skill.img
-    rollData.impactMalus = this.getImpactMalus(categKey)
 
     return rollData
   }
 
   /* -------------------------------------------- */
-  rollSkill(categKey, skillKey) {
-    let rollData = this.getCommonSkill(categKey, skillKey)
+  rollSkill(skillId) {
+    let rollData = this.getCommonSkill(skillId)
     rollData.mode = "skill"
-    rollData.title = game.i18n.localize(rollData.skill.name)
+    rollData.title = rollData.skill.name
     this.startRoll(rollData).catch("Error on startRoll")
-  }
-
-  /* -------------------------------------------- */
-  async rollSkillConfront(categKey, skillKey) {
-    let rollData = this.getCommonSkill(categKey, skillKey)
-    rollData.mode = "skill"
-    rollData.title = game.i18n.localize("ECRY.ui.confrontation") + " : " + game.i18n.localize(rollData.skill.name)
-    rollData.executionTotal    = rollData.skill.value
-    rollData.preservationTotal = rollData.skill.value
-    rollData.applyTranscendence = "execution"
-    let confrontStartDialog = await LoWConfrontStartDialog.create(this, rollData)
-    confrontStartDialog.render(true)
-  }
-
-  /* -------------------------------------------- */
-  async rollWeaponConfront(weaponId) {
-    let weapon = this.items.get(weaponId)
-    let rollData
-    if (weapon && weapon.system.weapontype == "melee") {
-      rollData = this.getCommonSkill("physical", "fencing")
-    } else {
-      rollData = this.getCommonSkill("physical", "shooting")
-    }
-    rollData.mode = "weapon"
-    rollData.weapon = duplicate(weapon)
-    rollData.title = game.i18n.localize("ECRY.ui.confrontation") + " : " + game.i18n.localize(rollData.skill.name)
-    rollData.executionTotal    = rollData.skill.value
-    rollData.preservationTotal = rollData.skill.value
-    rollData.applyTranscendence = "execution"
-    let confrontStartDialog = await LoWConfrontStartDialog.create(this, rollData)
-    confrontStartDialog.render(true)
   }
 
   /* -------------------------------------------- */

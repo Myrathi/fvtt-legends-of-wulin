@@ -25,6 +25,30 @@
         "ASSISTANT": "OWNER"
       },
       "flags": {}
+    },
+    {
+      "name": "loresheets",
+      "label": "Loresheets",
+      "system": "fvtt-legends-of-wulin",
+      "path": "packs/loresheets",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    },
+    {
+      "name": "styles-and-techniques",
+      "label": "Styles and Techniques",
+      "system": "fvtt-legends-of-wulin",
+      "path": "packs/styles-and-techniques",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
     }
   ],
   "license": "LICENSE.txt",
@@ -42,7 +66,7 @@
   ],
   "title": "Legends of Wulin RPG",
   "url": "https://www.uberwald.me/gitea/uberwald/legends-of-wulin",
-  "version": "11.0.4",
-  "download": "https://www.uberwald.me/gitea/uberwald/legends-of-wulin/archive/legends-of-wulin-v11.0.4.zip",
+  "version": "11.0.6",
+  "download": "https://www.uberwald.me/gitea/uberwald/legends-of-wulin/archive/legends-of-wulin-v11.0.5.zip",
   "background": "systems/fvtt-legends-of-wulin/images/ui/LotW- Welcome Background.jpg"
 }

@@ -13,17 +13,17 @@ export class LoWRollDialog extends Dialog {
   /* -------------------------------------------- */
   constructor(actor, rollData, html, options, close = undefined) {
     let conf = {
-      title: game.i18n.localize("ECRY.ui.rolltitle"),
+      title: "Lake roll",
       content: html,
       buttons: {
         roll: {
           icon: '<i class="fas fa-check"></i>',
-          label: game.i18n.localize("ECRY.ui.roll"),
+          label: "Roll",
           callback: () => { this.roll() }
         },
         cancel: {
           icon: '<i class="fas fa-times"></i>',
-          label: game.i18n.localize("ECRY.ui.cancel"),
+          label: "Cancel", 
           callback: () => { this.close() }
         }
       },
@@ -57,30 +57,12 @@ export class LoWRollDialog extends Dialog {
     }
     $(function () { onLoad(); });
 
-    html.find('#bonusMalusPerso').change((event) => {
-      this.rollData.bonusMalusPerso = Number(event.currentTarget.value)
+    html.find('#roll-bonus-malus').change((event) => {
+      this.rollData.bonusMalus = Number(event.currentTarget.value)
     })
     html.find('#roll-difficulty').change((event) => {
       this.rollData.difficulty = Number(event.currentTarget.value) || 0
     })
-    html.find('#roll-specialization').change((event) => {
-      this.rollData.selectedSpecs = $('#roll-specialization').val()
-    })
-    html.find('#roll-trait-bonus').change((event) => {
-      this.rollData.traitsBonus = $('#roll-trait-bonus').val()
-    })
-    html.find('#roll-trait-malus').change((event) => {
-      this.rollData.traitsMalus = $('#roll-trait-malus').val()
-    })
-    html.find('#roll-select-transcendence').change((event) => {
-      this.rollData.skillTranscendence = Number($('#roll-select-transcendence').val())
-    })    
-    html.find('#roll-use-spleen').change((event) => {
-      this.rollData.useSpleen = event.currentTarget.checked
-    })      
-    html.find('#roll-use-ideal').change((event) => {
-      this.rollData.useIdeal = event.currentTarget.checked
-    })      
 
   }
 }

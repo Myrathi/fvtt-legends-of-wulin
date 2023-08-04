@@ -106,10 +106,17 @@ export class LoWActorSheet extends ActorSheet {
     } );
 
     html.find('.roll-skill').click((event) => {
-      let categKey = $(event.currentTarget).data("category-key")
-      let skillKey = $(event.currentTarget).data("skill-key")
-      this.actor.rollSkill(categKey, skillKey)
+      let skillId = $(event.currentTarget).data("skill-id")
+      this.actor.rollSkill(skillId)
     });    
+    html.find('.river-flow').click((event) => {
+      const diceIndex = $(event.currentTarget).data("dice-index");
+      this.actor.flowDice(diceIndex);
+    });    
+    html.find('.river-wash').click((event) => {
+      this.actor.washRiver();
+    });    
+    
     
     html.find('.roll-weapon').click((event) => {
       const armeId = $(event.currentTarget).data("arme-id")

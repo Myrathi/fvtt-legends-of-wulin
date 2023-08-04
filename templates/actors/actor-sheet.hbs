@@ -85,6 +85,40 @@
         </div>
 
         <div>
+
+          <span class="flexrow pack-left">
+            <h3>River {{system.river.value}} - Lake : {{system.lake.value}}</h3>            
+            <span> <button class="river-button river-wash">Flush</button></span>
+          </span>
+          <div class="dice-river-list div-center flexrow div-river ">
+            <table class="div-river-full">
+              <tr class="div-river-full">
+                {{#each system.river.dices as |dice idx|}}
+                <td class="dice-cell">
+                  <div class="dice div-center">
+                    {{#if dice.active}}
+                    {{#if (eq dice.value -1)}}
+                    <label>?</label>
+                    {{else}}
+                    <label>{{dice.value}}</label>
+                    {{/if}}
+                    <img src="systems/fvtt-legends-of-wulin/images/dice/d10black.svg" />
+                    {{else }}
+                    {{/if}}
+                  </div>
+                  {{#if dice.active}}
+                  {{#if (ne dice.value -1)}}
+                  <button class="river-button river-flow" data-dice-index="{{idx}}">Flow</button>
+                  <button class="river-button river-flood" data-dice-index="{{idx}}">Flood</button>
+                  {{/if}}
+                  {{/if}}
+                </td>
+                {{/each}}
+              </tr>
+            </table>
+          </div>
+
+
           <h3>Chi Threshold</h3>
           {{#each system.chi_threshold as |chi key|}}
           <ul class="item-list alternate-list">
@@ -113,13 +147,13 @@
             {{#each system.chi as |chi key|}}
             <li class="item flexrow list-item items-title-bg">
               <span class="item-field-label-medium">{{upperFirst key}}</span>
-              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.value"
-                value="{{chi.trivial}}" data-dtype="Number" />
-              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.cultivation"
+              <input type="text" class="item-field-label-short" name="system.chi.{{key}}.value" value="{{chi.trivial}}"
+                data-dtype="Number" />
+              <input type="text" class="item-field-label-short" name="system.chi.{{key}}.cultivation"
                 value="{{chi.minor}}" data-dtype="Number" />
               {{#if (exists chi.max)}}
-              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.max"
-                value="{{chi.max}}" data-dtype="Number" />
+              <input type="text" class="item-field-label-short" name="system.chi.{{key}}.max" value="{{chi.max}}"
+                data-dtype="Number" />
               {{/if}}
             </li>
             {{/each}}

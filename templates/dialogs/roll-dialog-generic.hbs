@@ -8,18 +8,20 @@
 
   <div class="flexcol">
 
-    {{> systems/fvtt-ecryme/templates/dialogs/partial-common-roll-dialog.hbs}}
+    {{> systems/fvtt-legends-of-wulin/templates/dialogs/partial-common-roll-dialog.hbs}}
 
     <div class="flexrow">
-      <span class="roll-dialog-label">Difficulté : </span>
+
+      <span class="roll-dialog-label">Difficulty : </span>
       <select class="" type="text" id="roll-difficulty" value="{{difficulty}}" data-dtype="Number">
         {{#select difficulty}}
-        {{#each config.difficulty as |diffData value| }}
-        <option value="{{diffData.value}}">{{localize diffData.difficulty}} / {{localize diffData.frequency}}
-          ({{diffData.value}})</option>
+        <option value="0">Not set/Not applicable</option>
+        {{#each config.difficulty as |diffName value| }}
+        <option value="{{value}}">{{diffName}} ({{value}})</option>
         {{/each}}
         {{/select}}
       </select>
+
     </div>
 
   </div>

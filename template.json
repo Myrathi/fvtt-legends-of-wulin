@@ -9,15 +9,9 @@
           "age": "",
           "size": "",
           "concept": "",
-          "rang": "",
+          "rank": "",
           "archetype": "",
           "player": "",
-          "milieusocial": "",
-          "poids": "",
-          "cheveux": "",
-          "sexe": "",
-          "yeux": "",
-          "enfance": "",
           "description": "",
           "gmnotes": ""
         }
@@ -29,6 +23,16 @@
         },
         "entanglement": {
           "value": 0
+        },
+        "lake": {
+          "label": "Lake",
+          "value": 5
+        },
+        "river": {
+          "label": "River",
+          "value": 0,
+          "max": 0,
+          "dices": [ ]
         },
         "subactors": [],
         "chi_threshold": {
