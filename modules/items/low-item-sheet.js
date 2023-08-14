@@ -111,7 +111,7 @@ export class LoWItemSheet extends ItemSheet {
     let levelIndex = Number($(ev.currentTarget).parents(".item").data("level-index"))
     let choiceIndex = Number($(ev.currentTarget).parents(".item").data("choice-index"))
     let featureId = $(ev.currentTarget).parents(".item").data("feature-id")
-    
+
     let itemData = this.object.system.levels[levelIndex].choices[choiceIndex].features[featureId]
 
     if (itemData.name != 'None') {
@@ -165,7 +165,19 @@ export class LoWItemSheet extends ItemSheet {
       let itemType = li.data("item-type");
     });
 
- }
+    html.find('.weapon-family-selector').click(ev => {
+      this.updateFamilyDefaults(ev)
+    });
+  }
+
+  /* -------------------------------------------- */
+  updateFamilyDefaults(ev) {
+    let familyKey = $(ev.currentTarget).val();
+    let defaults = game.system.low.config.weaponFamilies[familyKey];
+    this.object.update({ "system.strikebonus": defaults.strikebonus, "system.blockbonus": defaults.blockbonus, 
+    "system.damagebonus": defaults.damagebonus, "system.speedbonus": defaults.speedbonus, "system.footworkbonus": 
+    defaults.footworkbonus, "system.hasflood": defaults.hasflood, "system.effects": defaults.effects  });
+  }
 
   /* -------------------------------------------- */
   get template() {

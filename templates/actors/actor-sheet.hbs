@@ -98,9 +98,9 @@
                   <div class="dice div-center">
                     {{#if dice.active}}
                     {{#if (eq dice.value -1)}}
-                    <label>?</label>
+                    <label class="dice-number-sheet-result">?</label>
                     {{else}}
-                    <label>{{dice.value}}</label>
+                    <label class="dice-number-sheet-result">{{dice.value}}</label>
                     {{/if}}
                     <img src="systems/fvtt-legends-of-wulin/images/dice/d10black.svg" />
                     {{else }}
@@ -247,11 +247,8 @@
           <span class="item-name-label-header-long2">
             <h3><label class="item-name-label-header-long2">External Styles</label></h3>
           </span>
-          <span class="item-field-label-short">
-            <label class="item-field-label-short">Niveau</label>
-          </span>
           <div class="item-controls item-controls-fixed">
-            <a class="item-control item-add" data-type="trait" title="Create Trait"><i class="fas fa-plus"></i></a>
+            <a class="item-control item-add" data-type="style" title="Create Style"><i class="fas fa-plus"></i></a>
           </div>
         </li>
         {{#each externalStyles as |style key|}}
@@ -259,11 +256,10 @@
           <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
               src="{{style.img}}" /></a>
           <span class="item-name-label-long2">{{style.name}}</span>
-          <span class="item-field-label-short"><label>{{style.system.level}}</label></span>
 
           <div class="item-filler">&nbsp;</div>
           <div class="item-controls item-controls-fixed">
-            <a class="item-control item-delete" title="Delete trait"><i class="fas fa-trash"></i></a>
+            <a class="item-control item-delete" title="Delete style"><i class="fas fa-trash"></i></a>
           </div>
         </li>
         {{/each}}

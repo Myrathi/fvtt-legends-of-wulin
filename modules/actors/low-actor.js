@@ -87,6 +87,11 @@ export class LoWActor extends Actor {
     LoWUtility.sortArrayObjectsByName(comp)
     return comp
   }
+  getExternalStyles() {
+    let comp = duplicate(this.items.filter(it => it.type == "style" && it.system.styletype == "external"))
+    LoWUtility.sortArrayObjectsByName(comp)
+    return comp
+  }
   getConditions() {
     let comp = duplicate(this.items.filter(it => it.type == "condition"))
     LoWUtility.sortArrayObjectsByName(comp)

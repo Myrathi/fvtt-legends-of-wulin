@@ -287,18 +287,15 @@
       ]
     },
     "weapon": {
-      "family": "",
-      "artful": false,
-      "brutal": false,
-      "ranged": false,
-      "speed": 0,
-      "strike": 0,
-      "damage": 0,
-      "short": 0,
-      "medium": 0,
-      "long": 0,
+      "family": "improvised",
+      "speedbonus": 0,
+      "strikebonus": 0,
+      "damagebonus": 0,
+      "blockbonus": 0,
+      "footworkbonus": 0,
+      "hasflood": false,
       "equipped": false,
-      "effectdescription": "",
+      "effects": ["", "", "", ""],
       "templates": [
         "common"
       ]

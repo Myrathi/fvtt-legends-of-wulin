@@ -5,6 +5,9 @@ import { LoWCommands } from "../app/low-commands.js";
 const __maxImpacts = { superficial: 4, light: 3, serious: 2, major: 1 }
 const __nextImpacts = { superficial: "light", light: "serious", serious: "major", major: "major" }
 const __effect2Impact= [ "none", "superficial", "superficial", "light", "light", "serious", "serious", "major", "major" ]
+const __familyWeapons ={
+
+}
 /* -------------------------------------------- */
 export class LoWUtility {
 
@@ -58,21 +61,6 @@ export class LoWUtility {
       for (let i = from; i <= to; i += incr)
         accum += block.fn(i);
       return accum;
-    })
-
-    game.settings.register("fvtt-legends-of-wulin", "low-game-level", {
-      name: game.i18n.localize("ECRY.settings.gamelevel"),
-      label: game.i18n.localize("ECRY.settings.gamelevelhelp"),
-      scope: 'world',
-      config: true,
-      type: String,
-      choices: {
-        "level_e": game.i18n.localize("ECRY.settings.cogs"),
-        "level_c": game.i18n.localize("ECRY.settings.cephaly"),
-        "level_b": game.i18n.localize("ECRY.settings.boheme"),
-        "level_a": game.i18n.localize("ECRY.settings.amertume"),
-      },
-      restricted: true
     })
 
   }

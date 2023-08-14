@@ -36,6 +36,7 @@ export class LoWActorSheet extends ActorSheet {
       system: duplicate(this.object.system),
       limited: this.object.limited,
       skills: this.actor.getSkills(),
+      externalStyles: this.actor.getExternalStyles(),
       conditions: this.object.getConditions(),
       config: duplicate(game.system.low.config),
       weapons: this.actor.getWeapons(),
