@@ -31,35 +31,12 @@
             </select>
           </li>
 
+          {{#each system.stats as |stat key|}}
           <li class="flexrow">
-            <label class="item-name-label-long">Strike bonus</label>
-            <input type="text" class="item-field-label-short weapon-strike-bonus" name="system.strikebonus" value="{{system.strikebonus}}"
-              data-dtype="Number" />
+            <label class="item-name-label-long">{{upperFirst key}}</label>
+            Bonus: <input type="text" class="item-field-label-short" name="system.stats.{{@key}}.bonus" value="{{stat.bonus}}" data-dtype="Number"/>
           </li>
-
-          <li class="flexrow">
-            <label class="item-name-label-long">Damage bonus</label>
-            <input type="text" class="item-field-label-short weapon-damage-bonus" name="system.damagebonus" value="{{system.damagebonus}}"
-              data-dtype="Number" />
-          </li>
-
-          <li class="flexrow">
-            <label class="item-name-label-long">Block bonus</label>
-            <input type="text" class="item-field-label-short weapon-block-bonus" name="system.blockbonus" value="{{system.blockbonus}}"
-              data-dtype="Number" />
-          </li>
-
-          <li class="flexrow">
-            <label class="item-name-label-long">Speed bonus</label>
-            <input type="text" class="item-field-label-short weapon-speed-bonus" name="system.speedbonus" value="{{system.speedbonus}}"
-              data-dtype="Number" />
-          </li>
-
-          <li class="flexrow">
-            <label class="item-name-label-long">Footwork bonus</label>
-            <input type="text" class="item-field-label-short weapon-footwork-bonus" name="system.footworkbonus"
-              value="{{system.footworkbonus}}" data-dtype="Number" />
-          </li>
+          {{/each}}
 
           <div class="flexrow">
             <span class="item-name-label-long">Has flood ? : </span>
@@ -76,8 +53,8 @@
 
           <div class="flexrow">
             <span class="item-name-label-long">Equipped ? : </span>
-            <label class="item-field-label-short checkbox"><input type="checkbox" name="equipped"
-                {{checked equipped}} /></label>
+            <label class="item-field-label-short checkbox"><input type="checkbox" name="system.equipped"
+                {{checked system.equipped}} /></label>
           </div>
 
         </ul>

@@ -11,9 +11,21 @@ export const LOW_CONFIG = {
     technique: "Technique",
     status: "Status"
   },
+  conditionType: {
+    trivial: "Trivial",
+    minor: "Minor",
+    major: "Major"
+  },
   styleType: {
     internal: "Internal",
     external: "External"
+  },
+  styleCombatModifier: {
+    "speed": {label: "Speed", value: "speedbonus"},
+    "strike": {label: "Strike", value: "strikebonus"},
+    "damage": {label: "Damage", value: "damagebonus"},
+    "block": {label: "Block", value: "blockbonus"},
+    "footwork": {label: "Footwork", value: "footworkbonus"},
   },
   difficulty: {
     10: "Trivial",

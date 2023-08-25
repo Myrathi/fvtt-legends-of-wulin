@@ -39,6 +39,11 @@
       {{/if}}
     {{/if}}
 
+    {{#if style}}
+    <li>{{style.name}}: {{upperFirst styleCombatModifier}} {{styleBonus}}</li>
+    <li>Weapon Bonus : {{weaponBonus}} </li>
+    {{/if}}
+
     {{#if spentChivalrous}}
     {{#if (gt lakeModifier 0)}}
       <li>Chivalrous Joss has been spent: {{lakeModifier}} </li>

@@ -17,6 +17,7 @@
         }
       },
       "core": {
+        "equipmentfree": "",
         "joss": {
           "chivalrous": {
             "label": "Chivalrous",
@@ -42,7 +43,7 @@
           "label": "River",
           "value": 0,
           "max": 0,
-          "dices": [ ]
+          "dices": []
         },
         "subactors": [],
         "chi_threshold": {
@@ -154,7 +155,7 @@
               "code": "Hen",
               "name": "Ruthlessness",
               "value": 0
-            }          
+            }
           }
         }
       },
@@ -189,7 +190,7 @@
         "description": ""
       }
     },
-    "technique":  {
+    "technique": {
       "parent": "",
       "destinycost": 0,
       "templates": [
@@ -241,8 +242,9 @@
       "equipped": false
     },
     "condition": {
-      "penalty": "",
-      "appliedto": "",
+      "conditiontype": "trivial",
+      "actionpenalty": "",
+      "breathpenalty": "",
       "templates": [
         "common"
       ]
@@ -256,7 +258,7 @@
     "style": {
       "styletype": "internal",
       "isformless": false,
-      "stats":  {
+      "stats": {
         "speed": {
           "basic": 0,
           "modified": 0
@@ -280,7 +282,7 @@
         "toughness": {
           "basic": 0,
           "modified": 0
-        }  
+        }
       },
       "templates": [
         "common"
@@ -288,14 +290,34 @@
     },
     "weapon": {
       "family": "improvised",
-      "speedbonus": 0,
-      "strikebonus": 0,
-      "damagebonus": 0,
-      "blockbonus": 0,
-      "footworkbonus": 0,
+      "stats": {
+        "speed": {
+          "bonus": 0
+        },
+        "footwork": {
+          "bonus": 0
+        },
+        "strike": {
+          "bonus": 0
+        },
+        "block": {
+          "bonus": 0
+        },
+        "damage": {
+          "bonus": 0
+        },
+        "toughness": {
+          "bonus": 0
+        }
+      },
       "hasflood": false,
       "equipped": false,
-      "effects": ["", "", "", ""],
+      "effects": [
+        "",
+        "",
+        "",
+        ""
+      ],
       "templates": [
         "common"
       ]

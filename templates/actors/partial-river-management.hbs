@@ -1,0 +1,31 @@
+<span class="flexrow pack-left">
+  <h3>River {{system.river.value}} - Lake : {{system.lake.value}}</h3>
+  <span> <button class="river-button river-wash">Wash</button></span>
+</span>
+<div class="dice-river-list div-center flexrow div-river ">
+  <table class="div-river-full">
+    <tr class="div-river-full">
+      {{#each system.river.dices as |dice idx|}}
+      <td class="dice-cell">
+        <div class="dice div-center">
+          {{#if dice.active}}
+          {{#if (eq dice.value -1)}}
+          <label class="dice-number-sheet-result">?</label>
+          {{else}}
+          <label class="dice-number-sheet-result">{{dice.value}}</label>
+          {{/if}}
+          <img src="systems/fvtt-legends-of-wulin/images/dice/d10black.svg" />
+          {{else }}
+          {{/if}}
+        </div>
+        {{#if dice.active}}
+        {{#if (ne dice.value -1)}}
+        <button class="river-button river-flow" data-dice-index="{{idx}}">Flow</button>
+        <button class="river-button river-flood" data-dice-index="{{idx}}">Flood</button>
+        {{/if}}
+        {{/if}}
+      </td>
+      {{/each}}
+    </tr>
+  </table>
+</div>

@@ -53,7 +53,7 @@
     <a class="item" data-tab="virtues">Virtues</a>
     <a class="item" data-tab="combat">Combat</a>
     <a class="item" data-tab="conditions">Conditions</a>
-    <a class="item" data-tab="equipements">Equipment</a>
+    <a class="item" data-tab="equipment">Equipment</a>
     <a class="item" data-tab="biodata">Notes&Bio</a>
   </nav>
 
@@ -85,55 +85,9 @@
         </div>
 
         <div>
-
-          <span class="flexrow pack-left">
-            <h3>River {{system.river.value}} - Lake : {{system.lake.value}}</h3>            
-            <span> <button class="river-button river-wash">Wash</button></span>
-          </span>
-          <div class="dice-river-list div-center flexrow div-river ">
-            <table class="div-river-full">
-              <tr class="div-river-full">
-                {{#each system.river.dices as |dice idx|}}
-                <td class="dice-cell">
-                  <div class="dice div-center">
-                    {{#if dice.active}}
-                    {{#if (eq dice.value -1)}}
-                    <label class="dice-number-sheet-result">?</label>
-                    {{else}}
-                    <label class="dice-number-sheet-result">{{dice.value}}</label>
-                    {{/if}}
-                    <img src="systems/fvtt-legends-of-wulin/images/dice/d10black.svg" />
-                    {{else }}
-                    {{/if}}
-                  </div>
-                  {{#if dice.active}}
-                  {{#if (ne dice.value -1)}}
-                  <button class="river-button river-flow" data-dice-index="{{idx}}">Flow</button>
-                  <button class="river-button river-flood" data-dice-index="{{idx}}">Flood</button>
-                  {{/if}}
-                  {{/if}}
-                </td>
-                {{/each}}
-              </tr>
-            </table>
-          </div>
-
-
-          <h3>Chi Threshold</h3>
-          {{#each system.chi_threshold as |chi key|}}
-          <ul class="item-list alternate-list">
-            <li class="item flexrow list-item items-title-bg">
-              <span class="item-field-label-medium">{{upperFirst key}}</span>
-              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.trivial"
-                value="{{chi.trivial}}" data-dtype="Number" />
-              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.minor"
-                value="{{chi.minor}}" data-dtype="Number" />
-              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.major"
-                value="{{chi.major}}" data-dtype="Number" />
-            </li>
-          </ul>
-          {{/each}}
-
+          
+          {{> systems/fvtt-legends-of-wulin/templates/actors/partial-river-management.hbs}}
+  
           <h3>Chi</h3>
           <ul class="item-list alternate-list">
             <li class="item flexrow list-item items-title-bg">
@@ -242,28 +196,84 @@
 
     <div class="tab combat" data-group="primary" data-tab="combat">
 
-      <ul class="item-list alternate-list">
-        <li class="item flexrow list-item items-title-bg">
-          <span class="item-name-label-header-long2">
-            <h3><label class="item-name-label-header-long2">External Styles</label></h3>
-          </span>
-          <div class="item-controls item-controls-fixed">
-            <a class="item-control item-add" data-type="style" title="Create Style"><i class="fas fa-plus"></i></a>
-          </div>
-        </li>
-        {{#each externalStyles as |style key|}}
-        <li class="item flexrow list-item list-item-shadow" data-item-id="{{style._id}}">
-          <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
-              src="{{style.img}}" /></a>
-          <span class="item-name-label-long2">{{style.name}}</span>
+      <div class="grid grid-2col">
+        <div>
+        <ul class="item-list alternate-list">
+          <li class="item flexrow list-item items-title-bg">
+            <span class="item-name-label-header-long2">
+              <h3><label class="item-name-label-header-long2">External Styles</label></h3>
+            </span>
+            <div class="item-controls item-controls-fixed">
+              <a class="item-control item-add" data-type="style" title="Create Style"><i class="fas fa-plus"></i></a>
+            </div>
+          </li>
+          {{#each externalStyles as |style key|}}
+          <li class="item flexrow list-item list-item-shadow" data-item-id="{{style._id}}">
+            <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+                src="{{style.img}}" /></a>
+            <span class="item-name-label-long2">
+              <a class="roll-style" data-style-id="{{style._id}}">
+                <i class="fa-solid fa-dice-d6"></i>
+                {{style.name}}
+              </a>
+            </span>
 
-          <div class="item-filler">&nbsp;</div>
-          <div class="item-controls item-controls-fixed">
-            <a class="item-control item-delete" title="Delete style"><i class="fas fa-trash"></i></a>
-          </div>
-        </li>
-        {{/each}}
-      </ul>
+            <div class="item-filler">&nbsp;</div>
+            <div class="item-controls item-controls-fixed">
+              <a class="item-control item-delete" title="Delete style"><i class="fas fa-trash"></i></a>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+
+        <ul class="item-list alternate-list">
+          <li class="item flexrow list-item items-title-bg">
+            <span class="item-name-label-header-long2">
+              <h3><label class="item-name-label-header-long2">Weapons</label></h3>
+            </span>
+            <div class="item-controls item-controls-fixed">
+              <a class="item-control item-add" data-type="weapon" title="Create Weapon"><i class="fas fa-plus"></i></a>
+            </div>
+          </li>
+          {{#each weapons as |weapon key|}}
+          <li class="item flexrow list-item list-item-shadow" data-item-id="{{weapon._id}}">
+            <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+                src="{{weapon.img}}" /></a>
+            <span class="item-name-label-long2">
+                {{weapon.name}}
+            </span>
+
+            <div class="item-filler">&nbsp;</div>
+            <div class="item-controls item-controls-fixed">
+              <a class="item-control item-delete" title="Delete Weapons"><i class="fas fa-trash"></i></a>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+
+        </div>
+
+        <div>
+
+          {{> systems/fvtt-legends-of-wulin/templates/actors/partial-river-management.hbs}}
+
+          <h3>Chi Threshold</h3>
+          {{#each system.chi_threshold as |chi key|}}
+          <ul class="item-list alternate-list">
+            <li class="item flexrow list-item items-title-bg">
+              <span class="item-field-label-medium">{{upperFirst key}}</span>
+              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.trivial"
+                value="{{chi.trivial}}" data-dtype="Number" />
+              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.minor"
+                value="{{chi.minor}}" data-dtype="Number" />
+              <input type="text" class="item-field-label-short" name="system.chi_threshold.{{key}}.major"
+                value="{{chi.major}}" data-dtype="Number" />
+            </li>
+          </ul>
+          {{/each}}
+
+        </div>
+      </div>
 
     </div>
 
@@ -272,31 +282,32 @@
       <ul class="item-list alternate-list">
         <li class="item flexrow list-item items-title-bg">
           <span class="item-name-label-header-long2">
-            <h3><label class="item-name-label-header-long2">{{localize "ECRY.ui.weapons"}}</label></h3>
+            <h3><label class="item-name-label-header-long2">Conditions</label></h3>
           </span>
           <span class="item-field-label-medium">
-            <label class="item-field-label-medium">{{localize "ECRY.ui.type"}}</label>
+            <label class="item-field-label-medium">Type</label>
           </span>
           <span class="item-field-label-medium">
-            <label class="item-field-label-medium">{{localize "ECRY.ui.effect"}}</label>
+            <label class="item-field-label-medium">Action Penalty</label>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Breath Penalty</label>
           </span>
         </li>
-        {{#each weapons as |weapon key|}}
-        <li class="item flexrow list-item list-item-shadow" data-item-id="{{weapon._id}}">
+        {{#each conditions as |condition key|}}
+        <li class="item flexrow list-item list-item-shadow" data-item-id="{{condition._id}}">
           <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
-              src="{{weapon.img}}" /></a>
+              src="{{condition.img}}" /></a>
           <span class="item-name-label-long2">
-            <a class="roll-weapon-confront" data-category-key="{{categkey}}" data-skill-key="{{skillkey}}">
-              <i class="fa-regular fa-swords"></i>
-              {{weapon.name}}
-            </a>
+              {{condition.name}}
           </span>
-          <span class="item-field-label-medium">{{localize (concat "ECRY.ui." weapon.system.weapontype)}}</span>
-          <span class="item-field-label-medium">{{weapon.system.effect}}</span>
+          <span class="item-field-label-medium">{{upperFirst condition.system.conditiontype}}</span>
+          <span class="item-field-label-medium">{{condition.system.actionpenalty}}</span>
+          <span class="item-field-label-medium">{{condition.system.breathpenalty}}</span>
 
           <div class="item-filler">&nbsp;</div>
           <div class="item-controls item-controls-fixed">
-            <a class="item-control item-delete" title="Delete weapon"><i class="fas fa-trash"></i></a>
+            <a class="item-control item-delete" title="Delete condition"><i class="fas fa-trash"></i></a>
           </div>
         </li>
         {{/each}}
@@ -309,54 +320,16 @@
     <div class="tab equipment" data-group="primary" data-tab="equipment">
 
       <span class="item-name-label-header items-title-bg">
-        <h3><label class="items-title-text">Equipements (saisie libre)</label></h3>
+        <h3><label class="items-title-text">Equipments (Free area)</label></h3>
       </span>
       <div class="form-group small-editor">
-        {{editor equipementlibre target="system.equipementlibre" button=true owner=owner editable=editable}}
+        {{editor equipmentfree target="system.equipmentfree" button=true owner=owner editable=editable}}
       </div>
 
       <ul class="item-list alternate-list">
         <li class="item flexrow list-item items-title-bg">
           <span class="item-name-label-header">
-            <h3><label class="items-title-text">Armes</label></h3>
-          </span>
-          <span class="item-field-label-medium">
-            <label class="item-field-label-medium">Normaux</label>
-          </span>
-          <span class="item-field-label-medium">
-            <label class="item-field-label-medium">Particulier</label>
-          </span>
-          <span class="item-field-label-medium">
-            <label class="item-field-label-medium">Critique</label>
-          </span>
-          <div class="item-controls item-controls-fixed">
-            <a class="item-control item-add" data-type="weapon" title="Create Item"><i class="fas fa-plus"></i></a>
-          </div>
-        </li>
-        {{#each armes as |arme key|}}
-        <li class="item flexrow list-item list-item-shadow" data-item-id="{{arme._id}}">
-          <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
-              src="{{arme.img}}" /></a>
-          <span class="item-name-label">{{arme.name}}</span>
-          <span class="item-field-label-medium"><label>{{arme.system.dommagenormale}}</label></span>
-          <span class="item-field-label-medium"><label>{{arme.system.dommagepart}}</label></span>
-          <span class="item-field-label-medium"><label>{{arme.system.dommagecritique}}</label></span>
-
-          <div class="item-filler">&nbsp;</div>
-          <div class="item-controls item-controls-fixed">
-            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-          </div>
-        </li>
-        {{/each}}
-      </ul>
-
-      <ul class="item-list alternate-list">
-        <li class="item flexrow list-item items-title-bg">
-          <span class="item-name-label-header">
-            <h3><label class="items-title-text">Equipments (Items)</label></h3>
-          </span>
-          <span class="item-field-label-long">
-            <label class="short-label">Q.</label>
+            <h3><label class="items-title-text">Equipments </label></h3>
           </span>
           <div class="item-filler">&nbsp;</div>
           <div class="item-controls item-controls-fixed">
@@ -364,42 +337,12 @@
           </div>
 
         </li>
-        {{#each equipements as |equip key|}}
+        {{#each equipments as |equip key|}}
         <li class="item list-item flexrow list-item-shadow" data-item-id="{{equip._id}}">
           <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
               src="{{equip.img}}" /></a>
           <span class="item-name-label">{{equip.name}}</span>
 
-          <div class="item-filler">&nbsp;</div>
-          <div class="item-controls item-controls-fixed">
-            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-          </div>
-        </li>
-        {{/each}}
-      </ul>
-
-      <ul class="item-list alternate-list">
-        <li class="item flexrow list-item items-title-bg">
-          <span class="item-name-label-header">
-            <h3><label class="items-title-text">Sortilèges</label></h3>
-          </span>
-          <span class="item-field-label-medium">
-            <label class="short-label">Seuil</label>
-          </span>
-          <div class="item-filler">&nbsp;</div>
-          <div class="item-controls item-controls-fixed">
-            <a class="item-control item-add" data-type="equipment" title="Create Item"><i class="fas fa-plus"></i></a>
-          </div>
-
-        </li>
-        {{#each sorts as |sort key|}}
-        <li class="item list-item flexrow list-item-shadow" data-item-id="{{sort._id}}">
-          <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
-              src="{{sort.img}}" /></a>
-          <span class="item-name-label">{{sort.name}}</span>
-          <span class="item-field-label-medium">
-            <label class="short-label">{{sort.system.seuil}}</label>
-          </span>
           <div class="item-filler">&nbsp;</div>
           <div class="item-controls item-controls-fixed">
             <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>

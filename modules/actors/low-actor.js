@@ -133,10 +133,13 @@ export class LoWActor extends Actor {
       await this.updateEmbeddedDocuments('Item', [update]); // Updates one EmbeddedEntity
     }
   }
-
+  /* ------------------------------------------- */
+  getEquippedWeapons() {
+    return this.items.filter(item => item.type == 'weapon' && item.system.equipped)
+  }
   /* ------------------------------------------- */
   getEquipments() {
-    return this.items.filter(item => item.type == 'equipement')
+    return this.items.filter(item => item.type == 'equipment')
   }
 
   /* ------------------------------------------- */
@@ -302,6 +305,8 @@ export class LoWActor extends Actor {
     rollData.actorImg = this.img
     rollData.actorId = this.id
     rollData.img = this.img
+    rollData.weaponBonus = 0
+    rollData.styleBonus = 0 
 
     return rollData
   }
@@ -319,10 +324,35 @@ export class LoWActor extends Actor {
   }
 
   /* -------------------------------------------- */
+  getCommonStyle(styleId) {
+    let style = this.items.find(i => i.id == styleId)
+    let rollData = this.getCommonRollData()
+
+    style = duplicate(style)
+    rollData.style = style
+    rollData.img = style.img
+
+    return rollData
+  }
+
+  /* -------------------------------------------- */
   rollSkill(skillId) {
     let rollData = this.getCommonSkill(skillId)
     rollData.mode = "skill"
     rollData.title = rollData.skill.name
+    this.startRoll(rollData).catch("Error on startRoll")
+  }
+
+  /* -------------------------------------------- */
+  rollStyle(styleId) {
+    let rollData = this.getCommonStyle(styleId)
+    rollData.mode = "style"
+    rollData.title = rollData.style.name
+    rollData.weapons = this.getEquippedWeapons()
+    rollData.styleCombatModifier = "speed"
+    rollData.weaponBonus = 0
+    rollData.styleBonus = rollData.style.system.stats.speed.basic + rollData.style.system.stats.speed.modified
+    rollData.selectedWeapon = "none"
     this.startRoll(rollData).catch("Error on startRoll")
   }
 

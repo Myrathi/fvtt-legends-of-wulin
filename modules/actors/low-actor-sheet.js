@@ -40,7 +40,7 @@ export class LoWActorSheet extends ActorSheet {
       conditions: this.object.getConditions(),
       config: duplicate(game.system.low.config),
       weapons: this.actor.getWeapons(),
-      equipements: this.actor.getEquipments(),
+      equipments: this.actor.getEquipments(),
       subActors: duplicate(this.actor.getSubActors()),
       description: await TextEditor.enrichHTML(this.object.system.description, { async: true }),
       notes: await TextEditor.enrichHTML(this.object.system.notes, { async: true }),
@@ -110,6 +110,11 @@ export class LoWActorSheet extends ActorSheet {
       let skillId = $(event.currentTarget).data("skill-id")
       this.actor.rollSkill(skillId)
     });    
+    html.find('.roll-style').click((event) => {
+      let styleId = $(event.currentTarget).data("style-id")
+      this.actor.rollStyle(styleId)
+    });    
+    
     html.find('.river-flow').click((event) => {
       const diceIndex = $(event.currentTarget).data("dice-index");
       this.actor.flowDice(diceIndex);

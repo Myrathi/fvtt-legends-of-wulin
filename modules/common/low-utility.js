@@ -173,6 +173,7 @@ export class LoWUtility {
       'systems/fvtt-legends-of-wulin/templates/items/partial-item-nav.hbs',
       'systems/fvtt-legends-of-wulin/templates/items/partial-item-equipment.hbs',
       'systems/fvtt-legends-of-wulin/templates/items/partial-item-description.hbs',
+      'systems/fvtt-legends-of-wulin/templates/actors/partial-river-management.hbs',
       'systems/fvtt-legends-of-wulin/templates/dialogs/partial-common-roll-dialog.hbs'
     ]
     return loadTemplates(templatePaths);
@@ -368,7 +369,9 @@ export class LoWUtility {
       }
     }
     rollData.total += rollData.bonusMalus // Add bonus/malus if present
-    // Compute success/critical
+    rollData.total += rollData.styleBonus
+    rollData.total += rollData.weaponBonus
+     // Compute success/critical
     this.computeResults(rollData)
     // Display on the chat
     let msg = await this.createChatWithRollMode(rollData.alias, {

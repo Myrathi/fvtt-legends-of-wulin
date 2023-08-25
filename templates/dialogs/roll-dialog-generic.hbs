@@ -9,6 +9,41 @@
   <div class="flexcol">
 
     {{> systems/fvtt-legends-of-wulin/templates/dialogs/partial-common-roll-dialog.hbs}}
+    
+    {{#if style}}
+    <div class="flexrow">
+      <span class="roll-dialog-label">Combat Modifier : </span>
+      <select class="" type="text" id="style-combat-modifier" value="{{styleCombatModifier}}" data-dtype="Number">
+        {{#select styleCombatModifier}}
+        {{#each style.system.stats as |stat key| }}
+        <option value="{{key}}">{{upper key}} ({{stat.basic}} / {{stat.modified}})</option>
+        {{/each}}
+        {{/select}}
+      </select>
+    </div>
+
+    <div class="flexrow">
+      <span class="roll-dialog-label">Weapon : </span>
+      <select class="" type="text" id="style-weapon" value="{{styleWeapon}}" data-dtype="Number">
+        {{#select styleWeapon}}
+        <option value="None">None</option>        
+        {{#each weapons as |weapon key| }}
+        <option value="{{weapon._id}}">{{weapon.name}}</option>
+        {{/each}}
+        {{/select}}
+      </select>
+    </div>
+
+    <div class="flexrow">
+      <span class="roll-dialog-label">Combat Style modifier : </span>
+      <span class="roll-dialog-label" id="style-combat-bonus">{{styleBonus}}</span>
+    </div>
+
+    <div class="flexrow">
+      <span class="roll-dialog-label">Weapon modifier : </span>
+      <span class="roll-dialog-label" id="style-weapon-bonus">0</span>
+    </div>
+    {{/if}}
 
     <div class="flexrow">
       <span class="roll-dialog-label">Difficulty : </span>

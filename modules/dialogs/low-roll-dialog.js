@@ -34,6 +34,7 @@ export class LoWRollDialog extends Dialog {
 
     this.actor = actor;
     this.rollData = rollData;
+    this.updateStyleBonus()
   }
 
   /* -------------------------------------------- */
@@ -46,6 +47,20 @@ export class LoWRollDialog extends Dialog {
     const content = await renderTemplate("systems/fvtt-legends-of-wulin/templates/dialogs/roll-dialog-generic.hbs", this.rollData)
     this.data.content = content
     this.render(true)
+  }
+  
+  /* -------------------------------------------- */
+  updateStyleBonus() {
+    let weapon = this.rollData.weapons.find(w => w.id == this.rollData.selectedWeapon)
+    if (weapon) {
+      this.rollData.weaponBonus = weapon.system.stats[this.rollData.styleCombatModifier].bonus
+      $('#style-weapon-bonus').html(this.rollData.weaponBonus)
+    } else {
+      this.rollData.weaponBonus = 0
+      $('#style-weapon-bonus').html("0")
+    }
+    this.rollData.styleBonus = this.rollData.style.system.stats[this.rollData.styleCombatModifier].basic + this.rollData.style.system.stats[this.rollData.styleCombatModifier].modified
+    $('#style-combat-bonus').html(this.rollData.styleBonus)
   }
 
   /* -------------------------------------------- */
@@ -72,7 +87,13 @@ export class LoWRollDialog extends Dialog {
     html.find('#spent-chivalrous').change((event) => {
       this.rollData.spentChivalrous = event.currentTarget.checked
     })
-    
-    
+    html.find('#style-combat-modifier').change((event) => {
+      this.rollData.styleCombatModifier = event.currentTarget.value
+      this.updateStyleBonus()
+    })
+    html.find('#style-weapon').change((event) => {
+      this.rollData.selectedWeapon = event.currentTarget.value
+      this.updateStyleBonus()
+    })    
   }
 }
