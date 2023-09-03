@@ -282,7 +282,7 @@
       <ul class="item-list alternate-list">
         <li class="item flexrow list-item items-title-bg">
           <span class="item-name-label-header-long2">
-            <h3><label class="item-name-label-header-long2">Conditions</label></h3>
+            <h3><label class="item-name-label-header-long2">Weaknesses</label></h3>
           </span>
           <span class="item-field-label-medium">
             <label class="item-field-label-medium">Type</label>
@@ -294,7 +294,7 @@
             <label class="item-field-label-medium">Breath Penalty</label>
           </span>
         </li>
-        {{#each conditions as |condition key|}}
+        {{#each weaknesses as |condition key|}}
         <li class="item flexrow list-item list-item-shadow" data-item-id="{{condition._id}}">
           <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
               src="{{condition.img}}" /></a>
@@ -312,6 +312,41 @@
         </li>
         {{/each}}
       </ul>
+
+      <ul class="item-list alternate-list">
+        <li class="item flexrow list-item items-title-bg">
+          <span class="item-name-label-header-long2">
+            <h3><label class="item-name-label-header-long2">Hyperactivities</label></h3>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Type</label>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Action Penalty</label>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Breath Penalty</label>
+          </span>
+        </li>
+        {{#each hyperactivities as |condition key|}}
+        <li class="item flexrow list-item list-item-shadow" data-item-id="{{condition._id}}">
+          <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+              src="{{condition.img}}" /></a>
+          <span class="item-name-label-long2">
+              {{condition.name}}
+          </span>
+          <span class="item-field-label-medium">{{upperFirst condition.system.conditiontype}}</span>
+          <span class="item-field-label-medium">{{condition.system.actionpenalty}}</span>
+          <span class="item-field-label-medium">{{condition.system.breathpenalty}}</span>
+
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-delete" title="Delete condition"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+
 
     </div>
 

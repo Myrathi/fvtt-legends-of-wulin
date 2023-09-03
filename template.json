@@ -230,7 +230,7 @@
       "templates": [
         "common"
       ],
-      "type": "",
+      "armortype": "",
       "equipped": false,
       "quality": "",
       "perfect": false
@@ -243,8 +243,9 @@
     },
     "condition": {
       "conditiontype": "trivial",
-      "actionpenalty": "",
-      "breathpenalty": "",
+      "conditionkind": "weakness",
+      "actionmodifier": "",
+      "breathmodifier": "",
       "templates": [
         "common"
       ]

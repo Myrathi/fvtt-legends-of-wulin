@@ -97,6 +97,16 @@ export class LoWActor extends Actor {
     LoWUtility.sortArrayObjectsByName(comp)
     return comp
   }
+  getWeakness() {
+    let comp = duplicate(this.items.filter(it => it.type == "condition" && it.system.conditionkind == "weakness"))
+    LoWUtility.sortArrayObjectsByName(comp)
+    return comp
+  }
+  getHyperactivity() {
+    let comp = duplicate(this.items.filter(it => it.type == "condition" && it.system.conditionkind == "hyperactivity"))
+    LoWUtility.sortArrayObjectsByName(comp)
+    return comp
+  }
   getWeapons() {
     let comp = duplicate(this.items.filter(item => item.type == 'weapon') || [])
     LoWUtility.sortArrayObjectsByName(comp)
@@ -307,6 +317,9 @@ export class LoWActor extends Actor {
     rollData.img = this.img
     rollData.weaponBonus = 0
     rollData.styleBonus = 0 
+    rollData.weaknesses = this.getWeakness()
+    rollData.hyperactivities = this.getHyperactivity()
+    rollData.bonusMalusConditions = 0
 
     return rollData
   }

@@ -16,6 +16,36 @@ export const LOW_CONFIG = {
     minor: "Minor",
     major: "Major"
   },
+  modifierAll5: {
+    "-20": "-20",
+    "-15": "-15",
+    "-10": "-10",
+    "-5": "-5",
+    "0": "+0",
+    "5": "+5",
+    "10": "+10",
+    "15": "+15",
+    "20": "+20",
+  },
+  modifierPositive5: {
+    "0": "+0",
+    "5": "+5",
+    "10": "+10",
+    "15": "+15",
+    "20": "+20",
+  },
+  modifierPositive1: {
+    "0": "+0",
+    "1": "+1",
+    "2": "+2",
+    "3": "+3",
+    "4": "+4",
+    "5": "+5",
+  },
+  conditionKind: {
+    weakness: "Weakness",
+    hyperactivity: "Hyperactivity"
+  },
   styleType: {
     internal: "Internal",
     external: "External"
@@ -35,6 +65,11 @@ export const LOW_CONFIG = {
     60: "Fantastic",
     80: "Legendary",
     100: "Impossible"
+  },
+  armorTypes: {
+    "light": {name: "Light", soak: 0, mobility: 0, defense: 0, effects: ["", "", "", ""]},
+    "medium": {name: "Medium", soak: 0, mobility: 0, defense: 0, effects: ["", "", "", ""]},
+    "heavy": {name: "Heavy", soak: 0, mobility: 0, defense: 0, effects: ["", "", "", ""]},
   },
   weaponFamilies: {
     flexible: {

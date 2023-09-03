@@ -38,6 +38,8 @@ export class LoWActorSheet extends ActorSheet {
       skills: this.actor.getSkills(),
       externalStyles: this.actor.getExternalStyles(),
       conditions: this.object.getConditions(),
+      weaknesses: this.object.getWeakness(),
+      hyperactivities: this.object.getHyperactivity(),
       config: duplicate(game.system.low.config),
       weapons: this.actor.getWeapons(),
       equipments: this.actor.getEquipments(),

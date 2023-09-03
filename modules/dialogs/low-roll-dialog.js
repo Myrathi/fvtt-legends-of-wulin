@@ -51,23 +51,45 @@ export class LoWRollDialog extends Dialog {
   
   /* -------------------------------------------- */
   updateStyleBonus() {
-    let weapon = this.rollData.weapons.find(w => w.id == this.rollData.selectedWeapon)
-    if (weapon) {
-      this.rollData.weaponBonus = weapon.system.stats[this.rollData.styleCombatModifier].bonus
-      $('#style-weapon-bonus').html(this.rollData.weaponBonus)
-    } else {
-      this.rollData.weaponBonus = 0
-      $('#style-weapon-bonus').html("0")
+    if ( this.rollData.weapons) {
+      let weapon = this.rollData.weapons.find(w => w.id == this.rollData.selectedWeapon)
+      if (weapon) {
+        this.rollData.weaponBonus = weapon.system.stats[this.rollData.styleCombatModifier].bonus
+        $('#style-weapon-bonus').html(this.rollData.weaponBonus)
+      } else {
+        this.rollData.weaponBonus = 0
+        $('#style-weapon-bonus').html("0")
+      }
+      this.rollData.styleBonus = this.rollData.style.system.stats[this.rollData.styleCombatModifier].basic + this.rollData.style.system.stats[this.rollData.styleCombatModifier].modified
+      $('#style-combat-bonus').html(this.rollData.styleBonus)  
     }
-    this.rollData.styleBonus = this.rollData.style.system.stats[this.rollData.styleCombatModifier].basic + this.rollData.style.system.stats[this.rollData.styleCombatModifier].modified
-    $('#style-combat-bonus').html(this.rollData.styleBonus)
   }
 
+  /* -------------------------------------------- */
+  updateConditions() {
+    let rollData = this.rollData
+    rollData.bonusMalusConditions = 0 // Reset at each compute
+    if (rollData.weaknessSelected && rollData.weaknessSelected.length > 0) {
+      for (let id of rollData.weaknessSelected) {
+        let weakness = rollData.weaknesses.find(t => t._id == id)
+        weakness.activated = true
+        rollData.bonusMalusConditions -= Number(weakness.system.actionmodifier)
+      }
+    }
+    if (rollData.hyperSelected && rollData.hyperSelected.length > 0) {
+      for (let id of rollData.hyperSelected) {
+        let hyper = rollData.hyperactivities.find(t => t._id == id)
+        hyper.activated = true
+        rollData.bonusMalusConditions += Number(hyper.system.actionmodifier)
+      }
+    }
+  }
+  
   /* -------------------------------------------- */
   activateListeners(html) {
     super.activateListeners(html);
 
-    var dialog = this;
+    let dialog = this;
     function onLoad() {
     }
     $(function () { onLoad(); });
@@ -90,6 +112,14 @@ export class LoWRollDialog extends Dialog {
     html.find('#style-combat-modifier').change((event) => {
       this.rollData.styleCombatModifier = event.currentTarget.value
       this.updateStyleBonus()
+    })
+    html.find('#roll-weakness').change((event) => {
+      this.rollData.weaknessSelected = $('#roll-weakness').val()
+      this.updateConditions()
+    })
+    html.find('#roll-hyperactivity').change((event) => {
+      this.rollData.hyperSelected = $('#roll-hyperactivity').val()
+      this.updateConditions()
     })
     html.find('#style-weapon').change((event) => {
       this.rollData.selectedWeapon = event.currentTarget.value

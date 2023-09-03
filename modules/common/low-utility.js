@@ -371,6 +371,7 @@ export class LoWUtility {
     rollData.total += rollData.bonusMalus // Add bonus/malus if present
     rollData.total += rollData.styleBonus
     rollData.total += rollData.weaponBonus
+    rollData.total += rollData.bonusMalusConditions
      // Compute success/critical
     this.computeResults(rollData)
     // Display on the chat
@@ -510,7 +511,8 @@ export class LoWUtility {
       useSpecialty: false,
       lakeModifier: 0,
       spentChivalrous: false,
-      config: duplicate(game.system.low.config)
+      config: duplicate(game.system.low.config),
+
     }
     LoWUtility.updateWithTarget(rollData)
     return rollData

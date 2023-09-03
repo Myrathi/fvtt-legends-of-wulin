@@ -20,6 +20,17 @@
         <ul>
 
           <li class="flexrow">
+            <label class="item-name-label-long">Kind of condition</label>
+            <select class="item-field-label-medium" type="text" name="system.conditionkind" value="{{system.conditionkind}}" data-dtype="String">
+              {{#select system.conditionkind}}
+                {{#each config.conditionKind as |type key| }}
+                <option value="{{key}}">{{type}}</option>
+                {{/each}}
+              {{/select}}
+            </select> 
+          </li>
+
+          <li class="flexrow">
             <label class="item-name-label-long">Type</label>
             <select class="item-field-label-medium" type="text" name="system.conditiontype" value="{{system.conditiontype}}" data-dtype="String">
               {{#select system.conditiontype}}
@@ -30,13 +41,26 @@
             </select> 
           </li>
 
+
           <li class="flexrow">
-            <label class="item-name-label-long">Action penalty</label>
-            <input type="text" class="item-field-label-short" name="system.actionpenalty" value="{{system.actionpenalty}}" data-dtype="Number"/>
+            <label class="item-name-label-long">Action modifier</label>
+            <select class="item-field-label-medium" type="text" name="system.actionmodifier" value="{{system.actionmodifier}}" data-dtype="String">
+              {{#select system.actionmodifier}}
+                {{#each config.modifierPositive5 as |type key| }}
+                <option value="{{key}}">{{type}}</option>
+                {{/each}}
+              {{/select}}
+            </select> 
           </li>
           <li class="flexrow">
-            <label class="item-name-label-long">Breath penalty</label>
-            <input type="text" class="item-field-label-short" name="system.breathpenalty" value="{{system.breathpenalty}}" data-dtype="Number"/>
+            <label class="item-name-label-long">Breath modifier</label>
+            <select class="item-field-label-medium" type="text" name="system.breathmodifier" value="{{system.breathmodifier}}" data-dtype="String">
+              {{#select system.breathmodifier}}
+                {{#each config.modifierPositive1 as |type key| }}
+                <option value="{{key}}">{{type}}</option>
+                {{/each}}
+              {{/select}}
+            </select> 
           </li>
 
         </ul>

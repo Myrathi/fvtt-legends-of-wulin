@@ -46,6 +46,24 @@
     {{/if}}
 
     <div class="flexrow">
+      <span class="roll-dialog-label">Weaknesses </span>
+      <select class="" id="roll-weakness" data-type="String" multiple>
+        {{#each weaknessses as |weakness idx|}}
+        <option value="{{weakness._id}}" {{#if weakness.activated}}selected{{/if}}>{{weakness.name}} ({{weakness.system.conditiontype}} {{weakness.system.actionmodifier}})</option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div class="flexrow">
+      <span class="roll-dialog-label">Hyperactivities </span>
+      <select class="" id="roll-hyperactivity" data-type="String" multiple>
+        {{#each hyperactivities as |hyper idx|}}
+        <option value="{{hyper._id}}" {{#if hyper.activated}}selected{{/if}}>{{hyper.name}} ({{hyper.system.conditiontype}} {{hyper.system.actionmodifier}})</option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div class="flexrow">
       <span class="roll-dialog-label">Difficulty : </span>
       <select class="" type="text" id="roll-difficulty" value="{{difficulty}}" data-dtype="Number">
         {{#select difficulty}}

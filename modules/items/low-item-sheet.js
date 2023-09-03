@@ -174,8 +174,8 @@ export class LoWItemSheet extends ItemSheet {
   updateFamilyDefaults(ev) {
     let familyKey = $(ev.currentTarget).val();
     let defaults = game.system.low.config.weaponFamilies[familyKey];
-    this.object.update({ "system.strikebonus": defaults.strikebonus, "system.blockbonus": defaults.blockbonus, 
-    "system.damagebonus": defaults.damagebonus, "system.speedbonus": defaults.speedbonus, "system.footworkbonus": 
+    this.object.update({ "system.stats.strike.bonus": defaults.strikebonus, "system.stats.block.bonus": defaults.blockbonus, 
+    "system.stats.damage.bonus": defaults.damagebonus, "system.stats.speed.bonus": defaults.speedbonus, "system.stats.footwork.bonus": 
     defaults.footworkbonus, "system.hasflood": defaults.hasflood, "system.effects": defaults.effects  });
   }
 
