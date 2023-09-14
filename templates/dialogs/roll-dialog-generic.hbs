@@ -9,7 +9,7 @@
   <div class="flexcol">
 
     {{> systems/fvtt-legends-of-wulin/templates/dialogs/partial-common-roll-dialog.hbs}}
-    
+
     {{#if style}}
     <div class="flexrow">
       <span class="roll-dialog-label">Combat Modifier : </span>
@@ -26,7 +26,7 @@
       <span class="roll-dialog-label">Weapon : </span>
       <select class="" type="text" id="style-weapon" value="{{styleWeapon}}" data-dtype="Number">
         {{#select styleWeapon}}
-        <option value="None">None</option>        
+        <option value="None">None</option>
         {{#each weapons as |weapon key| }}
         <option value="{{weapon._id}}">{{weapon.name}}</option>
         {{/each}}
@@ -43,13 +43,32 @@
       <span class="roll-dialog-label">Weapon modifier : </span>
       <span class="roll-dialog-label" id="style-weapon-bonus">0</span>
     </div>
+      {{#if armor}}
+      <div class="flexrow">
+        <span class="roll-dialog-label">Armor modifier : </span>
+        <span class="roll-dialog-label" id="style-armor-bonus">{{armorBonus}}</span>
+      </div>
+      <div class="flexrow">
+        <span class="roll-dialog-label">Armor penalty : </span>
+        <span class="roll-dialog-label" >{{armor.system.armorpenalty}}</span>
+      </div>
+      {{/if}}
+    {{else}}
+      {{#if armor}}
+      <div class="flexrow">
+        <span class="roll-dialog-label">Apply Armor modifier {{armor.system.armorpenalty}} : </span>
+        <label class="item-field-label-short checkbox"><input type="checkbox" id="apply-armor-penalty" name="apply-armor-penalty" {{checked
+            applyArmorPenalty}} /></label>
+      </div>
+      {{/if}}
     {{/if}}
 
     <div class="flexrow">
       <span class="roll-dialog-label">Weaknesses </span>
       <select class="" id="roll-weakness" data-type="String" multiple>
         {{#each weaknessses as |weakness idx|}}
-        <option value="{{weakness._id}}" {{#if weakness.activated}}selected{{/if}}>{{weakness.name}} ({{weakness.system.conditiontype}} {{weakness.system.actionmodifier}})</option>
+        <option value="{{weakness._id}}" {{#if weakness.activated}}selected{{/if}}>{{weakness.name}}
+          ({{weakness.system.conditiontype}} {{weakness.system.actionmodifier}})</option>
         {{/each}}
       </select>
     </div>
@@ -58,7 +77,8 @@
       <span class="roll-dialog-label">Hyperactivities </span>
       <select class="" id="roll-hyperactivity" data-type="String" multiple>
         {{#each hyperactivities as |hyper idx|}}
-        <option value="{{hyper._id}}" {{#if hyper.activated}}selected{{/if}}>{{hyper.name}} ({{hyper.system.conditiontype}} {{hyper.system.actionmodifier}})</option>
+        <option value="{{hyper._id}}" {{#if hyper.activated}}selected{{/if}}>{{hyper.name}}
+          ({{hyper.system.conditiontype}} {{hyper.system.actionmodifier}})</option>
         {{/each}}
       </select>
     </div>

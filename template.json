@@ -174,14 +174,13 @@
   "Item": {
     "types": [
       "skill",
-      "archetype",
+      "secretart",
       "virtue",
       "disadvantage",
       "style",
       "armor",
       "loresheet",
       "technique",
-      "equipment",
       "condition",
       "weapon"
     ],
@@ -213,7 +212,9 @@
       "specialties": "",
       "level": 0
     },
-    "archetype": {
+    "secretart": {
+      "parent": "",
+      "destinycost": 0,
       "templates": [
         "common"
       ],
@@ -233,13 +234,28 @@
       "armortype": "",
       "equipped": false,
       "quality": "",
+      "stats": {
+        "speed": {
+          "bonus": 0
+        },
+        "footwork": {
+          "bonus": 0
+        },
+        "strike": {
+          "bonus": 0
+        },
+        "block": {
+          "bonus": 0
+        },
+        "damage": {
+          "bonus": 0
+        },
+        "toughness": {
+          "bonus": 0
+        }
+      },
+      "armorpenalty": 0,
       "perfect": false
-    },
-    "equipment": {
-      "templates": [
-        "common"
-      ],
-      "equipped": false
     },
     "condition": {
       "conditiontype": "trivial",

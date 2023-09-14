@@ -66,10 +66,16 @@ export const LOW_CONFIG = {
     80: "Legendary",
     100: "Impossible"
   },
-  armorTypes: {
-    "light": {name: "Light", soak: 0, mobility: 0, defense: 0, effects: ["", "", "", ""]},
-    "medium": {name: "Medium", soak: 0, mobility: 0, defense: 0, effects: ["", "", "", ""]},
-    "heavy": {name: "Heavy", soak: 0, mobility: 0, defense: 0, effects: ["", "", "", ""]},
+  armorFamilies: {
+    light: {
+      name: "Light", speedbonus: 0, blockbonus: 0, strikebonus: 0, footworkbonus: 0, damagebonus: 0, armorpenalty:0,
+    },
+    medium: {
+      name: "Medium", speedbonus: -5, blockbonus: 0, strikebonus: 0, footworkbonus: -5, damagebonus: 0, armorpenalty:-5,
+    },
+    heavy: {
+      name: "Heavy", speedbonus: -10, blockbonus: 0, strikebonus: 5, footworkbonus: -10, damagebonus: 0, armorpenalty:-10,
+    }
   },
   weaponFamilies: {
     flexible: {

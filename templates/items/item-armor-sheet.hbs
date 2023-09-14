@@ -20,16 +20,28 @@
         <ul>
           <li class="flexrow">
             <label class="item-name-label-long">Armor type</label>
-            <select class="item-field-label-medium weapon-family-selector" type="text" name="system.armortype" value="{{system.armortype}}"
+            <select class="item-field-label-medium armor-family-selector" type="text" name="system.armortype" value="{{system.armortype}}"
               data-dtype="String">
               {{#select system.armortype}}
-              {{#each config.armorTypes as |armor key| }}
+              {{#each config.armorFamilies as |armor key| }}
               <option value="{{key}}">{{armor.name}}</option>
               {{/each}}
               {{/select}}
             </select>
           </li>
           
+          {{#each system.stats as |stat key|}}
+          <li class="flexrow">
+            <label class="item-name-label-long">{{upperFirst key}}</label>
+            Bonus: <input type="text" class="item-field-label-short" name="system.stats.{{@key}}.bonus" value="{{stat.bonus}}" data-dtype="Number"/>
+          </li>
+          {{/each}}
+
+          <li class="flexrow">
+            <label class="item-name-label-long">Armro Penalty</label>
+            <input type="text" class="item-field-label-short" name="system.armorpenalty" value="{{system.armorpenalty}}" data-dtype="Number"/>
+          </li>
+
           <div class="flexrow">
             <span class="item-name-label-long">Equipped ? : </span>
             <label class="item-field-label-short checkbox"><input type="checkbox" name="system.equipped"

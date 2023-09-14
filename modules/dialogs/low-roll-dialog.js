@@ -60,10 +60,16 @@ export class LoWRollDialog extends Dialog {
         this.rollData.weaponBonus = 0
         $('#style-weapon-bonus').html("0")
       }
+    }
+    if ( this.rollData.armor && this.rollData.styleCombatModifier) {
+      this.rollData.armorBonus = this.rollData.armor.system.stats[this.rollData.styleCombatModifier].bonus
+      $('#style-armor-bonus').html(this.rollData.armorBonus)
+    }
+    if ( this.rollData.styleCombatModifier) {
       this.rollData.styleBonus = this.rollData.style.system.stats[this.rollData.styleCombatModifier].basic + this.rollData.style.system.stats[this.rollData.styleCombatModifier].modified
       $('#style-combat-bonus').html(this.rollData.styleBonus)  
     }
-  }
+}
 
   /* -------------------------------------------- */
   updateConditions() {
@@ -113,6 +119,9 @@ export class LoWRollDialog extends Dialog {
       this.rollData.styleCombatModifier = event.currentTarget.value
       this.updateStyleBonus()
     })
+    html.find('#apply-armor-penalty').change((event) => {
+      this.rollData.applyArmorPenalty = event.currentTarget.checked
+    })    
     html.find('#roll-weakness').change((event) => {
       this.rollData.weaknessSelected = $('#roll-weakness').val()
       this.updateConditions()

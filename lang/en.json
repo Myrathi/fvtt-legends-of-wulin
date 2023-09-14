@@ -1,15 +1,14 @@
 {
   "TYPES": {
     "Actor": {
-      "PC": "Player character"
+      "pc": "Player character"
     },
     "Item": {
       "condition": "Condition",
       "weapon": "Weapon",
-      "equipment": "Equipment",
       "technique": "Technique",
       "skill": "Skill",
-      "archetype": "Archetype",
+      "secretart": "Secret Art",
       "virtue": "Virtue",
       "style": "Style",
       "disadvantage": "Disadvantage",

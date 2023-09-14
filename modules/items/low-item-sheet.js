@@ -100,7 +100,7 @@ export class LoWItemSheet extends ItemSheet {
         payload: chatData,
       });
 
-    renderTemplate('systems/LoW/templates/post-item.html', chatData).then(html => {
+    renderTemplate('systems/fvtt-legends-of-wulin/templates/post-item.html', chatData).then(html => {
       let chatOptions = LoWUtility.chatDataSetup(html);
       ChatMessage.create(chatOptions)
     });
@@ -164,19 +164,31 @@ export class LoWItemSheet extends ItemSheet {
       let itemId = li.data("item-id");
       let itemType = li.data("item-type");
     });
-
+    
     html.find('.weapon-family-selector').click(ev => {
-      this.updateFamilyDefaults(ev)
+      this.updateWeaponFamilyDefaults(ev)
+    });
+    html.find('.armor-family-selector').click(ev => {
+      this.updateArmorFamilyDefaults(ev)
     });
   }
 
   /* -------------------------------------------- */
-  updateFamilyDefaults(ev) {
+  updateWeaponFamilyDefaults(ev) {
     let familyKey = $(ev.currentTarget).val();
     let defaults = game.system.low.config.weaponFamilies[familyKey];
     this.object.update({ "system.stats.strike.bonus": defaults.strikebonus, "system.stats.block.bonus": defaults.blockbonus, 
     "system.stats.damage.bonus": defaults.damagebonus, "system.stats.speed.bonus": defaults.speedbonus, "system.stats.footwork.bonus": 
     defaults.footworkbonus, "system.hasflood": defaults.hasflood, "system.effects": defaults.effects  });
+  }
+
+  /* -------------------------------------------- */
+  updateArmorFamilyDefaults(ev) {
+    let familyKey = $(ev.currentTarget).val();
+    let defaults = game.system.low.config.armorFamilies[familyKey];
+    this.object.update({ "system.stats.strike.bonus": defaults.strikebonus, "system.stats.block.bonus": defaults.blockbonus, 
+    "system.stats.damage.bonus": defaults.damagebonus, "system.stats.speed.bonus": defaults.speedbonus, "system.stats.footwork.bonus": 
+    defaults.footworkbonus, "system.armorpenalty": defaults.armorpenalty  });
   }
 
   /* -------------------------------------------- */

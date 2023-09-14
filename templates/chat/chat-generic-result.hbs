@@ -42,12 +42,19 @@
     {{#if style}}
     <li>{{style.name}}: {{upperFirst styleCombatModifier}} {{styleBonus}}</li>
     <li>Weapon Bonus : {{weaponBonus}} </li>
+      {{#if armor}}
+      <li>Armor Modifier : {{armorBonus}} </li>
+      {{/if}}
     {{/if}}
 
     {{#if spentChivalrous}}
     {{#if (gt lakeModifier 0)}}
       <li>Chivalrous Joss has been spent: {{lakeModifier}} </li>
     {{/if}}
+    {{/if}}
+
+    {{#if applyArmorPenalty}}
+    <li>Armor penalty: {{armor.system.armorpenalty}} </li>
     {{/if}}
 
     {{#if bonusMalusConditions}}

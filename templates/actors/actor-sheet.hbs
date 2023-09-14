@@ -52,8 +52,9 @@
     <a class="item" data-tab="skills">Skills</a>
     <a class="item" data-tab="virtues">Virtues</a>
     <a class="item" data-tab="combat">Combat</a>
+    <a class="item" data-tab="secretart">Secret Arts</a>
     <a class="item" data-tab="conditions">Conditions</a>
-    <a class="item" data-tab="equipment">Equipment</a>
+    <a class="item" data-tab="equipment">Inventory</a>
     <a class="item" data-tab="biodata">Notes&Bio</a>
   </nav>
 
@@ -200,8 +201,8 @@
         <div>
         <ul class="item-list alternate-list">
           <li class="item flexrow list-item items-title-bg">
-            <span class="item-name-label-header-long2">
-              <h3><label class="item-name-label-header-long2">External Styles</label></h3>
+            <span class="item-name-label-header-long">
+              <h3><label class="item-name-label-header-long">External Styles</label></h3>
             </span>
             <div class="item-controls item-controls-fixed">
               <a class="item-control item-add" data-type="style" title="Create Style"><i class="fas fa-plus"></i></a>
@@ -228,8 +229,8 @@
 
         <ul class="item-list alternate-list">
           <li class="item flexrow list-item items-title-bg">
-            <span class="item-name-label-header-long2">
-              <h3><label class="item-name-label-header-long2">Weapons</label></h3>
+            <span class="item-name-label-header-long">
+              <h3><label class="item-name-label-header-long">Weapons</label></h3>
             </span>
             <div class="item-controls item-controls-fixed">
               <a class="item-control item-add" data-type="weapon" title="Create Weapon"><i class="fas fa-plus"></i></a>
@@ -243,9 +244,32 @@
                 {{weapon.name}}
             </span>
 
-            <div class="item-filler">&nbsp;</div>
             <div class="item-controls item-controls-fixed">
-              <a class="item-control item-delete" title="Delete Weapons"><i class="fas fa-trash"></i></a>
+              <a class="item-control item-delete" title="Delete Weapon"><i class="fas fa-trash"></i></a>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+
+        <ul class="item-list alternate-list">
+          <li class="item flexrow list-item items-title-bg">
+            <span class="item-name-label-header-long">
+              <h3><label class="item-name-label-header-long">Armors</label></h3>
+            </span>
+            <div class="item-controls item-controls-fixed">
+              <a class="item-control item-add" data-type="armor" title="Create Armor"><i class="fas fa-plus"></i></a>
+            </div>
+          </li>
+          {{#each armors as |armor key|}}
+          <li class="item flexrow list-item list-item-shadow" data-item-id="{{armor._id}}">
+            <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+                src="{{armor.img}}" /></a>
+            <span class="item-name-label-long2">
+                {{armor.name}}
+            </span>
+
+            <div class="item-controls item-controls-fixed">
+              <a class="item-control item-delete" title="Delete Armor"><i class="fas fa-trash"></i></a>
             </div>
           </li>
           {{/each}}
@@ -277,6 +301,44 @@
 
     </div>
 
+    <div class="tab secretart" data-group="primary" data-tab="secretart">
+
+      <ul class="item-list alternate-list">
+        <li class="item flexrow list-item items-title-bg">
+          <span class="item-name-label-header-long2">
+            <h3><label class="item-name-label-header-long2">Secret Arts</label></h3>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Parent</label>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Cost</label>
+          </span>
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-add" data-type="secretart" title="Create Secret Art"><i class="fas fa-plus"></i></a>
+          </div>
+        </li>
+        {{#each secretarts as |secretart key|}}
+        <li class="item flexrow list-item list-item-shadow" data-item-id="{{secretart._id}}">
+          <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+              src="{{secretart.img}}" /></a>
+          <span class="item-name-label-long2">
+              {{secretart.name}}
+          </span>
+          <span class="item-field-label-medium">{{secretart.system.parent}}</span>
+          <span class="item-field-label-medium">{{secretart.system.destinycost}}</span>
+
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-delete" title="Delete secret art"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+
+    </div>
+
     <div class="tab conditions" data-group="primary" data-tab="conditions">
 
       <ul class="item-list alternate-list">
@@ -293,6 +355,10 @@
           <span class="item-field-label-medium">
             <label class="item-field-label-medium">Breath Penalty</label>
           </span>
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-add" data-type="condition" title="Create Condition"><i class="fas fa-plus"></i></a>
+          </div>
         </li>
         {{#each weaknesses as |condition key|}}
         <li class="item flexrow list-item list-item-shadow" data-item-id="{{condition._id}}">
@@ -327,6 +393,10 @@
           <span class="item-field-label-medium">
             <label class="item-field-label-medium">Breath Penalty</label>
           </span>
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-add" data-type="condition" title="Create Condition"><i class="fas fa-plus"></i></a>
+          </div>
         </li>
         {{#each hyperactivities as |condition key|}}
         <li class="item flexrow list-item list-item-shadow" data-item-id="{{condition._id}}">
@@ -336,8 +406,8 @@
               {{condition.name}}
           </span>
           <span class="item-field-label-medium">{{upperFirst condition.system.conditiontype}}</span>
-          <span class="item-field-label-medium">{{condition.system.actionpenalty}}</span>
-          <span class="item-field-label-medium">{{condition.system.breathpenalty}}</span>
+          <span class="item-field-label-medium">{{condition.system.actionmodifier}}</span>
+          <span class="item-field-label-medium">{{condition.system.breathmodifier}}</span>
 
           <div class="item-filler">&nbsp;</div>
           <div class="item-controls item-controls-fixed">
@@ -355,38 +425,11 @@
     <div class="tab equipment" data-group="primary" data-tab="equipment">
 
       <span class="item-name-label-header items-title-bg">
-        <h3><label class="items-title-text">Equipments (Free area)</label></h3>
+        <h3><label class="items-title-text">Inventory (Free area)</label></h3>
       </span>
-      <div class="form-group small-editor">
+      <div class="form-group medium-editor">
         {{editor equipmentfree target="system.equipmentfree" button=true owner=owner editable=editable}}
       </div>
-
-      <ul class="item-list alternate-list">
-        <li class="item flexrow list-item items-title-bg">
-          <span class="item-name-label-header">
-            <h3><label class="items-title-text">Equipments </label></h3>
-          </span>
-          <div class="item-filler">&nbsp;</div>
-          <div class="item-controls item-controls-fixed">
-            <a class="item-control item-add" data-type="equipment" title="Create Item"><i class="fas fa-plus"></i></a>
-          </div>
-
-        </li>
-        {{#each equipments as |equip key|}}
-        <li class="item list-item flexrow list-item-shadow" data-item-id="{{equip._id}}">
-          <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
-              src="{{equip.img}}" /></a>
-          <span class="item-name-label">{{equip.name}}</span>
-
-          <div class="item-filler">&nbsp;</div>
-          <div class="item-controls item-controls-fixed">
-            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-          </div>
-        </li>
-        {{/each}}
-      </ul>
-
-      <hr>
 
     </div>
 

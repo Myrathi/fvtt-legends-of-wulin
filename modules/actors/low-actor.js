@@ -112,6 +112,16 @@ export class LoWActor extends Actor {
     LoWUtility.sortArrayObjectsByName(comp)
     return comp;
   }
+  getArmors() {
+    let comp = duplicate(this.items.filter(item => item.type == 'armor') || [])
+    LoWUtility.sortArrayObjectsByName(comp)
+    return comp;
+  }
+  getSecretArts() {
+    let comp = duplicate(this.items.filter(item => item.type == 'secretart') || [])
+    LoWUtility.sortArrayObjectsByName(comp)
+    return comp;
+  }
   /* -------------------------------------------- */
   getItemById(id) {
     let item = this.items.find(item => item.id == id);
@@ -309,6 +319,11 @@ export class LoWActor extends Actor {
   }
 
   /* -------------------------------------------- */
+  getEquippedArmor() {
+    return this.items.find(it => it.type == "armor" && it.system.equipped)
+  }
+
+  /* -------------------------------------------- */
   getCommonRollData() {
     let rollData = LoWUtility.getBasicRollData()
     rollData.alias = this.name
@@ -316,10 +331,13 @@ export class LoWActor extends Actor {
     rollData.actorId = this.id
     rollData.img = this.img
     rollData.weaponBonus = 0
+    rollData.armorBonus = 0
     rollData.styleBonus = 0 
     rollData.weaknesses = this.getWeakness()
     rollData.hyperactivities = this.getHyperactivity()
     rollData.bonusMalusConditions = 0
+    rollData.armor = this.getEquippedArmor()
+    rollData.applyArmorPenalty = false
 
     return rollData
   }
@@ -364,7 +382,9 @@ export class LoWActor extends Actor {
     rollData.weapons = this.getEquippedWeapons()
     rollData.styleCombatModifier = "speed"
     rollData.weaponBonus = 0
+    rollData.applyArmorPenalty = true // Per Default
     rollData.styleBonus = rollData.style.system.stats.speed.basic + rollData.style.system.stats.speed.modified
+    rollData.armorBonus = rollData.armor?.system.stats.speed.bonus ?? 0
     rollData.selectedWeapon = "none"
     this.startRoll(rollData).catch("Error on startRoll")
   }
