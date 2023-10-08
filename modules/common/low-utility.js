@@ -371,7 +371,11 @@ export class LoWUtility {
     rollData.total += rollData.bonusMalus // Add bonus/malus if present
     rollData.total += rollData.styleBonus
     rollData.total += rollData.weaponBonus
-    rollData.total += rollData.armorBonus  
+    rollData.total += rollData.armorBonus
+    rollData.bonusMalusConditions = 0
+    for (let c of rollData.conditions) {
+      rollData.bonusMalusConditions += (c.activated) ? Number(c.system.actionmodifier) : 0
+    }
     rollData.total += rollData.bonusMalusConditions
     if (rollData.armor && rollData.applyArmorPenalty) {
       rollData.total += Number(rollData.armor.system.armorpenalty)

@@ -262,6 +262,7 @@
       "conditionkind": "weakness",
       "actionmodifier": "",
       "breathmodifier": "",
+      "autoapply": true,
       "templates": [
         "common"
       ]

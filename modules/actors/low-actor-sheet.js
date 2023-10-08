@@ -14,7 +14,7 @@ export class LoWActorSheet extends ActorSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["fvtt-legends-of-wulin", "sheet", "actor"],
       template: "systems/fvtt-legends-of-wulin/templates/actors/actor-sheet.hbs",
-      width: 860,
+      width: 880,
       height:680,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }],
       dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null }],
@@ -37,9 +37,10 @@ export class LoWActorSheet extends ActorSheet {
       limited: this.object.limited,
       skills: this.actor.getSkills(),
       externalStyles: this.actor.getExternalStyles(),
-      conditions: this.object.getConditions(),
-      weaknesses: this.object.getWeakness(),
-      hyperactivities: this.object.getHyperactivity(),
+      internalStyles: this.actor.getInternalStyles(),
+      conditions: this.actor.getConditions(),
+      weaknesses: this.actor.getWeakness(),
+      hyperactivities: this.actor.getHyperactivity(),
       config: duplicate(game.system.low.config),
       weapons: this.actor.getWeapons(),
       armors: this.actor.getArmors(),
@@ -87,7 +88,14 @@ export class LoWActorSheet extends ActorSheet {
       let dataType = $(ev.currentTarget).data("type")
       this.actor.createEmbeddedDocuments('Item', [{ name: "NewItem", type: dataType }], { renderSheet: true })
     })
-        
+    html.find('.wulin-item-checkbox').click(ev => {
+      const li = $(ev.currentTarget).parents(".item")
+      let dataType = li.data("item-type")
+      let dataId = li.data("item-id")
+      let field = $(ev.currentTarget).data("field")
+      this.actor.updateItemCheck(dataType, dataId, field, ev.currentTarget.checked)
+    })
+     
     html.find('.subactor-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
       let actorId = li.data("actor-id");

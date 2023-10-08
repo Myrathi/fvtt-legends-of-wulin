@@ -46,7 +46,7 @@
             <label class="item-name-label-long">Action modifier</label>
             <select class="item-field-label-medium" type="text" name="system.actionmodifier" value="{{system.actionmodifier}}" data-dtype="String">
               {{#select system.actionmodifier}}
-                {{#each config.modifierPositive5 as |type key| }}
+                {{#each config.modifierAll5 as |type key| }}
                 <option value="{{key}}">{{type}}</option>
                 {{/each}}
               {{/select}}
@@ -56,12 +56,18 @@
             <label class="item-name-label-long">Breath modifier</label>
             <select class="item-field-label-medium" type="text" name="system.breathmodifier" value="{{system.breathmodifier}}" data-dtype="String">
               {{#select system.breathmodifier}}
-                {{#each config.modifierPositive1 as |type key| }}
+                {{#each config.modifierAll1 as |type key| }}
                 <option value="{{key}}">{{type}}</option>
                 {{/each}}
               {{/select}}
             </select> 
           </li>
+
+          <div class="flexrow">
+            <span class="item-name-label-long">Apply automatically</span>
+            <label class="item-field-label-short checkbox"><input type="checkbox" name="system.autoapply"
+                {{checked system.autoapply}} /></label>
+          </div>
 
         </ul>
     </div>

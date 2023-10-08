@@ -48,10 +48,6 @@
         <span class="roll-dialog-label">Armor modifier : </span>
         <span class="roll-dialog-label" id="style-armor-bonus">{{armorBonus}}</span>
       </div>
-      <div class="flexrow">
-        <span class="roll-dialog-label">Armor penalty : </span>
-        <span class="roll-dialog-label" >{{armor.system.armorpenalty}}</span>
-      </div>
       {{/if}}
     {{else}}
       {{#if armor}}
@@ -65,22 +61,32 @@
 
     <div class="flexrow">
       <span class="roll-dialog-label">Weaknesses </span>
-      <select class="" id="roll-weakness" data-type="String" multiple>
-        {{#each weaknessses as |weakness idx|}}
-        <option value="{{weakness._id}}" {{#if weakness.activated}}selected{{/if}}>{{weakness.name}}
-          ({{weakness.system.conditiontype}} {{weakness.system.actionmodifier}})</option>
+      <ul>
+        {{#each conditions as |weakness idx|}}
+          {{#if (eq weakness.system.conditionkind "weakness")}}
+          <li class="flexrow">
+            <label class="item-field-label-medium">{{weakness.name}} ({{weakness.system.actionmodifier}})</label>
+            <label class="item-field-label-short checkbox"><input type="checkbox" class="roll-condition-apply" data-condition-id="{{weakness._id}}"
+              data-modifier-value="{{weakness.system.actionmodifier}}" {{checked weakness.activated}} /></label>
+          </li>
+          {{/if}}
         {{/each}}
-      </select>
+      </ul>
     </div>
 
     <div class="flexrow">
       <span class="roll-dialog-label">Hyperactivities </span>
-      <select class="" id="roll-hyperactivity" data-type="String" multiple>
-        {{#each hyperactivities as |hyper idx|}}
-        <option value="{{hyper._id}}" {{#if hyper.activated}}selected{{/if}}>{{hyper.name}}
-          ({{hyper.system.conditiontype}} {{hyper.system.actionmodifier}})</option>
+      <ul>
+        {{#each conditions as |hyperactivity idx|}}
+          {{#if (eq hyperactivity.system.conditionkind "hyperactivity")}}
+          <li class="flexrow">
+            <label class="item-field-label-medium">{{hyperactivity.name}} ({{hyperactivity.system.actionmodifier}})</label>
+            <label class="item-field-label-short checkbox"><input type="checkbox" class="roll-condition-apply" data-condition-id="{{hyperactivity._id}}"
+              data-modifier-value="{{hyperactivity.system.actionmodifier}}" {{checked hyperactivity.activated}} /></label>
+          </li>
+          {{/if}}
         {{/each}}
-      </select>
+      </ul>
     </div>
 
     <div class="flexrow">

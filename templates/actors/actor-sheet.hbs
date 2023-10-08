@@ -50,10 +50,10 @@
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="skills">Skills</a>
-    <a class="item" data-tab="virtues">Virtues</a>
     <a class="item" data-tab="combat">Combat</a>
-    <a class="item" data-tab="secretart">Secret Arts</a>
     <a class="item" data-tab="conditions">Conditions</a>
+    <a class="item" data-tab="secretart">Secret Arts&Lore</a>
+    <a class="item" data-tab="virtues">Virtues</a>
     <a class="item" data-tab="equipment">Inventory</a>
     <a class="item" data-tab="biodata">Notes&Bio</a>
   </nav>
@@ -102,10 +102,10 @@
             {{#each system.chi as |chi key|}}
             <li class="item flexrow list-item items-title-bg">
               <span class="item-field-label-medium">{{upperFirst key}}</span>
-              <input type="text" class="item-field-label-short" name="system.chi.{{key}}.value" value="{{chi.trivial}}"
+              <input type="text" class="item-field-label-short" name="system.chi.{{key}}.value" value="{{chi.value}}"
                 data-dtype="Number" />
               <input type="text" class="item-field-label-short" name="system.chi.{{key}}.cultivation"
-                value="{{chi.minor}}" data-dtype="Number" />
+                value="{{chi.cultivation}}" data-dtype="Number" />
               {{#if (exists chi.max)}}
               <input type="text" class="item-field-label-short" name="system.chi.{{key}}.max" value="{{chi.max}}"
                 data-dtype="Number" />
@@ -230,6 +230,32 @@
         <ul class="item-list alternate-list">
           <li class="item flexrow list-item items-title-bg">
             <span class="item-name-label-header-long">
+              <h3><label class="item-name-label-header-long">Internal Styles</label></h3>
+            </span>
+            <div class="item-controls item-controls-fixed">
+              <a class="item-control item-add" data-type="style" title="Create Style"><i class="fas fa-plus"></i></a>
+            </div>
+          </li>
+          {{#each internalStyles as |style key|}}
+          <li class="item flexrow list-item list-item-shadow" data-item-id="{{style._id}}">
+            <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+                src="{{style.img}}" /></a>
+            <span class="item-name-label-long2">
+              {{style.name}}
+            </span>
+
+            <div class="item-filler">&nbsp;</div>
+            <div class="item-controls item-controls-fixed">
+              <a class="item-control item-delete" title="Delete style"><i class="fas fa-trash"></i></a>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+
+
+        <ul class="item-list alternate-list">
+          <li class="item flexrow list-item items-title-bg">
+            <span class="item-name-label-header-long">
               <h3><label class="item-name-label-header-long">Weapons</label></h3>
             </span>
             <div class="item-controls item-controls-fixed">
@@ -336,8 +362,47 @@
         </li>
         {{/each}}
       </ul>
+      <ul class="item-list alternate-list">
+        <li class="item flexrow list-item items-title-bg">
+          <span class="item-name-label-header-long2">
+            <h3><label class="item-name-label-header-long2">Lore</label></h3>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Parent</label>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Type</label>
+          </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Cost</label>
+          </span>
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-add" data-type="lore" title="Create Lore"><i class="fas fa-plus"></i></a>
+          </div>
+        </li>
+        {{#each lores as |lore key|}}
+        <li class="item flexrow list-item list-item-shadow" data-item-id="{{lore._id}}">
+          <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
+              src="{{lore.img}}" /></a>
+          <span class="item-name-label-long2">
+              {{lore.name}}
+          </span>
+          <span class="item-field-label-medium">{{lore.system.parent}}</span>
+          <span class="item-field-label-medium">{{lore.system.loretype}}</span>
+          <span class="item-field-label-medium">{{lore.system.destinycost}}</span>
+
+          <div class="item-filler">&nbsp;</div>
+          <div class="item-controls item-controls-fixed">
+            <a class="item-control item-delete" title="Delete Lore"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
 
     </div>
+
+
 
     <div class="tab conditions" data-group="primary" data-tab="conditions">
 
@@ -355,21 +420,28 @@
           <span class="item-field-label-medium">
             <label class="item-field-label-medium">Breath Penalty</label>
           </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Auto apply?</label>
+          </span>
           <div class="item-filler">&nbsp;</div>
           <div class="item-controls item-controls-fixed">
             <a class="item-control item-add" data-type="condition" title="Create Condition"><i class="fas fa-plus"></i></a>
           </div>
         </li>
         {{#each weaknesses as |condition key|}}
-        <li class="item flexrow list-item list-item-shadow" data-item-id="{{condition._id}}">
+        <li class="item flexrow list-item list-item-shadow" data-item-type="condition"  data-item-id="{{condition._id}}">
           <a class="item-edit item-name-img" title="Edit Item"><img class="sheet-competence-img"
               src="{{condition.img}}" /></a>
           <span class="item-name-label-long2">
               {{condition.name}}
           </span>
           <span class="item-field-label-medium">{{upperFirst condition.system.conditiontype}}</span>
-          <span class="item-field-label-medium">{{condition.system.actionpenalty}}</span>
-          <span class="item-field-label-medium">{{condition.system.breathpenalty}}</span>
+          <span class="item-field-label-medium field-center">{{condition.system.actionmodifier}}</span>
+          <span class="item-field-label-medium field-center">{{condition.system.breathmodifier}}</span>
+          <label class="item-field-label-medium checkbox">
+            <input class="wulin-item-checkbox" data-field="system.autoapply" type="checkbox" name="condition.system.autoapply"
+              {{checked condition.system.autoapply}} />
+          </label>
 
           <div class="item-filler">&nbsp;</div>
           <div class="item-controls item-controls-fixed">
@@ -393,6 +465,9 @@
           <span class="item-field-label-medium">
             <label class="item-field-label-medium">Breath Penalty</label>
           </span>
+          <span class="item-field-label-medium">
+            <label class="item-field-label-medium">Auto apply?</label>
+          </span>
           <div class="item-filler">&nbsp;</div>
           <div class="item-controls item-controls-fixed">
             <a class="item-control item-add" data-type="condition" title="Create Condition"><i class="fas fa-plus"></i></a>
@@ -406,8 +481,13 @@
               {{condition.name}}
           </span>
           <span class="item-field-label-medium">{{upperFirst condition.system.conditiontype}}</span>
-          <span class="item-field-label-medium">{{condition.system.actionmodifier}}</span>
-          <span class="item-field-label-medium">{{condition.system.breathmodifier}}</span>
+          <span class="item-field-label-medium field-center">{{condition.system.actionmodifier}}</span>
+          <span class="item-field-label-medium field-center">{{condition.system.breathmodifier}}</span>
+          <label class="item-field-label-medium checkbox">
+            <input class="wulin-item-checkbox" data-field="system.autoapply" type="checkbox" name="condition.system.autoapply"
+              {{checked condition.system.autoapply}} />
+          </label>
+
 
           <div class="item-filler">&nbsp;</div>
           <div class="item-controls item-controls-fixed">

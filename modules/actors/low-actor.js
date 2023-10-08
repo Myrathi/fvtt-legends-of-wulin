@@ -92,6 +92,11 @@ export class LoWActor extends Actor {
     LoWUtility.sortArrayObjectsByName(comp)
     return comp
   }
+  getInternalStyles() {
+    let comp = duplicate(this.items.filter(it => it.type == "style" && it.system.styletype == "internal"))
+    LoWUtility.sortArrayObjectsByName(comp)
+    return comp
+  }
   getConditions() {
     let comp = duplicate(this.items.filter(it => it.type == "condition"))
     LoWUtility.sortArrayObjectsByName(comp)
@@ -322,7 +327,14 @@ export class LoWActor extends Actor {
   getEquippedArmor() {
     return this.items.find(it => it.type == "armor" && it.system.equipped)
   }
-
+  /* -------------------------------------------- */
+  updateItemCheck(dataType, dataId, field, checked) {
+    let item = this.items.find(it => it.type == dataType && it.id == dataId)
+    if (item) {
+      let update = { _id: item.id, [field]: checked };
+      this.updateEmbeddedDocuments('Item', [update]); // Updates one EmbeddedEntity
+    }
+  }
   /* -------------------------------------------- */
   getCommonRollData() {
     let rollData = LoWUtility.getBasicRollData()
@@ -333,12 +345,15 @@ export class LoWActor extends Actor {
     rollData.weaponBonus = 0
     rollData.armorBonus = 0
     rollData.styleBonus = 0 
-    rollData.weaknesses = this.getWeakness()
-    rollData.hyperactivities = this.getHyperactivity()
+    rollData.conditions = this.getConditions()
     rollData.bonusMalusConditions = 0
     rollData.armor = this.getEquippedArmor()
     rollData.applyArmorPenalty = false
-
+    
+    // process auto weakness/hyperactivities
+    for(let c of rollData.conditions) {
+      c.activated = c.system.autoapply
+    }
     return rollData
   }
 
@@ -382,7 +397,6 @@ export class LoWActor extends Actor {
     rollData.weapons = this.getEquippedWeapons()
     rollData.styleCombatModifier = "speed"
     rollData.weaponBonus = 0
-    rollData.applyArmorPenalty = true // Per Default
     rollData.styleBonus = rollData.style.system.stats.speed.basic + rollData.style.system.stats.speed.modified
     rollData.armorBonus = rollData.armor?.system.stats.speed.bonus ?? 0
     rollData.selectedWeapon = "none"

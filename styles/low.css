@@ -54,7 +54,7 @@
   font-size: 1.0rem;
 } /* For title, sidebar character and scene */
 .sheet nav.sheet-tabs {
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   font-family: Mephisto;
 } /* For nav and title */
 .window-app input, .fvtt-legends-of-wulin .item-form, .sheet header.sheet-header .flex-group-center.flex-compteurs, .sheet header.sheet-header .flex-group-center.flex-fatigue, select, button, .item-checkbox, #sidebar, #players, #navigation #nav-toggle {
@@ -1395,4 +1395,8 @@ ul, li {
 .dice-total .modifier {
   margin: 2px;
   display: inline-flex;
+}
+.field-center {
+  text-align: center;
+  align-self: center;
 }

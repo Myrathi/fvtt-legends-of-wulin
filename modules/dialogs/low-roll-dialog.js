@@ -79,7 +79,7 @@ export class LoWRollDialog extends Dialog {
       for (let id of rollData.weaknessSelected) {
         let weakness = rollData.weaknesses.find(t => t._id == id)
         weakness.activated = true
-        rollData.bonusMalusConditions -= Number(weakness.system.actionmodifier)
+        rollData.bonusMalusConditions += Number(weakness.system.actionmodifier)
       }
     }
     if (rollData.hyperSelected && rollData.hyperSelected.length > 0) {
@@ -121,14 +121,13 @@ export class LoWRollDialog extends Dialog {
     })
     html.find('#apply-armor-penalty').change((event) => {
       this.rollData.applyArmorPenalty = event.currentTarget.checked
-    })    
-    html.find('#roll-weakness').change((event) => {
-      this.rollData.weaknessSelected = $('#roll-weakness').val()
-      this.updateConditions()
     })
-    html.find('#roll-hyperactivity').change((event) => {
-      this.rollData.hyperSelected = $('#roll-hyperactivity').val()
-      this.updateConditions()
+    html.find('.roll-condition-apply').change((event) => {
+      let condId = $(event.currentTarget).data("condition-id")
+      let cond = this.rollData.conditions.find(c => c._id == condId)
+      if (cond) {
+        cond.activated = event.currentTarget.checked
+      }
     })
     html.find('#style-weapon').change((event) => {
       this.rollData.selectedWeapon = event.currentTarget.value
