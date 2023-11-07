@@ -45,6 +45,7 @@ export class LoWActorSheet extends ActorSheet {
       weapons: this.actor.getWeapons(),
       armors: this.actor.getArmors(),
       secretarts: this.actor.getSecretArts(),
+      lores: this.actor.getLores(),
       subActors: duplicate(this.actor.getSubActors()),
       description: await TextEditor.enrichHTML(this.object.system.description, { async: true }),
       notes: await TextEditor.enrichHTML(this.object.system.notes, { async: true }),
@@ -129,6 +130,10 @@ export class LoWActorSheet extends ActorSheet {
     html.find('.river-flow').click((event) => {
       const diceIndex = $(event.currentTarget).data("dice-index");
       this.actor.flowDice(diceIndex);
+    });    
+    html.find('.river-flood').click((event) => {
+      const diceIndex = $(event.currentTarget).data("dice-index");
+      this.actor.floodDice(diceIndex);
     });    
     html.find('.river-wash').click((event) => {
       this.actor.washRiver();

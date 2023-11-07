@@ -127,6 +127,11 @@ export class LoWActor extends Actor {
     LoWUtility.sortArrayObjectsByName(comp)
     return comp;
   }
+  getLores() {
+    let comp = duplicate(this.items.filter(item => item.type == 'loresheet') || [])
+    LoWUtility.sortArrayObjectsByName(comp)
+    return comp;
+  }
   /* -------------------------------------------- */
   getItemById(id) {
     let item = this.items.find(item => item.id == id);
@@ -310,6 +315,20 @@ export class LoWActor extends Actor {
       riverDices[diceIndex].value = -1
       this.update({ 'system.river.dices': riverDices })
       LoWUtility.flowDiceToLake(msgId, diceValue)
+    } else {
+      ui.notifications.warn("No lake roll available !")
+    }
+  }
+
+  /* -------------------------------------------- */
+  floodDice(diceIndex) {
+    let msgId = this.getFlag("world", "last-roll-message-id")
+    if (msgId) {
+      let riverDices = duplicate(this.system.river.dices)
+      let diceValue = riverDices[diceIndex].value
+      riverDices[diceIndex].value = -1
+      this.update({ 'system.river.dices': riverDices })
+      LoWUtility.floodDiceToLake(msgId, diceValue)
     } else {
       ui.notifications.warn("No lake roll available !")
     }

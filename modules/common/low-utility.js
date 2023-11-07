@@ -144,7 +144,20 @@ export class LoWUtility {
       this.processRollResults(rollData) // Update and display again the new roll results  
     }
   }
-
+  /* -------------------------------------------- */
+  static floodDiceToLake(messageId, diceValue) {
+    let message = game.messages.get(messageId)
+    if (!message) {
+      ui.notifications.error("No message found")
+    } else {
+      this.removeChatMessageId(messageId) // Delete the previous chat message
+      let rollData = message.getFlag("world", "low-rolldata")
+      diceValue = Number(diceValue)
+      rollData.floodDice = (diceValue == 10) ? 10 : diceValue+10 // Add the flood dice to the dice results
+      this.processRollResults(rollData) // Update and display again the new roll results  
+    }
+  }
+  
   /* -------------------------------------------- */
   static async chatListeners(html) {
 
