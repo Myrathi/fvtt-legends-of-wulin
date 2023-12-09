@@ -58,7 +58,7 @@
     }
   ],
   "license": "LICENSE.txt",
-  "manifest": "https://www.uberwald.me/gitea/uberwald/fvtt-legends-of-wulin/raw/branch/master/system.json",
+  "manifest": "https://raw.githubusercontent.com/PureConcentratedSpite/fvtt-legends-of-wulin/main/system.json",
   "compatibility": {
     "minimum": "11",
     "verified": "11"
@@ -71,8 +71,8 @@
     "styles/low.css"
   ],
   "title": "Legends of Wulin RPG",
-  "url": "https://www.uberwald.me/gitea/uberwald/legends-of-wulin",
-  "version": "11.0.16",
-  "download": "https://www.uberwald.me/gitea/uberwald/legends-of-wulin/archive/legends-of-wulin-v11.0.16.zip",
+  "url": "https://github.com/PureConcentratedSpite/fvtt-legends-of-wulin/tree/main",
+  "version": "11.0.17",
+  "download": "https://github.com/PureConcentratedSpite/fvtt-legends-of-wulin/archive/refs/tags/legends-of-wulin-v11.0.17.zip",
   "background": "systems/fvtt-legends-of-wulin/images/ui/wulin_background_01.jpg"
 }

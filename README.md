@@ -1,6 +1,3 @@
-# Système Foundry pour Ecryme v2 (French RPG, Open Sesam Games, Official)
+# Legends of the Wulin system for Foundry VTT
 
-# Developmement 
-
-Uberwald
-
+Unofficial implementation of the Legends of the Wulin system for Foundry VTT.
