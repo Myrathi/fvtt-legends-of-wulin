@@ -1140,7 +1140,7 @@ ul, li {
   color: #CCC
 }
 #pause > img {
-  content: url(../images/ui/ecryme_logo_small_01.webp);
+  content: url(../images/ui/wulin_pause_logo.webp);
   height: 200px;
   width: 200px;
   top: -200px;
@@ -1148,7 +1148,7 @@ ul, li {
 }
 
 #logo {
-  content : url(../images/ui/ecryme_logo_small_01.webp);
+  content : url(../images/ui/wulin_pause_logo.webp);
   width: 100px;
   height: 60px;
 }
