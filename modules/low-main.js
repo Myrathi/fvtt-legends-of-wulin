@@ -117,7 +117,7 @@ Hooks.once("ready", function () {
     });
   }
 
-  registerUsageCount(game.system.id)
+  // registerUsageCount(game.system.id)
   welcomeMessage();
   LoWUtility.ready()
 
