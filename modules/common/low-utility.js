@@ -62,6 +62,11 @@ export class LoWUtility {
         accum += block.fn(i);
       return accum;
     })
+    Handlebars.registerHelper('times', function (count, options) {
+      return [...Array(Number(count) || 0).keys()]
+        .map((i) => options.fn(i, { data: options.data, blockParams: [i] }))
+        .join("");
+    })
 
   }
 
